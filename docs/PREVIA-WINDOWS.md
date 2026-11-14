@@ -57,7 +57,8 @@ Cópias originais do instalador e dos jogos: `arcadia-preview\_instalador\` e `a
 2. **O instalador também instalou componentes de sistema**, apesar de ter sido pedido só o componente principal (`/COMPONENTS="main"`). Isso exigiu permissão de administrador (janelas do Controle de Conta de Usuário):
    - Microsoft Visual C++ 2005, 2008 e 2010 (x86 e x64) e DirectX 9 (bibliotecas antigas usadas por emuladores);
    - **Dokan Library 2.3.1** e **WinFsp 2025** (drivers que o RetroBat usa para abrir jogos compactados/ISO como se fossem pastas).
-   Eles continuam instalados. Se não quiser mantê-los, podem ser removidos em *Configurações do Windows → Aplicativos → Aplicativos instalados* (alguns emuladores do RetroBat podem deixar de funcionar sem eles).
+   **Decisão do usuário (14/11/2026):** manter os Visual C++ e o DirectX e **remover Dokan e WinFsp**. Removidos às 14:11 (Dokan Library 2.3.1.1000 Bundle + MSI x64, WinFsp 2025 e o serviço `WinFsp.Launcher`), conferido que não sobraram programas, serviços, drivers nem pastas. O Windows pede um reinício para concluir a remoção do driver.
+   Efeito na prévia: o RetroBat usava o Dokan só para "montar" jogos compactados (.zip/.7z) como unidade; sem ele, descompacta para `roms\.uncompressed` antes de abrir. Os jogos de teste não são compactados, então nada muda.
 
 ## Configuração aplicada
 
