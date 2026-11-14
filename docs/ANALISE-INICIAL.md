@@ -1,457 +1,289 @@
 # Análise inicial — Console de Jogos Retrô (`console-retro-os`)
 
-- **Data:** 14/11/2026, 12:24 (horário de Brasília)
-- **Base analisada:** fork de [EmuELEC/EmuELEC](https://github.com/EmuELEC/EmuELEC), branch `dev`, commit `d4c7b2f143` (15/10/2026 — "Added geartowns libretro core…")
-- **Alvo:** aparelhos Amlogic S905X3 (ex.: Super Console X3 Plus) → `PROJECT=Amlogic-ce DEVICE=Amlogic-ng ARCH=aarch64`
+- **Data:** 14/11/2026, 12:51 (horário de Brasília)
+- **Aparelho alvo:** KINHANK Super Console X2 Pro — Amlogic **S905X2** (família **g12a**), 2 GB de RAM, Wi-Fi, Bluetooth 5.0; o sistema de jogos roda pelo **cartão microSD**
+- **Uso:** pessoal/doméstico — todos os emuladores do EmuELEC são mantidos, inclusive os de licença não comercial
+- **Base analisada:** fork de [EmuELEC/EmuELEC](https://github.com/EmuELEC/EmuELEC), branch `dev` (último commit do upstream: `d4c7b2f143`, 15/10/2026)
 - **Escopo:** somente leitura. Nenhum código foi alterado nesta etapa.
 
-> ⚠️ **Aviso mais importante deste relatório.** O próprio [README do EmuELEC](../README.md#license) diz que a distribuição, **como está**, *não pode ser vendida, empacotada ou incluída em produtos comerciais — citando expressamente TV boxes* — porque contém núcleos com licença não comercial. A marca, os logotipos e as imagens do EmuELEC também não podem ir para produto comercial sem permissão. Ou seja: antes de vender qualquer aparelho com este sistema, é **obrigatório** (1) remover todos os itens marcados 🔴 na seção 3, (2) remover toda a marca EmuELEC (nome, logos, splash, tema Carbon) e (3) cumprir as obrigações da GPL (publicar o código-fonte correspondente a cada versão distribuída). Este documento é uma análise técnica e não substitui revisão jurídica.
+> Esta versão substitui a análise anterior (feita para o S905X3 com foco comercial), que continua no histórico do Git (commit `df42c96`).
 
 ---
 
 ## Sumário
 
-1. [Como compilar a imagem para S905X3 (Amlogic-ng)](#1-como-compilar-a-imagem-para-s905x3-amlogic-ng)
-2. [Onde fica cada peça do sistema](#2-onde-fica-cada-peça-do-sistema)
-3. [Núcleos e emuladores incluídos e suas licenças](#3-núcleos-e-emuladores-incluídos-e-suas-licenças)
-4. [Plano proposto em etapas](#4-plano-proposto-em-etapas)
-5. [Riscos e pendências](#5-riscos-e-pendências)
+1. [Ambiente de compilação](#1-ambiente-de-compilação)
+2. [Como compilar a imagem para o S905X2 e qual DTB usar](#2-como-compilar-a-imagem-para-o-s905x2-e-qual-dtb-usar)
+3. [Onde fica cada peça e como alterar](#3-onde-fica-cada-peça-e-como-alterar)
+4. [Backup completo do cartão original no Windows](#4-backup-completo-do-cartão-original-no-windows)
+5. [Migrar a pasta roms do cartão original](#5-migrar-a-pasta-roms-do-cartão-original)
+6. [Plano da Fase 1](#6-plano-da-fase-1)
+7. [Pendências e riscos](#7-pendências-e-riscos)
 
 ---
 
-## 1. Como compilar a imagem para S905X3 (Amlogic-ng)
+## 1. Ambiente de compilação
 
-### 1.1 Qual DEVICE usar
+### 1.1 Resultado da verificação neste PC (14/11/2026)
 
-Em [projects/Amlogic-ce/devices/](../projects/Amlogic-ce/devices) existem `Amlogic-ng`, `Amlogic-ng-dv`, `Amlogic-no` e `Amlogic-old`. O S905X3 (SM1) é atendido pelo **`Amlogic-ng`**: kernel `amlogic-4.9`, `TARGET_CPU="cortex-a53"` (o Cortex-A55 do S905X3 roda código A53; o mesmo device cobre o S922X com `cortex-a73.cortex-a53`), u-boot e imagem Android (`kernel.img`) — ver [projects/Amlogic-ce/devices/Amlogic-ng/options](../projects/Amlogic-ce/devices/Amlogic-ng/options). O `Amlogic-ng` também recebe os núcleos "pesados" da lista `LIBRETRO_S922X_CORES`, o `dolphinSA` e o `mame` atual (ver [packages/sx05re/emuelec/package.mk](../packages/sx05re/emuelec/package.mk), linhas 19–22 e 56–71).
+| Item | Situação |
+|---|---|
+| Processador | AMD Ryzen 7 5700X — 8 núcleos / 16 threads ✅ |
+| Memória RAM | 32 GB ✅ |
+| Disco `D:` | 436 GB livres ✅ (o build precisa de 150–250 GB) |
+| Disco `C:` | 505 GB livres ✅ |
+| WSL | WSL 2.7.11 instalado, **nenhuma distribuição Linux** ❌ |
+| Virtualização | **desligada** ❌ — o Windows informa "virtualização não habilitada" (`HCS_E_HYPERV_NOT_INSTALLED`); o firmware (BIOS) reporta virtualização desativada |
+| Docker | Docker Desktop instalado, mas o motor **não sobe** ❌ (depende da mesma virtualização) |
 
-### 1.2 O que é necessário no computador
+**Conclusão:** o PC tem hardware de sobra; o único bloqueio é a virtualização. Enquanto ela estiver desligada, nem WSL2 nem Docker funcionam.
 
-| Item | Mínimo | Recomendado |
-|---|---|---|
-| Sistema | Linux x86_64 (Debian/Ubuntu) **ou** Windows 10/11 com WSL2 | Ubuntu 22.04 LTS (nativo ou WSL2) |
-| CPU | 4 núcleos | 8 a 16 núcleos (a 1ª compilação leva várias horas; o `mame` é o pacote mais demorado) |
-| Memória RAM | 8 GB + swap | 16 a 32 GB (o link do MAME com LTO consome muita memória) |
-| Disco livre | 150 GB | 250 GB em SSD (fontes + `build.*` + ccache) |
-| Internet | estável | as fontes de centenas de pacotes são baixadas na 1ª compilação |
+### 1.2 O que precisa ser feito (com administrador)
 
-Pacotes (lista do README, para Debian/Ubuntu):
+1. **Ligar a virtualização na BIOS/UEFI** (não é um comando): reiniciar o PC, entrar no setup (geralmente tecla `Del` ou `F2`) e ativar **SVM Mode** (AMD-V), normalmente em *Advanced → CPU Configuration*. Salvar e reiniciar.
+2. **Habilitar a "Plataforma de Máquina Virtual" do Windows** — no PowerShell **como administrador**:
 
-```bash
-sudo apt install gcc make git unzip wget xz-utils libsdl2-dev libsdl2-mixer-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev rapidjson-dev libasound2-dev libgl1-mesa-dev build-essential libboost-all-dev cmake fonts-droid-fallback libvlc-dev libvlccore-dev vlc-bin texinfo premake4 golang libssl-dev curl patchelf xmlstarlet default-jre xsltproc libvpx-dev rdfind tzdata xfonts-utils lzop
-```
+   ```powershell
+   wsl.exe --install --no-distribution
+   ```
 
-### 1.3 Windows com WSL2 — cuidados obrigatórios
+   Depois, reiniciar o Windows.
+3. **Instalar o Ubuntu 22.04 com o disco dentro da pasta do projeto** (não exige administrador; o Claude Code faz):
 
-1. Instalar: `wsl --install -d Ubuntu-22.04` (PowerShell como administrador).
-2. **Compilar dentro do sistema de arquivos do Linux** (ex.: `~/console-retro-os`), **nunca** em `/mnt/d/...`. O NTFS montado no WSL é lento, não diferencia maiúsculas/minúsculas e não guarda permissões Unix — o build quebra ou fica dezenas de vezes mais lento.
-3. Neste computador o Git do Windows está com `core.autocrlf=true` (definido em `C:\Program Files\Git\etc\gitconfig`). Portanto a cópia em `D:\ADUBE SISTEMAS\console-retro-os` tem finais de linha CRLF nos scripts e **não serve para compilar**. Use-a para documentação/edição e faça um clone separado dentro do WSL.
-4. Dar memória suficiente ao WSL criando `%UserProfile%\.wslconfig`:
+   ```powershell
+   wsl --install -d Ubuntu-22.04 --location "D:\Adube Sistemas\Console de Jogo\wsl\Ubuntu-22.04"
+   ```
+
+4. Limitar os recursos do WSL criando `%UserProfile%\.wslconfig`:
 
    ```ini
    [wsl2]
    memory=24GB
    swap=32GB
-   processors=12
+   processors=14
    ```
 
-### 1.4 Passo a passo (Linux ou WSL2)
+### 1.3 Estimativa de tempo e onde compilar
+
+- **Primeiro build no PC (Ryzen 7 5700X, 32 GB, SSD):** estimativa de **6 a 10 horas**, mais o download de 20–40 GB de código-fonte (depende da internet). Os pacotes mais demorados são MAME, Dolphin, RetroArch, o kernel e o toolchain.
+- **Builds seguintes:** de **10 a 60 minutos**, porque só os pacotes alterados são recompilados (e o ccache acelera).
+- **Recomendação: compilar no seu PC.** Ele é forte o suficiente, não tem custo por hora e guarda o cache entre builds (o que mais economiza tempo). Um servidor Linux na nuvem (16 vCPUs, 32–64 GB de RAM, 250 GB de SSD) só compensa se não for possível ligar a virtualização na BIOS: o primeiro build levaria um tempo parecido, e a máquina teria de ficar ligada (e paga) para manter o cache.
+
+### 1.4 Cuidados no WSL
+
+- Compilar **dentro do Linux** (`~/console-retro-os`), nunca em `/mnt/d/...`: o NTFS montado é lento, não diferencia maiúsculas/minúsculas e não guarda permissões Unix.
+- A cópia em `D:\Adube Sistemas\Console de Jogo\console-retro-os` foi clonada pelo Git do Windows com `core.autocrlf=true`, então os scripts estão com finais de linha CRLF. **Ela serve para documentação e edição, não para compilar.** O build usa um clone separado dentro do WSL.
+
+---
+
+## 2. Como compilar a imagem para o S905X2 e qual DTB usar
+
+### 2.1 DEVICE correto
+
+O S905X2 (g12a) é atendido pelo device **`Amlogic-ng`** do projeto `Amlogic-ce` ([projects/Amlogic-ce/devices/Amlogic-ng/options](../projects/Amlogic-ce/devices/Amlogic-ng/options): kernel `amlogic-4.9`, `TARGET_CPU="cortex-a53"`). O `Amlogic-ng` também recebe os núcleos mais pesados (`LIBRETRO_S922X_CORES`), que o próprio código comenta como destinados a "S922x, **S905x2** e A311D" ([packages/sx05re/emuelec/package.mk](../packages/sx05re/emuelec/package.mk), linhas 19–22).
+
+### 2.2 Dependências (Ubuntu 22.04)
+
+```bash
+sudo apt update
+sudo apt install gcc make git unzip wget xz-utils libsdl2-dev libsdl2-mixer-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev rapidjson-dev libasound2-dev libgl1-mesa-dev build-essential libboost-all-dev cmake fonts-droid-fallback libvlc-dev libvlccore-dev vlc-bin texinfo premake4 golang libssl-dev curl patchelf xmlstarlet default-jre xsltproc libvpx-dev rdfind tzdata xfonts-utils lzop
+```
+
+### 2.3 Comando exato de build
 
 ```bash
 git clone https://github.com/ricardofarney/console-retro-os.git ~/console-retro-os
 cd ~/console-retro-os
 git checkout dev
-git remote add upstream https://github.com/EmuELEC/EmuELEC.git
 PROJECT=Amlogic-ce DEVICE=Amlogic-ng ARCH=aarch64 DISTRO=EmuELEC make image
 ```
 
 Resultado em `target/`:
 
-- `EmuELEC-Amlogic-ng.aarch64-<versão>.img.gz` → gravar no cartão SD/pendrive (balenaEtcher, Rufus etc.);
-- `EmuELEC-Amlogic-ng.aarch64-<versão>.tar` → pacote de **atualização** (é o arquivo que o mecanismo de update baixa — ver seção 2.4).
+- `EmuELEC-Amlogic-ng.aarch64-<versão>.img.gz` → gravar no microSD (balenaEtcher ou Rufus);
+- `EmuELEC-Amlogic-ng.aarch64-<versão>.tar` → pacote de atualização.
 
-Comandos úteis no dia a dia (mesmas variáveis de ambiente na frente):
+Recompilar só um pacote: `PROJECT=Amlogic-ce DEVICE=Amlogic-ng ARCH=aarch64 DISTRO=EmuELEC ./scripts/clean <pacote>` e, em seguida, o mesmo `make image`.
 
-- recompilar só um pacote: `PROJECT=Amlogic-ce DEVICE=Amlogic-ng ARCH=aarch64 DISTRO=EmuELEC ./scripts/clean <pacote>` e depois `make image`;
-- chaves de API do ScreenScraper/RetroAchievements: opcionais, lidas de `api_keys.txt` (ver comentário em [packages/sx05re/emuelec-emulationstation/package.mk](../packages/sx05re/emuelec-emulationstation/package.mk)).
+Alternativa via Docker (depois de ligar a virtualização): `docker build --pull -t console-retro-build tools/docker/jammy` e `docker run --rm -v "$PWD":/build -w /build -e PROJECT=Amlogic-ce -e DEVICE=Amlogic-ng -e ARCH=aarch64 -e DISTRO=EmuELEC -it console-retro-build make image` (ver [tools/docker/README.md](../tools/docker/README.md)).
 
-**Alternativa com Docker** (isola as dependências): existem Dockerfiles em [tools/docker/](../tools/docker) (`jammy` = Ubuntu 22.04):
+### 2.4 DTB do Super Console X2 Pro
 
-```bash
-docker build --pull -t console-retro-build tools/docker/jammy
-docker run --rm -v "$PWD":/build -w /build -e PROJECT=Amlogic-ce -e DEVICE=Amlogic-ng -e ARCH=aarch64 -e DISTRO=EmuELEC -it console-retro-build make image
-```
+O DTB ("device tree") diz ao kernel como é a placa. Ele fica na partição de boot do cartão (`EMUELEC`, FAT32) com o nome **`dtb.img`**.
 
-O repositório não possui workflow de CI (`.github/workflows` não existe); a compilação automatizada terá de ser criada por nós (ver Etapa 4).
-
-### 1.5 No aparelho
-
-Após gravar a imagem, é preciso escolher o **DTB** do S905X3 na partição de boot (copiar o arquivo `sm1_s905x3_*.dtb` adequado — variantes 2 GB/4 GB e Ethernet 100M/1 Gbit — para a raiz como `dtb.img`). Para o produto final, o DTB correto do nosso modelo de placa deve ser fixado na imagem para o cliente não precisar fazer isso.
+- **Candidato:** `g12a_s905x2_2g.dtb` (S905X2 com 2 GB de RAM e Ethernet 100 Mbit). Se a Ethernet do aparelho for gigabit, `g12a_s905x2_2g_1gbit.dtb`. Os genéricos vêm do kernel do CoreELEC, na pasta `device_trees/` da partição de boot da imagem gerada; o arquivo [projects/Amlogic-ce/devices/Amlogic-ng/bootloader/dtb.conf](../projects/Amlogic-ce/devices/Amlogic-ng/bootloader/dtb.conf) só lista variantes de outras marcas (Beelink).
+- **Forma mais segura (recomendada):** o cartão original do X2 Pro já tem um `dtb.img` que funciona. Antes de qualquer coisa, copiar esse arquivo (seção 4.1), calcular o hash e comparar com os DTBs de `device_trees/` da nossa imagem para descobrir qual é. Na nossa imagem, usar exatamente esse arquivo como `dtb.img`.
+- Quando o DTB estiver confirmado, ele será fixado no build para que todo cartão novo já saia pronto.
 
 ---
 
-## 2. Onde fica cada peça do sistema
+## 3. Onde fica cada peça e como alterar
 
-### 2.1 EmulationStation (interface) e temas
+Regra geral do EmuELEC: tudo o que vem na imagem fica em `/usr/config/...` (somente leitura) e é **copiado para `/storage/...` no primeiro boot**. Mudar um padrão no código só vale para **cartões novos**; num cartão já em uso, vale o arquivo em `/storage`.
+
+### 3.1 EmulationStation e temas
 
 | O quê | Onde |
 |---|---|
-| Receita de compilação | [packages/sx05re/emuelec-emulationstation/package.mk](../packages/sx05re/emuelec-emulationstation/package.mk) |
-| Código-fonte do ES | **repositório externo** [EmuELEC/emuelec-emulationstation](https://github.com/EmuELEC/emuelec-emulationstation), branch `EmuELEC`, fixado no commit `3de652c6…` (derivado do Batocera-EmulationStation) |
-| Configuração padrão | [config/es_settings.cfg](../packages/sx05re/emuelec-emulationstation/config/es_settings.cfg) — tema padrão `Crystal`, `FavoritesFirst=true` |
-| Sistemas e emuladores por sistema | [config/es_systems.json](../packages/sx05re/emuelec-emulationstation/config/es_systems.json) + gerador [generate_es_systems.py](../packages/sx05re/emuelec-emulationstation/generate_es_systems.py) |
-| Recursos por emulador (menus de opções) | [config/es_features.cfg](../packages/sx05re/emuelec-emulationstation/config/es_features.cfg) |
-| Temas incluídos | [themes/Crystal/package.mk](../packages/sx05re/emuelec-emulationstation/themes/Crystal/package.mk) (fonte: `github.com/dm2912/Crystal`, **padrão**) e [themes/es-theme-EmuELEC-carbon/package.mk](../packages/sx05re/emuelec-emulationstation/themes/es-theme-EmuELEC-carbon/package.mk) |
-| Temas no aparelho | sistema (somente leitura): `/usr/config/emulationstation/themes/`; usuário: `/storage/.config/emulationstation/themes/` |
-| Traduções | dentro do repositório do ES em `locale/lang/` — **já existe `pt_BR`** |
-| Idioma padrão | `system.language=en_US` em [packages/sx05re/emuelec/config/emuelec/configs/emuelec.conf](../packages/sx05re/emuelec/config/emuelec/configs/emuelec.conf) (linha 154) |
+| Receita do ES | [packages/sx05re/emuelec-emulationstation/package.mk](../packages/sx05re/emuelec-emulationstation/package.mk) — código-fonte externo: [EmuELEC/emuelec-emulationstation](https://github.com/EmuELEC/emuelec-emulationstation), branch `EmuELEC`, fixado no commit `3de652c6` |
+| Configuração padrão | [packages/sx05re/emuelec-emulationstation/config/es_settings.cfg](../packages/sx05re/emuelec-emulationstation/config/es_settings.cfg) — `ThemeSet=Crystal`, `FavoritesFirst=true` |
+| Sistemas e emuladores | [config/es_systems.json](../packages/sx05re/emuelec-emulationstation/config/es_systems.json) e [generate_es_systems.py](../packages/sx05re/emuelec-emulationstation/generate_es_systems.py) |
+| Temas | [themes/Crystal/package.mk](../packages/sx05re/emuelec-emulationstation/themes/Crystal/package.mk) (padrão, fonte `github.com/dm2912/Crystal`) e [themes/es-theme-EmuELEC-carbon/package.mk](../packages/sx05re/emuelec-emulationstation/themes/es-theme-EmuELEC-carbon/package.mk) |
+| Temas no aparelho | sistema: `/usr/config/emulationstation/themes/`; usuário: `/storage/.config/emulationstation/themes/` (ou a pasta `themes` na partição EEROMS) |
 
-Observação: no momento só o `Crystal` é dependência do pacote do ES (`PKG_DEPENDS_TARGET+=" Crystal"`); o Carbon tem receita, mas não está ligado ao build.
+**Como alterar o tema:** criar um repositório próprio do tema (ex.: fork do Crystal ou do Carbon — permitido em uso pessoal), criar `packages/sx05re/emuelec-emulationstation/themes/<nosso-tema>/package.mk` apontando para ele, incluí-lo em `PKG_DEPENDS_TARGET` do ES e trocar `ThemeSet` no `es_settings.cfg`.
 
-### 2.2 RetroArch — salvamento e carregamento automático de save state
+### 3.2 Idioma padrão — português do Brasil
 
-A configuração é montada em **três camadas**:
+- [packages/sx05re/emuelec/config/emuelec/configs/emuelec.conf](../packages/sx05re/emuelec/config/emuelec/configs/emuelec.conf), linha 154: `system.language=en_US` → **`system.language=pt_BR`**. O ES mapeia `system.language` para a configuração interna `Language` (`es-core/src/SystemConf.cpp`), e o [setsettings.sh](../packages/sx05re/emuelec/bin/setsettings.sh) (linha 80 em diante) usa o mesmo valor para o idioma do RetroArch.
+- A tradução `pt_BR` do ES já existe (`locale/lang/pt_BR` no repositório do ES).
+- Linha 157 do mesmo arquivo: `system.timezone=America/Mexico_City` → **`system.timezone=America/Sao_Paulo`** (horário de Brasília).
+- Num aparelho já em uso: *Menu → Configurações do sistema → Idioma*, ou editar `/storage/.config/emuelec/configs/emuelec.conf`.
 
-1. **Arquivo base gerado na compilação** — [packages/sx05re/libretro_base/retroarch/package.mk](../packages/sx05re/libretro_base/retroarch/package.mk), linhas ~101–160: uma série de `sed`/`echo` sobre o `retroarch.cfg` do upstream define diretórios (`savestate_directory=/storage/roms/savestates`, `system_directory=/storage/roms/bios`, `screenshot_directory=…`), driver de vídeo/áudio/entrada, `savestate_thumbnail_enable=true` etc. Esse arquivo vai para `/usr/config/retroarch/retroarch.cfg` e é copiado para `/storage/.config/retroarch/retroarch.cfg` no primeiro boot.
-2. **Configurações do usuário** — [emuelec.conf](../packages/sx05re/emuelec/config/emuelec/configs/emuelec.conf), linhas 193–194:
+### 3.3 Salvamento e carregamento automático (RetroArch)
 
-   ```ini
-   ## Set autosave/load savestate for all emulators (0,1)
-   #global.autosave=0
-   ```
+Como funciona hoje:
 
-   Também aceita valor por sistema (`snes.autosave=1`, por exemplo), definido pelo menu do ES.
-3. **Aplicação a cada jogo iniciado** — o ES repassa `-autosave <valor>` ao [emuelecRunEmu.sh](../packages/sx05re/emuelec/bin/emuelecRunEmu.sh) (linhas 492–497), que chama [setsettings.sh](../packages/sx05re/emuelec/bin/setsettings.sh):
-   - linhas 116–126: força `savestate_directory = /storage/roms/savestates/<sistema>` e desliga a ordenação por pasta;
-   - linhas 141–142 (`default_settings`): **padrão `savestate_auto_save = "false"` e `savestate_auto_load = "false"`**;
-   - linhas 195–215 (`autosave`/`snapshot`): se o autosave estiver ligado, grava `true` nos dois; integra-se ao gerenciador de "snapshots" (slots) do ES.
+1. O `retroarch.cfg` base é gerado em [packages/sx05re/libretro_base/retroarch/package.mk](../packages/sx05re/libretro_base/retroarch/package.mk) (linhas ~101–160, série de `sed`), vai para `/usr/config/retroarch/retroarch.cfg` e é copiado para `/storage/.config/retroarch/retroarch.cfg`.
+2. **A cada jogo iniciado**, o [setsettings.sh](../packages/sx05re/emuelec/bin/setsettings.sh) reescreve as opções:
+   - linhas 116–126: `savestate_directory = /storage/roms/savestates/<sistema>`;
+   - linhas 141–142 (`default_settings`): **`savestate_auto_save = "false"` e `savestate_auto_load = "false"`**;
+   - linhas 195–215: se o autosave estiver ligado para aquele jogo, grava `"true"` nos dois.
+3. O ES decide o "ligado" em `FileData::getCurrentGameSetting("autosave")`, nesta ordem: configuração do jogo → `<sistema>.autosave` → **`global.autosave`** (do `emuelec.conf`). Só repassa para sistemas com suporte a save state (`SaveStateRepository::isEnabled`).
 
-**Saves de bateria (SRAM, `.srm`)**: `savefile_directory` fica comentado na linha 115 do `package.mk` do RetroArch, então o RetroArch grava o `.srm` **ao lado da ROM**, em `/storage/roms/<sistema>/`. Os save states ficam em `/storage/roms/savestates/<sistema>/`.
+Por isso, **editar só o `retroarch.cfg` não adianta**: o `setsettings.sh` sobrescreve o valor a cada jogo.
 
-**Conclusão:** para ligar o salvamento/carregamento automático por padrão basta, em princípio, descomentar e trocar para `global.autosave=1` no `emuelec.conf` — a confirmar em teste no aparelho (o ES precisa repassar o argumento). Emuladores standalone (PPSSPP, Flycast SA, DuckStation SA, Mupen64Plus SA, Dolphin…) **não** usam essa chave; cada um tem seu próprio mecanismo.
+**Como ligar em todos os sistemas por padrão:**
 
-### 2.3 Sistema de favoritos (e base para "Continuar jogando")
+1. `emuelec.conf` (linhas 193–194): trocar `#global.autosave=0` por **`global.autosave=1`**;
+2. no `setsettings.sh`, função `default_settings` (linhas 141–142): trocar os dois padrões para `"true"`, para cobrir também os sistemas para os quais o ES não envia a opção;
+3. opcional, recomendado: incluir `autosave_interval = "10"` no `retroarch.cfg` base para gravar o save de bateria (`.srm`) a cada 10 s, protegendo contra desligamento na tomada.
 
-- Favoritos, data do último jogo (`lastplayed`) e contagem (`playcount`) são metadados de cada jogo no **`gamelist.xml`** do sistema (`<favorite>true</favorite>`).
-- Caminho do `gamelist.xml` (função `SystemData::getGamelistPath` no fonte do ES): primeiro `/storage/roms/<sistema>/gamelist.xml`; se não existir, `~/.emulationstation/gamelists/<sistema>/gamelist.xml`.
-- Coleções automáticas (arquivo `es-app/src/CollectionSystemManager.cpp` do ES): `favorites` ("favoritos") e **`recent` ("last played", ordenada por `lastplayed`)** — esta última é a base natural da linha **"Continuar jogando"**. Coleções personalizadas ficam em `~/.emulationstation/collections/*.cfg`.
-- `FavoritesFirst=true` já vem ligado no `es_settings.cfg`.
+Onde ficam os arquivos: save states em `/storage/roms/savestates/<sistema>/`; saves de bateria (`.srm`) ao lado da ROM, em `/storage/roms/<sistema>/` (o `savefile_directory` fica comentado). Emuladores **standalone** (PPSSPP, Flycast SA, DuckStation SA, Mupen64Plus SA, Dolphin, AdvanceMAME…) não usam essas opções do RetroArch.
 
-### 2.4 Mecanismo de atualização
+### 3.4 Favoritos
+
+- Cada jogo favorito fica marcado no **`gamelist.xml`** do sistema (`<favorite>true</favorite>`), junto com `lastplayed` (último jogo) e `playcount`.
+- Caminho (`SystemData::getGamelistPath` no fonte do ES): primeiro `/storage/roms/<sistema>/gamelist.xml`; se não existir, `~/.emulationstation/gamelists/<sistema>/gamelist.xml`.
+- A coleção automática **`favorites`** junta os favoritos de todos os sistemas. `FavoritesFirst=true` já está ligado no `es_settings.cfg` (favoritos no topo de cada lista).
+
+### 3.5 Coleção "jogados recentemente" (base da linha "Continuar jogando")
+
+- O ES tem a coleção automática **`recent`** ("last played", ordenada por `lastplayed`) — definida em `es-app/src/CollectionSystemManager.cpp`.
+- Quais coleções aparecem é controlado pela configuração **`CollectionSystemsAuto`**. Padrão do ES (`es-core/src/Settings.cpp`, linha 301): `"all,favorites"` — ou seja, **`recent` vem desligada**.
+- **Como ligar:** acrescentar ao `es_settings.cfg` padrão:
+
+  ```xml
+  <string name="CollectionSystemsAuto" value="recent,favorites,all" />
+  ```
+
+- **Como chamar de "Continuar jogando":** a pasta `recent` do tema pode mostrar um logotipo/texto "Continuar jogando" (sem mexer no código do ES). Para trocar o nome no código, basta alterar a tradução de "last played" no `pt_BR` do ES (exige fork do ES).
+
+### 3.6 Mecanismo de atualização
 
 | Etapa | Arquivo | Detalhe |
 |---|---|---|
-| Verificar se há versão nova | [packages/sx05re/emuelec/bin/updatecheck.sh](../packages/sx05re/emuelec/bin/updatecheck.sh) | linha 8 `UPDINFO="https://raw.githubusercontent.com/EmuELEC/emuelec.github.io/master/settings/EE_update"` — arquivo de texto com uma linha por canal (`<versão>;…` contendo `stable` ou `beta`) |
-| Endereço do pacote | mesmo arquivo, linhas 9–10 e 112–124 | `UPDURL="https://github.com/EmuELEC/EmuELEC/releases/download/v"` (estável) e `TEST_UPDURL=".../EmuELEC-tests/releases/download/v"` (beta); arquivo `EmuELEC-<device>.aarch64-<versão>.tar` |
-| Comparação de versão | linhas 135–171 | compara `/usr/config/EE_VERSION` com a versão do servidor |
-| Download | [packages/sx05re/emuelec/bin/batocera/emuelec-upgrade](../packages/sx05re/emuelec/bin/batocera/emuelec-upgrade) (chamado pelo menu "Atualizar" do ES) | baixa para `/storage/.update/` (que o init monta sobre `/storage/roms/.update`); confere `.sha256` **somente se existir** |
-| Aplicação | [packages/sysutils/busybox/scripts/init](../packages/sysutils/busybox/scripts/init) (initramfs), linhas ~328–400 e ~740–850 | no próximo boot, verifica compatibilidade de projeto/arquitetura e grava `KERNEL`/`SYSTEM` na partição de boot; `/storage` não é tocado |
-| Configuração do usuário | `emuelec.conf`, linhas 159–163 | `updates.enabled=1`, `updates.type=stable` |
+| Consulta de versão | [packages/sx05re/emuelec/bin/updatecheck.sh](../packages/sx05re/emuelec/bin/updatecheck.sh), linha 8 | `UPDINFO="https://raw.githubusercontent.com/EmuELEC/emuelec.github.io/master/settings/EE_update"` — arquivo de texto; cada linha tem a versão no primeiro campo (separado por `;`) e o canal (`stable`/`beta`) |
+| Download | linhas 9–10 e 112–124 | estável: `https://github.com/EmuELEC/EmuELEC/releases/download/v<versão>/EmuELEC-Amlogic-ng.aarch64-<versão>.tar`; beta: repositório `EmuELEC-tests` |
+| Comparação | linhas 135–171 | versão do servidor × `/usr/config/EE_VERSION` |
+| Baixar e conferir | [packages/sx05re/emuelec/bin/batocera/emuelec-upgrade](../packages/sx05re/emuelec/bin/batocera/emuelec-upgrade) | grava em `/storage/.update` (montado sobre `/storage/roms/.update`); confere `.sha256` só se existir |
+| Aplicar | [packages/sysutils/busybox/scripts/init](../packages/sysutils/busybox/scripts/init) | no boot seguinte, troca `KERNEL`/`SYSTEM` na partição de boot; não mexe em `/storage` |
+| Configuração | `emuelec.conf`, linhas 159–163 | `updates.enabled=1`, `updates.type=stable` |
 
-**Como trocar pelo nosso servidor:** alterar `UPDINFO`, `UPDURL` e `TEST_UPDURL` no `updatecheck.sh` para endereços HTTPS nossos (pode ser o GitHub Releases do próprio fork ou um armazenamento como S3/Cloudflare R2), publicar um arquivo no mesmo formato do `EE_update` e, para cada versão, o `.tar` e o `.sha256`. O prefixo `EmuELEC-` do nome do arquivo vem de `DISTRONAME` e deve ser ajustado junto com a troca de marca.
+**Como trocar pelo nosso servidor** (sugestão simples: GitHub do próprio fork):
 
-**Problemas encontrados:**
+1. No `updatecheck.sh`: `UPDINFO="https://raw.githubusercontent.com/ricardofarney/console-retro-os/<branch>/atualizacao/EE_update"` e `UPDURL="https://github.com/ricardofarney/console-retro-os/releases/download/v"` (e `TEST_UPDURL` para o canal beta).
+2. Criar o arquivo `atualizacao/EE_update` no mesmo formato.
+3. A cada versão, publicar uma release `v<versão>` com o `.tar` e o `.sha256`, usando o nome que o script espera (`EmuELEC-Amlogic-ng.aarch64-<versão>.tar`, ou ajustar `UFILE` na linha 112).
 
-1. **Sem assinatura digital.** O `.sha256` vem do mesmo servidor do `.tar` e é opcional — protege contra download corrompido, não contra arquivo adulterado.
-2. **A "atualização forçada" apaga dados do usuário.** Em `updatecheck.sh forceupdate`, a função `forced_update` (linha 81) chama `emuelec-utils clearconfig EMUS`, que ([emuelec-utils](../packages/sx05re/emuelec/bin/emuelec-utils), linhas 131–140) faz um backup em `/storage/roms/backup/ee_backup_config.tar.gz` e depois **apaga todo o `/storage` exceto** temas, `.update`, `download`, `roms` e o cache do Bluetooth. Perdem-se configurações do ES e do RetroArch, coleções personalizadas e quaisquer `gamelist.xml` (favoritos) que estejam em `~/.emulationstation/gamelists/`. A atualização normal pelo menu não chama essa limpeza.
+⚠️ **Atenção:** a opção "atualização forçada" (`updatecheck.sh forceupdate`) chama `emuelec-utils clearconfig EMUS` ([emuelec-utils](../packages/sx05re/emuelec/bin/emuelec-utils), linhas 131–140), que faz backup em `/storage/roms/backup/` e depois **apaga quase todo o `/storage`**, menos `roms`, temas e alguns caches. Nas nossas versões, essa limpeza deve ser removida (ver Fase 1, etapa 6).
+
+### 3.7 Usuário e senha do acesso de rede
+
+| Acesso | Padrão | Onde está | Como trocar |
+|---|---|---|---|
+| **SSH** | usuário `root`, senha **`emuelec`**; ligado por padrão (`ee_ssh.enabled=1`, `emuelec.conf` linha 3) | `ROOT_PASSWORD="emuelec"` em [distributions/EmuELEC/options](../distributions/EmuELEC/options), linha 20 | **No build:** trocar `ROOT_PASSWORD`. **No aparelho:** entrar por SSH e rodar `passwd`; a nova senha fica em `/storage/.cache/shadow` e é preservada nas atualizações ([usercache-setup](../packages/sysutils/systemd/scripts/usercache-setup)). Para desligar o SSH: `ee_ssh.enabled=0` |
+| **Samba** (pastas de rede `\\EMUELEC\ROMS` etc.) | **sem senha** (`SAMBA_SECURE="false"`; usuário/senha de reserva `coreelec`/`coreelec`); convidado = `root` | [packages/network/samba/default.d/samba.conf](../packages/network/samba/default.d/samba.conf) e compartilhamentos em [packages/network/samba/config/smb.conf](../packages/network/samba/config/smb.conf) | **No build:** `SAMBA_SECURE="true"`, `SAMBA_USERNAME`, `SAMBA_PASSWORD`. **No aparelho:** editar `/storage/.cache/services/samba.conf` com os mesmos campos e reiniciar |
+| Nome na rede | `EMUELEC` | `system.hostname` no `emuelec.conf` (linha 118) | trocar o valor (ex.: `CONSOLE-RETRO`) |
 
 ---
 
-## 3. Núcleos e emuladores incluídos e suas licenças
+## 4. Backup completo do cartão original no Windows
 
-### 3.1 Como a lista foi montada
+Fazer **antes de qualquer alteração**, e guardar o cartão original intacto (os testes devem ser feitos num microSD novo).
 
-- **Incluídos na imagem Amlogic-ng** = `LIBRETRO_CORES` de [distributions/EmuELEC/options](../distributions/EmuELEC/options) (linhas 274–386) + `PKG_EMUS` e `PKG_EXPERIMENTAL` de [packages/sx05re/emuelec/package.mk](../packages/sx05re/emuelec/package.mk) + `LIBRETRO_S922X_CORES` + extras de aarch64 (`swanstation`, núcleos `lib32-*`) + `dolphinSA` e `mame`. Em aarch64 são **removidos** `quicknes`, `parallel-n64` e `pcsx_rearmed` (substituídos pelas versões `lib32-`).
-- Licença: campo `PKG_LICENSE` de cada `package.mk` e, nos casos ambíguos ou suspeitos, o arquivo de licença do repositório de origem consultado em 14/11/2026.
-- **O campo `PKG_LICENSE` tem erros.** Exemplos confirmados: `cannonball` diz GPLv3, mas a licença real proíbe uso comercial; `picodrivesa` diz GPL2, mas o PicoDrive proíbe uso comercial; `PPSSPPSDL` diz "MAME", mas o PPSSPP é GPL-2.0+; `same_cdi` diz "MAME", mas o upstream é GPL (MAME moderno). Antes de qualquer lançamento, cada item deve ser reconferido.
+### 4.1 Preparação
 
-Legenda: ✅ permite uso comercial (respeitando GPL/MIT/BSD etc.) · 🔴 **proíbe uso comercial** · 🟡 atenção (licença indefinida, conteúdo/ROM embutido protegido ou exigência específica).
+1. Desligar o aparelho, retirar o microSD e colocá-lo num leitor USB no PC. Se o adaptador tiver trava de gravação, deixe-a em **LOCK**.
+2. ⚠️ O Windows não lê partições Linux (ext4) e pode oferecer **"Formatar o disco"** — clique sempre em **Cancelar**.
+3. Na partição FAT32 que aparece (rótulo `EMUELEC`), **copiar todos os arquivos** para `D:\Adube Sistemas\Console de Jogo\backups\cartao-original\boot\` — principalmente `dtb.img` (o DTB que funciona no X2 Pro) e o arquivo `ee_fstype`, se existir (indica o formato da partição de roms).
 
-### 3.2 Itens que PROÍBEM uso comercial (remover) e alternativas liberadas
+### 4.2 Imagem inteira do cartão
 
-| Núcleo/emulador | Sistema | Licença | Alternativa liberada |
-|---|---|---|---|
-| `snes9x`, `snes9x2002`, `snes9x2005_plus`, `snes9x2010` | Super Nintendo | Não comercial (licença Snes9x) | **Mesen-S** (GPLv3, já incluído) e **supafaust** (GPLv2, já incluído); bsnes/bsnes_hd (GPLv3) para jogos exigentes — validar desempenho no S905X3 |
-| `genesis-plus-gx`, `genesis-plus-gx-wide`, `genesis_plus_gx_cart_special` | Mega Drive, Master System, Game Gear, Sega CD | Não comercial | **clownmdemu** (AGPLv3, já incluído — Mega Drive e Mega CD); **BlastEm** (GPLv3, núcleo libretro existe, não está no repo); **Gearsystem** (GPLv3, já incluído) para Master System/Game Gear |
-| `picodrive` | Mega Drive, 32X, Sega Pico | Não comercial ("Redistributions may not be sold…") | Mega Drive: clownmdemu/BlastEm. 32X e Pico: **sem alternativa livre conhecida** → remover esses sistemas |
-| `fbneo`, `fbalpha2012`, `fbneoSA` (experimental) | Arcade (CPS1/2/3, Neo Geo etc.) | Não comercial | **MAME atual** (GPL-2.0+, já incluído); **mame2016** (GPL, no repo, mais leve); **Geolith** (BSD-3, já incluído) para Neo Geo |
-| `mame2003-plus`, `mame2010` | Arcade | Licença MAME antiga (não comercial) | **mame2016** ou **MAME atual** (GPL-2.0+) |
-| `advancemame` | Arcade | Código do MAME 0.106 sob licença MAME antiga | MAME atual |
-| `fmsx-libretro` | MSX | Proprietária ("não pode alterar nem copiar sem contatar o autor") | **blueMSX** (GPLv2, já incluído) e **openMSX** (GPL, já incluído) |
-| `opera` | 3DO | LGPL com nota FreeDO: "uso comercial estritamente proibido sem aprovação" | **sem alternativa livre conhecida** → remover 3DO |
-| `cannonball` | Motor do OutRun | Não comercial (+ marca SEGA) | Nenhuma → remover |
-| `amiarcadia` | Emerson Arcadia 2001 | Não comercial | MAME atual (driver Arcadia) ou remover |
-| `mu` | Palm OS | CC BY-NC 3.0 | Nenhuma → remover |
-| `dinothawr` | Jogo | Não comercial | Remover (jogos livres como `mrboom`, `2048`, `xrick`* podem ocupar o lugar) |
-| `bigpemu` | Atari Jaguar | Proprietária (freeware) — redistribuição comercial exige permissão do autor | **Virtual Jaguar** (GPLv3, já incluído) |
-| `biginstinct` | Killer Instinct | Proprietária (freeware) | MAME atual |
-| `dreamm` | Jogos LucasArts/SCUMM | Proprietária (freeware) | **ScummVM** (GPL, já incluído) |
+**Opção A — Win32 Disk Imager** (gratuito):
 
-\* ver observação sobre `xrick` na tabela 3.3.
+1. Executar como administrador.
+2. Em *Device*, escolher a letra do cartão (confira o tamanho!).
+3. Em *Image File*, informar `D:\Adube Sistemas\Console de Jogo\backups\cartao-original\x2pro-original-AAAA-MM-DD.img`.
+4. **Desmarcar** "Read Only Allocated Partitions" (para copiar o cartão inteiro) e marcar o hash **SHA256**.
+5. Clicar em **Read** e aguardar (cartão de 64 GB → arquivo de 64 GB; pode levar de 30 a 60 minutos).
+6. Ao final, clicar em **Verify Only** para conferir a imagem com o cartão.
 
-Também fora da área de núcleos, mas com restrição: **marca EmuELEC** (logos, splash, nome) e **tema `es-theme-EmuELEC-carbon`** (derivado do tema Carbon, distribuído como CC BY-NC-SA) — não podem ir para produto comercial. O tema **Crystal** não tem licença declarada (GitHub: NOASSERTION) — trate como não liberado. Ambos serão substituídos pelo nosso tema (Etapa 2).
+**Opção B — Rufus:** selecionar o cartão e usar o botão de salvar ao lado da lista de dispositivos ("salvar como imagem VHD/VHDX").
 
-### 3.3 Lista completa dos incluídos na imagem Amlogic-ng
-
-#### Núcleos libretro (`LIBRETRO_CORES`)
-
-| Núcleo | Sistema principal | Licença | Situação |
-|---|---|---|---|
-| 2048 | Jogo 2048 | GPLv3 | ✅ |
-| 81 | Sinclair ZX81 | GPLv3 | 🟡 ROM do ZX81 embutida (Amstrad autoriza distribuir com emuladores; confirmar uso comercial) |
-| a5200 | Atari 5200 | GPLv2 | ✅ (BIOS não incluída) |
-| amiarcadia | Emerson Arcadia 2001 | Não comercial | 🔴 |
-| applewin | Apple II | GPL-2.0+ | ✅ |
-| arduous | Arduboy | GPL-3.0+ | ✅ |
-| atari800 | Atari 8 bits | GPL | ✅ |
-| azahar | Nintendo 3DS | GPLv2+ | ✅ |
-| b2 | BBC Micro | GPLv3 | ✅ |
-| beetle-lynx | Atari Lynx | GPLv2 | ✅ |
-| beetle-ngp | Neo Geo Pocket | GPLv2 | ✅ |
-| beetle-pce | PC Engine | GPLv2 | ✅ |
-| beetle-pcfx | PC-FX | GPLv2 | ✅ |
-| beetle-supergrafx | SuperGrafx | GPLv2 | ✅ |
-| beetle-vb | Virtual Boy | GPLv2 | ✅ |
-| beetle-wswan | WonderSwan | GPLv2 | ✅ |
-| bk | Elektronika BK | NTP (permissiva) | ✅ |
-| bluemsx | MSX/ColecoVision | GPLv2 | ✅ |
-| cannonball | OutRun | Não comercial | 🔴 |
-| cap32 | Amstrad CPC | GPLv2 | 🟡 ROMs do CPC embutidas (mesma situação do ZX81) |
-| clownmdemu | Mega Drive / Mega CD | AGPLv3 | ✅ (AGPL: fornecer o fonte) |
-| daphne | LaserDisc | GPLv2+ | ✅ |
-| dice | Arcade discreto | GPLv3 | ✅ |
-| dinothawr | Jogo | Não comercial | 🔴 |
-| dosbox-svn | MS-DOS | GPLv2 | ✅ |
-| easyrpg | RPG Maker 2000/2003 | GPLv3 | ✅ |
-| emuscv | Epoch Super Cassette Vision | GPL-3.0+ | ✅ |
-| ep128emu | Enterprise 128 | GPL-2.0 | ✅ |
-| exa-rs | EXA (jogo) | MIT | ✅ |
-| fake_08 | PICO-8 | MIT | ✅ |
-| fbalpha2012 | Arcade | Não comercial | 🔴 |
-| fbneo | Arcade | Não comercial | 🔴 |
-| fceumm | NES | GPLv2 | ✅ |
-| fceumm-mod | NES | GPLv2 | ✅ |
-| flycast | Dreamcast/Naomi | GPLv2 | ✅ |
-| freechaf | Fairchild Channel F | GPLv3 | ✅ |
-| freeintv | Intellivision | GPLv3 | ✅ |
-| fuse-libretro | ZX Spectrum | GPLv3 | 🟡 ROMs do Spectrum embutidas (ver ZX81) |
-| gambatte | Game Boy / Color | GPLv2 | ✅ |
-| gearboy | Game Boy / Color | GPLv3 | ✅ |
-| gearcoleco | ColecoVision | GPLv3 | ✅ |
-| geargrafx | PC Engine | GPLv3 | ✅ |
-| gearlynx | Atari Lynx | GPLv3 | ✅ |
-| gearsystem | Master System / Game Gear / SG-1000 | GPLv3 | ✅ |
-| geartowns | FM Towns | GPLv3 | ✅ |
-| genesis-plus-gx | Mega Drive / SMS / GG / Sega CD | Não comercial | 🔴 |
-| genesis_plus_gx_cart_special | Mega Drive | Não comercial | 🔴 |
-| genesis-plus-gx-wide | Mega Drive (widescreen) | Não comercial | 🔴 |
-| geolith | Neo Geo AES/MVS | BSD-3 | ✅ |
-| gme | Música de videogame | GPLv3 | ✅ |
-| gp32emu | GamePark 32 | LGPL | ✅ |
-| gpsp | Game Boy Advance | GPLv2 | ✅ |
-| gw-libretro | Game & Watch | Zlib | 🟡 núcleo livre, mas as simulações usam arte/ROM da Nintendo |
-| handy | Atari Lynx | Zlib | ✅ |
-| hatari | Atari ST | GPLv2 | ✅ (usar EmuTOS, livre) |
-| jaxe | CHIP-8 | MIT | ✅ |
-| jollycv | ColecoVision | BSD-3 | ✅ |
-| lowresnx | LowRes NX | Zlib | ✅ |
-| m2000 | Philips P2000 | GPLv3 | ✅ |
-| mame2003-plus | Arcade | MAME antiga (não comercial) | 🔴 |
-| mame2010 | Arcade | MAME antiga (não comercial) | 🔴 |
-| meowpc98 | NEC PC-98 | MIT (GitHub) / "Unknown" no package.mk | 🟡 confirmar |
-| mgba | Game Boy Advance | MPL-2.0 | ✅ |
-| minivmac | Macintosh | GPL-2.0 | ✅ (ROM do Mac não incluída) |
-| mojozork | Z-machine | Zlib | ✅ |
-| mrboom | Jogo Mr. Boom | GPLv3 | ✅ |
-| mu | Palm OS | CC BY-NC 3.0 | 🔴 |
-| mupen64plus | Nintendo 64 | GPLv2 | ✅ |
-| native32emu | Native32 | BSD-3 | ✅ |
-| neocd_libretro | Neo Geo CD | LGPLv3 | ✅ |
-| nestopia | NES | GPLv2 | ✅ |
-| numero | TI-83 | GPLv2 | ✅ |
-| nxengine | Cave Story | GPLv3 | 🟡 motor livre; os dados do Cave Story são freeware da Pixel (não comercial) |
-| o2em | Odyssey² | Artistic License | ✅ |
-| opera | 3DO | LGPL + nota FreeDO (proíbe comercial) | 🔴 |
-| pd777 | Epoch Cassette Vision | MIT | ✅ |
-| picodrive | Mega Drive / 32X / Pico | Não comercial | 🔴 |
-| pocketcdg | Karaokê CD+G | MIT | ✅ |
-| pokemini | Pokémon Mini | GPLv3 | ✅ |
-| prboom | Doom | GPLv2 | ✅ (só com WADs livres, ex. Freedoom) |
-| prosystem | Atari 7800 | GPLv2 | ✅ |
-| puae | Amiga | GPL | ✅ (Kickstart não incluído; AROS é alternativa livre) |
-| puae2021 | Amiga | GPL | ✅ |
-| pzretro | PuzzleScript | MIT | ✅ |
-| px68k | Sharp X68000 | GPL-2.0 (GitHub) / "Unknown" no package.mk | 🟡 confirmar origem do código Keropi |
-| reminiscence | Flashback | GPLv3 | ✅ (dados do jogo não incluídos) |
-| sameboy | Game Boy / Color | MIT | ✅ |
-| sameduck | Mega Duck | MIT | ✅ |
-| scummvm | Aventuras point-and-click | GPL | ✅ |
-| snes9x | Super Nintendo | Não comercial | 🔴 |
-| snes9x2002 | Super Nintendo | Não comercial | 🔴 |
-| snes9x2005_plus | Super Nintendo | Não comercial | 🔴 |
-| snes9x2010 | Super Nintendo | Não comercial | 🔴 |
-| spring | Spring RTS | MIT | 🟡 confirmar |
-| stella | Atari 2600 | GPLv2 | ✅ |
-| supafaust | Super Nintendo | GPLv2 | ✅ |
-| tgbdual | Game Boy (link) | GPLv2 | ✅ |
-| theodore | Thomson MO/TO | GPL-3.0 | ✅ |
-| tic-80 | TIC-80 | MIT | ✅ |
-| tyrquake | Quake | GPLv2 | ✅ (dados do jogo não incluídos) |
-| xrick | Rick Dangerous | GPLv3 | 🟡 o pacote de dados contém arte original (Core Design) |
-| uae4arm | Amiga | GPL | ✅ |
-| uzem | Uzebox | MIT | ✅ |
-| vba-next | Game Boy Advance | GPLv2 | ✅ |
-| vbam | Game Boy Advance | GPLv2 | ✅ |
-| vecx | Vectrex | GPLv2/LGPLv2.1 | 🟡 BIOS do Vectrex embutida (liberada pelo detentor só para uso não comercial) |
-| vice | Commodore 64/128/VIC-20/PET | GPLv2 | 🟡 ROMs da Commodore embutidas (direitos da Cloanto) |
-| vircon32 | Vircon32 | BSD-3 | ✅ |
-| virtualxt | IBM PC/XT | zlib (a confirmar; "?" no package.mk) | 🟡 |
-| wasm4 | WASM-4 | ISC | ✅ |
-| yabasanshiro | Sega Saturn | GPLv2 | ✅ |
-
-#### Emuladores standalone e núcleos adicionais (`PKG_EMUS`)
-
-| Pacote | Sistema | Licença | Situação |
-|---|---|---|---|
-| desmume | Nintendo DS | GPLv2 | ✅ |
-| melonds | Nintendo DS | GPLv3 | ✅ |
-| advancemame | Arcade | MAME antiga | 🔴 |
-| PPSSPPSDL | PSP | GPL-2.0+ (package.mk diz "MAME" — erro) | ✅ |
-| amiberry / amiberry-lite | Amiga | GPLv3 | ✅ |
-| hatarisa | Atari ST | GPL | ✅ |
-| openbor | Beat 'em up (motor) | BSD-3 | ✅ |
-| dosbox-staging | MS-DOS | GPLv2 | ✅ |
-| mupen64plus-nx / mupen64plus-nx-alt | Nintendo 64 | GPLv2 | ✅ |
-| scummvmsa | ScummVM | GPL | ✅ |
-| stellasa | Atari 2600 | GPL2 | ✅ |
-| solarus | Motor Solarus | GPLv3 | ✅ (jogos/assets têm licenças próprias) |
-| dosbox-pure | MS-DOS | GPLv2 | ✅ |
-| ecwolf | Wolfenstein 3D | GPLv2 | 🟡 verificar arquivos com licença id Software |
-| potator | Watara Supervision | Unlicense | ✅ |
-| freej2me | Java ME | GPLv3 (+ ASM, BSD) | ✅ |
-| duckstation | PlayStation | GPLv3 **na versão fixada** (commit de 21/07/2022) | 🟡 **nunca** atualizar para versões a partir de set/2024, que passaram a CC BY-NC-ND |
-| flycastsa | Dreamcast | GPLv2 | ✅ |
-| fmsx-libretro | MSX | Proprietária/não comercial | 🔴 |
-| jzintv | Intellivision | "FOSS" no package.mk | 🟡 confirmar (GPL-2.0 nas versões recentes) |
-| mupen64plussa (+ plugins) | Nintendo 64 | GPLv2 | ✅ |
-| xroar | Dragon/CoCo | GPL-3.0+ | ✅ |
-| x16 | Commander X16 | BSD-2 | ✅ |
-| simcoupe | SAM Coupé | GPL | ✅ |
-| ti99sim | TI-99/4A | GPL-3.0 | ✅ |
-| oricutron | Oric | GPL-2.0 | 🟡 ROMs do Oric embutidas |
-| eka2l1 | Symbian/N-Gage | GPL | ✅ |
-| bigpemu | Atari Jaguar | Proprietária | 🔴 |
-| biginstinct | Killer Instinct | Proprietária | 🔴 |
-| memu | Memotech MTX | GPL | ✅ |
-| ruffle | Flash | MIT/Apache-2.0 | ✅ |
-| tsugaru | FM Towns | BSD-3 | ✅ |
-| openmsx / openmsx-ld | MSX | GPL | ✅ (usa C-BIOS livre) |
-| touchhle | iPhone OS | MPL-2.0 | ✅ |
-| dreamm | LucasArts | Proprietária | 🔴 |
-| basilisk2 | Macintosh 68k | GPL-2.0+ | ✅ |
-
-#### Experimentais (`PKG_EXPERIMENTAL`, também entram na imagem)
-
-| Pacote | Sistema | Licença | Situação |
-|---|---|---|---|
-| nestopiaCV | NES | GPLv2 | ✅ |
-| quasi88 | NEC PC-8801 | BSD-3 | ✅ |
-| xmil | Sharp X1 | "Unknown" (repositório de origem não encontrado) | 🟡 remover até esclarecer |
-| np2kai | NEC PC-98 | MIT | ✅ |
-| hypseus-singe | LaserDisc | GPL-3 | ✅ |
-| yabasanshiroSA_1_11 / yabasanshiroSA_1_5 | Sega Saturn | GPLv2 | ✅ |
-| fbneoSA | Arcade | Personalizada (não comercial) | 🔴 |
-| same_cdi | Philips CD-i | GPL (MAME moderno; package.mk diz "MAME") | ✅ |
-| ikemen-go | M.U.G.E.N | MIT | ✅ |
-
-#### Exclusivos de aarch64 / Amlogic-ng
-
-| Pacote | Sistema | Licença | Situação |
-|---|---|---|---|
-| beetle-saturn | Sega Saturn | GPLv2 | ✅ |
-| mesen | NES | GPLv3 | ✅ |
-| mesen-s | SNES/GB | GPLv3 | ✅ |
-| virtualjaguar | Atari Jaguar | GPLv3 | ✅ |
-| swanstation | PlayStation | GPLv3 | ✅ |
-| dolphinSA | GameCube/Wii | GPLv2+ | ✅ |
-| mame | Arcade (MAME atual) | GPL-2.0+ | ✅ |
-| lib32-flycast, lib32-mupen64plus, lib32-pcsx_rearmed, lib32-parallel-n64, lib32-uae4arm | versões 32 bits | GPLv2/GPL | ✅ |
-| lib32-bennugd-monolithic | Motor BennuGD | zlib | ✅ |
-| lib32-droidports | Jogos Android | GPLv3 | 🟡 executa binários de jogos proprietários |
-| lib32-box86 | Tradutor x86 | MIT | ✅ |
-
-**Componentes principais:** RetroArch (GPLv3) ✅ · EmulationStation (base MIT, fork Batocera) ✅ · CoreELEC/LibreELEC (GPLv2+) ✅ · drivers e firmwares Amlogic/Wi-Fi (binários proprietários, redistribuíveis — conferir os termos de cada um).
-
-### 3.4 No repositório, mas fora da imagem padrão
-
-Não entram no build do Amlogic-ng hoje, mas é preciso cuidado caso alguém os habilite:
-
-- **Núcleos não comerciais:** `duckstation-lr` (binário pronto, CC BY-NC-ND), `fbalpha`, `imame4all`, `mame2000`, `mame2003`, `mame2003-midway`, `mame2003-xtreme`, `snes9x2005`, `picodrivesa`.
-- **Ports** ([packages/sx05re/emuelec-ports](../packages/sx05re/emuelec-ports/package.mk), pacote não ligado à imagem): `VVVVVV` (licença própria, proíbe uso comercial), `devilutionX`, `falloutce1` e `falloutce2` (Sustainable Use License — só uso não comercial), `sonic2013`, `soniccd`, `sonicmania` (licença da decompilação proíbe uso comercial), `eduke` (licença BUILD, não comercial), `shovelknight`, `celeste`, `tmntsr`, `ccleste`, `supermariowar` (dependem de dados ou de marcas de terceiros). Livres: `supertux`, `supertuxkart`, `opentyrian`, `sdlpop`, `chocolate-doom`, `gzdoom`/`lzdoom`, `fheroes2`, `cdogs-sdl`, `bstone`, `augustus`, `abuse`, `hurrican`, `xash3d` (motores — os dados dos jogos à parte).
+Depois: compactar com 7-Zip (as áreas vazias encolhem bastante) e guardar uma segunda cópia em outro disco. Para restaurar: Win32 Disk Imager → selecionar o `.img` → **Write** num cartão do mesmo tamanho ou maior.
 
 ---
 
-## 4. Plano proposto em etapas
+## 5. Migrar a pasta roms do cartão original
 
-### Etapa 0 — Base de trabalho (≈ 1 semana)
+### 5.1 Como as roms ficam guardadas
 
-1. Montar o ambiente (WSL2 Ubuntu 22.04 ou Docker), compilar a imagem original **sem alterações** e testar no Super Console X3 Plus (vídeo, áudio HDMI, controles, Wi-Fi/Bluetooth, DTB correto).
-2. Criar a branch de produto (ex.: `produto`) a partir de `dev`; trazer o upstream periodicamente com `git fetch upstream && git merge upstream/dev`.
-3. Decidir o nome comercial e trocar a marca: `DISTRONAME`, `GREETING*`, `DISTRO_BOOTLABEL` em [distributions/EmuELEC/options](../distributions/EmuELEC/options) (ou criar `distributions/<NossoNome>/`), splash em `packages/sx05re/emuelec/config/splash`, textos "EmuELEC" nos scripts. Trocar também a senha root padrão (`ROOT_PASSWORD="emuelec"`) e avaliar desligar SSH/Samba por padrão.
-4. Revisão jurídica da lista da seção 3 (incluindo os itens 🟡).
+Em cartões maiores que 8 GB, o EmuELEC cria no primeiro boot uma **terceira partição chamada `EEROMS`** ([packages/sysutils/busybox/scripts/fs-resize](../packages/sysutils/busybox/scripts/fs-resize), linhas 61–140) e a monta diretamente como `/storage/roms` ([init](../packages/sysutils/busybox/scripts/init), linhas 715–751). O formato é definido pelo arquivo `ee_fstype` da partição de boot: **FAT32 (padrão)**, exFAT, NTFS ou ext4. Ou seja, na raiz da `EEROMS` estão diretamente as pastas `nes/`, `snes/`, `psx/`, `bios/`, `savestates/`… (o EmuELEC cria mais de 130 pastas — ver [emuelec-dirs.conf](../packages/sx05re/emuelec/tmpfiles.d/emuelec-dirs.conf)).
 
-### Etapa 1 — Limpeza de licenças (≈ 1–2 semanas)
+### 5.2 Copiar do cartão original
 
-1. Remover os itens 🔴 de `LIBRETRO_CORES` (distributions/…/options) e de `PKG_EMUS`/`PKG_EXPERIMENTAL` ([packages/sx05re/emuelec/package.mk](../packages/sx05re/emuelec/package.mk)).
-2. Atualizar [es_systems.json](../packages/sx05re/emuelec-emulationstation/config/es_systems.json)/[generate_es_systems.py](../packages/sx05re/emuelec-emulationstation/generate_es_systems.py) para que o emulador **padrão** de cada sistema seja um liberado (SNES → Mesen-S/supafaust; Mega Drive → clownmdemu; Master System/GG → Gearsystem; Arcade → MAME/mame2016; Neo Geo → Geolith; MSX → blueMSX).
-3. Remover sistemas sem alternativa (3DO, 32X, Pico, Palm, OutRun).
-4. Matriz de desempenho no S905X3 (FPS e áudio) dos núcleos substitutos, principalmente SNES e arcade, que ficam mais pesados que os originais.
-5. Gerar automaticamente um arquivo `LICENCAS.md`/tela "Sobre" com a licença de cada componente e o link do código-fonte (obrigação da GPL).
+- **Se a `EEROMS` for FAT32, exFAT ou NTFS** (o Windows mostra a unidade): copiar **todo o conteúdo** para `D:\Adube Sistemas\Console de Jogo\backups\roms-original\`, incluindo arquivos ocultos. Ex. no PowerShell: `robocopy E:\ "D:\Adube Sistemas\Console de Jogo\backups\roms-original" /E /COPY:DAT /R:1 /W:1` (trocar `E:` pela letra da unidade).
+- **Se for ext4** (o Windows não mostra): copiar pela rede com o aparelho ligado, pelo compartilhamento `\\EMUELEC\ROMS`, ou ler o cartão com uma ferramenta somente leitura de ext4 (ex.: DiskInternals Linux Reader). Com o WSL2 funcionando, também dá para usar `wsl --mount`.
 
-### Etapa 2 — Tema próprio em português com "Continuar jogando" (≈ 2–4 semanas)
+Junto com as roms vêm: `bios/`, os saves `.srm` (ao lado das roms), `savestates/`, os `gamelist.xml` (favoritos e "último jogado") e as pastas de imagens/vídeos do scraper.
 
-1. **Português por padrão:** `system.language=pt_BR` no `emuelec.conf`; revisar a tradução `pt_BR` do ES (completar strings faltantes) e traduzir os textos dos scripts EmuELEC exibidos na tela (ex.: mensagens do `updatecheck.sh`).
-2. **Tema próprio:** novo pacote `packages/sx05re/emuelec-emulationstation/themes/<nosso-tema>/` com arte 100% nossa (ou licenciada), compatível com o formato de temas do Batocera-ES; definir `ThemeSet` no `es_settings.cfg`; remover Crystal e Carbon da imagem.
-3. **"Continuar jogando" — fase A (sem mexer no código do ES):** ativar por padrão a coleção automática `recent` ("últimos jogados", ordenada por `lastplayed`), exibi-la como **primeiro item** da tela inicial com o rótulo "Continuar jogando" no tema e usar a miniatura do save state como imagem.
-4. **"Continuar jogando" — fase B (fork do ES):** fazer fork de `EmuELEC/emuelec-emulationstation` e apontar o `package.mk` para ele; implementar uma linha horizontal na tela inicial com os N últimos jogos **que têm save state automático** e retomar direto do ponto salvo ao apertar A.
+### 5.3 Colocar no nosso sistema
 
-### Etapa 3 — Salvamento automático ligado por padrão (≈ 1 semana)
-
-1. No `emuelec.conf`: `global.autosave=1` (salva ao sair e carrega ao entrar).
-2. Testar o fluxo completo ES → `emuelecRunEmu.sh` → `setsettings.sh` e confirmar que o arquivo `.state.auto` é gravado ao sair pelo atalho e carregado ao reabrir.
-3. Desligar por sistema onde o save state não é confiável (ex.: `dos.autosave=0`, `scummvm.autosave=0`, arcade com MAME, se necessário).
-4. Proteger saves de bateria contra desligamento na tomada (comum em TV box): definir `autosave_interval` (ex.: 10 s) no `retroarch.cfg` base, para gravar o `.srm` periodicamente.
-5. Emuladores standalone (PPSSPP, Flycast SA, DuckStation SA, Mupen64Plus SA, Dolphin): configurar o salvamento automático de cada um, ou aceitar que só os núcleos RetroArch tenham "Continuar jogando" na primeira versão.
-
-### Etapa 4 — Atualização pelo nosso servidor (≈ 1–2 semanas)
-
-1. Trocar `UPDINFO`, `UPDURL` e `TEST_UPDURL` no [updatecheck.sh](../packages/sx05re/emuelec/bin/updatecheck.sh) para HTTPS nosso (ex.: GitHub Releases do fork para começar; depois CDN/armazenamento próprio). Ajustar o prefixo do arquivo (`UFILE`) à nova marca.
-2. Publicar, por canal (`stable`/`beta`), um arquivo no formato do `EE_update` com `<versão>;…`.
-3. **Assinatura digital:** gerar `.tar` + `.sha256` + `.sig` (ex.: minisign/Ed25519) e verificar a assinatura com uma chave pública gravada na imagem **antes** de liberar o reboot no `emuelec-upgrade`; recusar a atualização se a verificação falhar.
-4. Pipeline de build e publicação (GitHub Actions com runner próprio ou máquina dedicada; o build é grande demais para os runners gratuitos).
-5. Manter a checagem de compatibilidade de projeto/arquitetura do init.
-
-### Etapa 5 — Proteção de saves e favoritos nas atualizações (≈ 1–2 semanas)
-
-1. **Centralizar os dados do usuário** em `/storage/roms` (que nenhuma rotina apaga): `.srm` já fica lá; save states em `/storage/roms/savestates`; garantir que os `gamelist.xml` (favoritos/últimos jogados) sejam sempre gravados em `/storage/roms/<sistema>/` e mover as coleções personalizadas para lá (ou incluí-las no backup).
-2. **Remover ou reescrever a limpeza da atualização forçada** (`forced_update` → `clearconfig EMUS`): a atualização nunca deve apagar `/storage`.
-3. **Backup automático antes de cada atualização** (reaproveitar `ee_backup backup` do `emuelec-utils`), guardando os 3 últimos com data, e opção "Restaurar backup" no menu.
-4. **Migração em vez de sobrescrita:** script de pós-atualização, por versão, que mescla novas opções padrão nos arquivos do usuário (`retroarch.cfg`, `emuelec.conf`, `es_settings.cfg`) sem perder as escolhas existentes.
-5. **Teste automatizado de regressão:** aparelho com saves, states e favoritos conhecidos → atualizar N → N+1 → comparar hashes dos arquivos e conferir a lista de favoritos.
-
-### Etapa 6 — Testes e lançamento
-
-Canal beta interno (`updates.type=beta`), testes de campo com alguns aparelhos e, depois, a versão estável. Cada versão distribuída deve ter a tag correspondente publicada no fork (código-fonte GPL).
+1. Gravar a nossa imagem num **microSD novo** (nunca no original).
+2. Ligar o aparelho uma vez e esperar o primeiro boot terminar: ele cria a partição `EEROMS` com a estrutura padrão de pastas.
+3. Desligar, colocar o cartão no PC e copiar as pastas do backup para a `EEROMS`, **mantendo os mesmos nomes** (`robocopy "D:\...\roms-original" F:\ /E`).
+4. Conferir nomes de pastas que mudaram entre a versão do EmuELEC do cartão original e a nossa (comparar com o `emuelec-dirs.conf`); renomear o que for diferente.
+5. Ligar o aparelho; se faltar algum jogo, usar *Menu → Atualizar listas de jogos*.
 
 ---
 
-## 5. Riscos e pendências
+## 6. Plano da Fase 1
 
-- **Licenciamento:** a remoção dos 🔴 é obrigatória para venda; os 🟡 precisam de decisão jurídica (ROMs de sistema embutidas: vice, fuse, 81, cap32, vecx, oricutron; dados de jogos: nxengine, xrick, gw-libretro).
-- **ROMs e BIOS comerciais:** nunca incluir jogos ou BIOS protegidos na imagem nem no cartão vendido.
-- **Marcas registradas:** nomes e logotipos de consoles (Nintendo, SEGA, Sony…) no tema podem gerar problema de marca — avaliar nomes genéricos/descritivos.
-- **Obrigações da GPL:** publicar o código-fonte exato de cada versão (o fork público no GitHub atende, desde que as tags acompanhem as versões vendidas), manter avisos de copyright e oferecer o fonte aos compradores.
-- **Desempenho:** os substitutos de Snes9x/FBNeo/Genesis Plus GX são mais pesados; validar no S905X3 antes de fechar a lista.
-- **Dependências externas:** o ES e os temas vêm de repositórios de terceiros fixados por commit; para controlar o produto, eles precisarão de fork próprio.
-- **Segurança:** senha root padrão `emuelec`, SSH/Samba ligados e atualização sem assinatura — corrigir antes do lançamento.
-- **Limitações desta análise:** nenhuma compilação nem teste em aparelho foi feito nesta etapa; licenças conferidas pelos `package.mk` e pelos arquivos de licença dos repositórios de origem em 14/11/2026 — podem mudar em versões futuras dos núcleos.
+Objetivo: tema próprio em português, salvamento automático ligado de fábrica, linha "Continuar jogando" e favoritos na tela inicial.
+
+| # | Etapa | O que muda | Como validar |
+|---|---|---|---|
+| 0 | **Preparar o ambiente** | Ligar SVM na BIOS e a Plataforma de Máquina Virtual (seção 1.2); instalar o Ubuntu 22.04 no WSL; clonar o fork no WSL | `wsl -l -v` mostra o Ubuntu rodando em WSL2 |
+| 1 | **Backup do cartão original** | Seção 4 (imagem inteira + `dtb.img`) e seção 5.2 (roms) | Imagem verificada com SHA256; roms copiadas |
+| 2 | **Build original sem alterações** | `make image` (seção 2.3); usar o `dtb.img` do cartão original | Aparelho liga com o nosso build: vídeo, som, controles, Wi-Fi e Bluetooth funcionando |
+| 3 | **Português e fuso de Brasília** | `emuelec.conf`: `system.language=pt_BR`, `system.timezone=America/Sao_Paulo`; `es_settings.cfg`: `Language=pt_BR` | Menus em português e hora certa no primeiro boot |
+| 4 | **Salvamento automático de fábrica** | `emuelec.conf`: `global.autosave=1`; `setsettings.sh` linhas 141–142 → `"true"`; `retroarch.cfg` base: `autosave_interval = "10"` | Jogar, sair e reabrir → volta no mesmo ponto; existe o `.state.auto` em `/storage/roms/savestates/<sistema>/` |
+| 5 | **Tema próprio + "Continuar jogando" + favoritos** | Repositório do nosso tema (fork do Crystal ou Carbon), traduzido, com identidade visual própria e telas `recent` ("Continuar jogando") e `favorites` ("Favoritos"); novo `package.mk` do tema; `es_settings.cfg`: `ThemeSet=<nosso-tema>` e `CollectionSystemsAuto=recent,favorites,all`, com "Continuar jogando" e "Favoritos" como primeiros itens da tela inicial | Tela inicial abre em "Continuar jogando", seguida de "Favoritos"; ao jogar algo, ele aparece no topo de "Continuar jogando" |
+| 6 | **Proteção de saves e favoritos** | Remover a limpeza `clearconfig EMUS` da atualização forçada; garantir `gamelist.xml` sempre em `/storage/roms/<sistema>/` | Atualizar uma versão para outra sem perder saves nem favoritos |
+| 7 | **Atualização pelo nosso servidor** (opcional na Fase 1) | URLs do `updatecheck.sh` apontando para o GitHub do fork (seção 3.6) | O menu "Atualizar" encontra e instala a nossa release |
+| 8 | **Migrar roms e testar no dia a dia** | Seção 5.3 | Jogos, saves e favoritos do cartão original funcionando no nosso sistema |
+
+Evolução prevista para depois da Fase 1: uma linha horizontal de verdade na tela inicial, com os últimos jogos e a miniatura do save (exige fork do código do ES).
+
+---
+
+## 7. Pendências e riscos
+
+- **Bloqueio atual:** virtualização desligada — sem ela não há build (seção 1.2).
+- **DTB:** confirmar com o `dtb.img` do cartão original antes do primeiro teste; DTB errado pode deixar o aparelho sem vídeo, Wi-Fi ou Bluetooth (sem danificar nada — basta trocar o arquivo).
+- **2 GB de RAM:** sistemas pesados (GameCube/Wii, Saturn, PSP, N64 em alguns jogos) podem rodar mal no S905X2; isso é limitação do hardware, não do build.
+- **Segurança da rede doméstica:** SSH com senha conhecida (`emuelec`) e Samba sem senha — trocar ao menos a senha root (seção 3.7).
+- **Wi-Fi e Bluetooth do X2 Pro:** o chip exato precisa ser confirmado no aparelho; a lista `ADDITIONAL_DRIVERS` em [distributions/EmuELEC/options](../distributions/EmuELEC/options) já inclui os drivers mais comuns em TV boxes Amlogic.
+- **Dependências externas:** o ES e os temas vêm de repositórios de terceiros fixados por commit; para personalizações maiores, eles precisarão de fork próprio.
+- **Limitações desta análise:** nenhuma compilação nem teste no aparelho foi feito; os nomes dos DTBs genéricos do S905X2 precisam ser confirmados na pasta `device_trees/` do primeiro build.
