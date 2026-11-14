@@ -15,8 +15,10 @@
 
 ### Repositório
 
-- Fork: <https://github.com/ricardofarney/console-retro-os> (branch de trabalho: `dev`)
-- `origin` → fork; `upstream` → EmuELEC original (somente leitura, para puxar atualizações: `git fetch upstream && git merge upstream/dev`)
+- Sistema: <https://github.com/ricardofarney/console-retro-os> (branch de trabalho: `dev`)
+  - `origin` → fork; `upstream` → EmuELEC original (somente leitura, para puxar atualizações: `git fetch upstream && git merge upstream/dev`)
+- EmulationStation: <https://github.com/ricardofarney/arcadia-emulationstation> (branch `arcadia`) — funções novas em [FUNCOES-ARCADIA.md](FUNCOES-ARCADIA.md)
+  - `upstream` → `EmuELEC/emuelec-emulationstation` (push desativado)
 
 ## Regras permanentes
 
@@ -39,9 +41,11 @@
 D:\Adube Sistemas\Console de Jogo\
 ├── console-retro-os\          repositório do sistema (fork do EmuELEC) — fonte oficial de tudo
 │   ├── docs\                  documentos oficiais (este arquivo, análise, ambiente, prévia)
-│   ├── temas\arcadia\         tema Arcádia do EmulationStation
-│   └── ferramentas\           scripts: wsl\ (build), tema\ (artes), previa\ (RetroBat), copiar-docs.ps1
-├── arcadia-emulationstation\  fork do EmulationStation (criado só quando for necessário)
+│   ├── temas\arcadia\         tema Arcádia do EmulationStation (v0.2, ver DESIGN.md)
+│   ├── atualizacao\           versoes.txt (lido pelos aparelhos para achar atualizações)
+│   └── ferramentas\           wsl\ (build), tema\ (artes), previa\ (RetroBat), roms\ (limpeza),
+│                              aparelho\ (chegada do aparelho), publicar-versao.ps1, copiar-docs.ps1
+├── arcadia-emulationstation\  fork do EmulationStation (branch arcadia)
 ├── arcadia-preview\           prévia no Windows com RetroBat (atalho "Arcádia (prévia)" na Área de Trabalho)
 │   ├── _instalador\           instalador original do RetroBat
 │   └── _jogos-teste\          jogos homebrew de distribuição liberada
@@ -85,4 +89,17 @@ Situação do build: `D:\Adube Sistemas\Console de Jogo\imagens-compiladas\logs\
 3. Linha "Continuar jogando" (coleção de jogados recentemente) na tela inicial.
 4. Favoritos na tela inicial.
 
-Prévia do visual no Windows (RetroBat): [PREVIA-WINDOWS.md](PREVIA-WINDOWS.md). Detalhes técnicos e plano em etapas: [ANALISE-INICIAL.md](ANALISE-INICIAL.md).
+## Documentos
+
+| Documento | Conteúdo |
+|---|---|
+| [DESIGN.md](DESIGN.md) | visual aprovado (cores, telas) |
+| [ANALISE-INICIAL.md](ANALISE-INICIAL.md) | análise do EmuELEC e plano da Fase 1 |
+| [AMBIENTE-BUILD.md](AMBIENTE-BUILD.md) | WSL2, como compilar, correções do build |
+| [CONFIGURACAO-DE-FABRICA.md](CONFIGURACAO-DE-FABRICA.md) | idioma, fuso, salvamento automático, proteção de dados, senhas |
+| [FUNCOES-ARCADIA.md](FUNCOES-ARCADIA.md) | consoles favoritos, "continuar de onde parei", menu simplificado |
+| [ATUALIZACOES.md](ATUALIZACOES.md) | atualização pelas Releases do fork e publicação de versões |
+| [PREVIA-WINDOWS.md](PREVIA-WINDOWS.md) | prévia no RetroBat, capturas |
+| [LIMPEZA-ROMS.md](LIMPEZA-ROMS.md) | ferramenta de limpeza da coleção de jogos |
+| [CHEGADA-DO-APARELHO.md](CHEGADA-DO-APARELHO.md) | passo a passo quando o aparelho chegar |
+| `SENHAS-LOCAIS.md` | senhas do root e do Samba — **só local, fora do Git** |
