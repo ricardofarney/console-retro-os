@@ -48,3 +48,6 @@ sx05re-kodi*.log
 
 packages/sx05re/experimental/
 packages/sx05re/emuelec-emulationstation/api_keys.txt
+
+# cache/temporários da ferramenta de limpeza de ROMs (DATs, testes)
+ferramentas/roms/.cache/
