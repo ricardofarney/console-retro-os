@@ -81,6 +81,8 @@ O EmuELEC de 15/10/2026 tinha links de código-fonte quebrados. Cada fonte troca
 | `portaudio` (dependência do `hatarisa`) | fork `zhang-ray/portaudio` apagado; o commit não existe no projeto oficial | PortAudio oficial **v19.7.0** | `4152e6a` |
 | `soundfont-generaluser` 1.471 | link do Dropbox só funciona com `?dl=1` | `?dl=1` + `PKG_SOURCE_NAME` fixo (mesmo SHA-256) | `4152e6a` |
 | `xroar` 1.11 | versão retirada do site oficial e de todos os espelhos | atualizado para **1.12.1** (oficial mais próxima) | `4152e6a` |
+| `dosbox-pure` | o projeto reescreveu o histórico: o commit fixado `fe0bdab` saiu da branch `main` e o clone falhava (descoberto na etapa 528/690) | baixado como arquivo do próprio commit no GitHub, com SHA-256 fixo; as outras 80 fontes git foram conferidas (todas íntegras) | `c865c88` |
+| `yabasanshiroSA_1_5` | a branch `pi4` foi apagada e a `main` divergiu do commit fixado (descoberto na etapa 579/690); o código depende do submódulo `ext/eigen` | código baixado como arquivo do commit (SHA-256 fixo) + pacote auxiliar `eigen-yabasanshiro` com o submódulo no commit exato, juntados por `PKG_DEPENDS_UNPACK`; todas as branches fixadas dos outros pacotes conferidas no GitHub (existem) | ver histórico |
 
 Melhorias no fluxo, nascidas dessas falhas:
 

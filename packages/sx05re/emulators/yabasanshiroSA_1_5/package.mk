@@ -3,15 +3,22 @@ PKG_VERSION="f6f41dd6485c638ab661f3acd2951c9522f34450"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/ticohq/tico-yabasanshiro"
-PKG_URL="${PKG_SITE}.git"
+# Arcadia: a branch pi4 foi apagada e a main divergiu deste commit; o codigo vem como
+# arquivo do commit (hash fixo) e o submodulo ext/eigen vem do pacote eigen-yabasanshiro.
+PKG_SHA256="df5d90c46d7a2052ecf5d45bcd7163052b1e2277135129c69ed7915d0705b9ff"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
+PKG_SOURCE_DIR="tico-yabasanshiro-${PKG_VERSION}"
+PKG_DEPENDS_UNPACK="eigen-yabasanshiro"
 PKG_DEPENDS_TARGET="toolchain SDL2 boost openal-soft ${OPENGLES} zlib"
 PKG_LONGDESC="Yabause is a Sega Saturn emulator and took over as Yaba Sanshiro"
 PKG_TOOLCHAIN="cmake-make"
-GET_HANDLER_SUPPORT="git"
-PKG_GIT_CLONE_BRANCH="pi4"
 #PKG_BUILD_FLAGS="+speed"
 
 post_unpack() {
+  # submodulo ext/eigen (antes vinha pelo git clone)
+  mkdir -p ${PKG_BUILD}/yabause/src/retro_arena/nanogui-sdl/ext/eigen
+  cp -r $(get_build_dir eigen-yabasanshiro)/* ${PKG_BUILD}/yabause/src/retro_arena/nanogui-sdl/ext/eigen/
+
   # use host versions
   sed -i "s|COMMAND m68kmake|COMMAND ${PKG_BUILD}/m68kmake_host|" ${PKG_BUILD}/yabause/src/musashi/CMakeLists.txt
   sed -i "s|COMMAND ./bin2c|COMMAND ${PKG_BUILD}/bin2c_host|" ${PKG_BUILD}/yabause/src/retro_arena/nanogui-sdl/CMakeLists.txt
