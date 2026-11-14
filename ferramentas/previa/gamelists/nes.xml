@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<gameList>
+	<game>
+		<path>./Nova the Squirrel.nes</path>
+		<name>Nova the Squirrel</name>
+		<desc>Plataforma de ação em que a esquilo Nova usa poderes copiados dos inimigos para atravessar fases cheias de segredos. Jogo homebrew de código aberto (GPL-3.0) de NovaSquirrel.</desc>
+		<genre>Plataforma</genre>
+		<players>1</players>
+		<developer>NovaSquirrel</developer>
+		<favorite>true</favorite>
+	</game>
+	<game>
+		<path>./Thwaite.nes</path>
+		<name>Thwaite</name>
+		<desc>Defenda as vilas de Thwaite dos mísseis que caem do céu, no estilo do clássico Missile Command. Jogo homebrew de código aberto (GPL-3.0) de Damian Yerrick.</desc>
+		<genre>Ação</genre>
+		<players>1-2</players>
+		<developer>Damian Yerrick</developer>
+	</game>
+</gameList>

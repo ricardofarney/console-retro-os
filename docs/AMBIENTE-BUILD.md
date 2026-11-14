@@ -42,7 +42,7 @@ Start-Process powershell -WindowStyle Hidden -ArgumentList '-NoProfile','-Execut
 ```
 
 - [compilar.ps1](../ferramentas/wsl/compilar.ps1) roda o build num processo próprio (continua mesmo fechando o terminal ou o Claude), **impede o Windows de suspender** até terminar e avisa o build se houver alterações não commitadas.
-- [compilar.sh](../ferramentas/wsl/compilar.sh) sincroniza `~/arcadia-build` com o repositório do projeto, executa `PROJECT=Amlogic-ce DEVICE=Amlogic-ng ARCH=aarch64 DISTRO=EmuELEC make image` e:
+- [compilar.sh](../ferramentas/wsl/compilar.sh) sincroniza `~/arcadia-build` com o repositório do projeto, **baixa antes as fontes de todos os pacotes** (`tools/download-tool --all`; se algum link estiver quebrado, para e lista todos em `imagens-compiladas\logs\fontes-com-falha.txt`), executa `PROJECT=Amlogic-ce DEVICE=Amlogic-ng ARCH=aarch64 DISTRO=EmuELEC make image` e:
   - grava o log em `~/arcadia-logs/build-AAAA-MM-DD_HHMM.log`;
   - grava a situação (`EM ANDAMENTO`, `OK` ou `FALHOU`) em `~/arcadia-logs/status.txt`;
   - copia log e situação para `D:\Adube Sistemas\Console de Jogo\imagens-compiladas\logs\`;

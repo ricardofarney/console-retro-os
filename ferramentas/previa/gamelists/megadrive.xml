@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<gameList>
+	<game>
+		<path>./Miniplanets.bin</path>
+		<name>Miniplanets</name>
+		<desc>Plataforma em pequenos planetas esféricos: ande ao redor de cada mundo para coletar todas as esferas e abrir caminho para o próximo. Jogo homebrew de código aberto (licença zlib) de Javier Degirolmo (Sik).</desc>
+		<genre>Plataforma / Quebra-cabeça</genre>
+		<players>1</players>
+		<developer>Sik</developer>
+	</game>
+</gameList>

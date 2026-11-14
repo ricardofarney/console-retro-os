@@ -4,15 +4,18 @@
 # Saída: temas\arcadia\arte, temas\arcadia\logos e temas\arcadia\cores (sobrescreve).
 # Para mudar nome/cor de um console, edite a tabela $sistemas abaixo e rode de novo.
 
+param([switch]$Previa)  # -Previa: gera só os ajustes da prévia no Windows (ferramentas\previa\ajustes-tema)
 Add-Type -AssemblyName System.Drawing
 $ErrorActionPreference = 'Stop'
 
 $raiz  = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
-$tema  = Join-Path $raiz 'temas\arcadia'
+$tema  = if ($Previa) { Join-Path $raiz 'ferramentas\previa\ajustes-tema' } else { Join-Path $raiz 'temas\arcadia' }
 $arte  = Join-Path $tema 'arte'
 $logos = Join-Path $tema 'logos'
 $cores = Join-Path $tema 'cores'
-foreach ($d in $arte, $logos, $cores) { New-Item -ItemType Directory -Force $d | Out-Null }
+$logosClaros = Join-Path $logos 'claro'
+foreach ($d in $logos, $logosClaros, $cores) { New-Item -ItemType Directory -Force $d | Out-Null }
+if (-not $Previa) { New-Item -ItemType Directory -Force $arte | Out-Null }
 
 # id do sistema (pasta de roms / system.theme) ; nome exibido ; linha de baixo ; cor (RRGGBB)
 $sistemas = @"
@@ -104,11 +107,17 @@ moonlight;Moonlight;Streaming;5E35B1
 kodi;Kodi;Mídia;17B2E7
 "@
 
+if ($Previa) {
+  # itens que só existem no RetroBat (não vão para o aparelho)
+  $sistemas = 'retrobat;Configurações;RetroBat (só na prévia);8E9AAF'
+}
+
 function Cor([string]$hex, [int]$alfa = 255) {
   [System.Drawing.Color]::FromArgb($alfa, [Convert]::ToInt32($hex.Substring(0,2),16), [Convert]::ToInt32($hex.Substring(2,2),16), [Convert]::ToInt32($hex.Substring(4,2),16))
 }
 function Salvar($bmp, $arquivo) { $bmp.Save($arquivo, [System.Drawing.Imaging.ImageFormat]::Png); $bmp.Dispose() }
 
+if (-not $Previa) {
 # ---------- Fundo (gradiente escuro com vinheta) ----------
 $bmp = New-Object System.Drawing.Bitmap 1920, 1080
 $g = [System.Drawing.Graphics]::FromImage($bmp)
@@ -148,6 +157,8 @@ $bmp = New-Object System.Drawing.Bitmap 8, 8
 $g = [System.Drawing.Graphics]::FromImage($bmp); $g.Clear([System.Drawing.Color]::White); $g.Dispose()
 Salvar $bmp (Join-Path $arte 'branco.png')
 
+}  # fim das artes de base
+
 # ---------- Logotipos e cores por console ----------
 $fonteNome = New-Object System.Drawing.Font 'Segoe UI', 64, ([System.Drawing.FontStyle]::Bold), ([System.Drawing.GraphicsUnit]::Pixel)
 $fonteSub  = New-Object System.Drawing.Font 'Segoe UI', 30, ([System.Drawing.FontStyle]::Bold), ([System.Drawing.GraphicsUnit]::Pixel)
@@ -186,6 +197,20 @@ foreach ($linha in ($sistemas -split "`r?`n" | Where-Object { $_.Trim() })) {
   $g.FillRectangle((New-Object System.Drawing.SolidBrush $rgb), [int]((900 - $larg) / 2), 186, [int]$larg, 8)
   $g.DrawString($sub.ToUpper(), $fonteSub, (New-Object System.Drawing.SolidBrush $rgb), (New-Object System.Drawing.RectangleF 0, 200, 900, 70), $centro)
   $g.Dispose(); Salvar $bmp (Join-Path $logos "$id.png")
+
+  # versão clara (tudo branco, enquadrada) para a faixa colorida das listas de jogos
+  $bmp = New-Object System.Drawing.Bitmap 900, 200
+  $g = [System.Drawing.Graphics]::FromImage($bmp)
+  $g.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
+  $g.TextRenderingHint = [System.Drawing.Text.TextRenderingHint]::AntiAliasGridFit
+  $g.Clear([System.Drawing.Color]::Transparent)
+  $esq = New-Object System.Drawing.StringFormat
+  $esq.Alignment = [System.Drawing.StringAlignment]::Near
+  $esq.LineAlignment = [System.Drawing.StringAlignment]::Center
+  $g.DrawString($nomeTexto, $f, $sombra, (New-Object System.Drawing.RectangleF 4, 8, 900, 120), $esq)
+  $g.DrawString($nomeTexto, $f, [System.Drawing.Brushes]::White, (New-Object System.Drawing.RectangleF 0, 4, 900, 120), $esq)
+  $g.DrawString($sub.ToUpper(), $fonteSub, (New-Object System.Drawing.SolidBrush ([System.Drawing.Color]::FromArgb(215,255,255,255))), (New-Object System.Drawing.RectangleF 6, 122, 900, 60), $esq)
+  $g.Dispose(); Salvar $bmp (Join-Path $logosClaros "$id.png")
 
   # texto selecionado escuro em cores claras, branco em cores escuras
   $lum = 0.299 * $rgb.R + 0.587 * $rgb.G + 0.114 * $rgb.B

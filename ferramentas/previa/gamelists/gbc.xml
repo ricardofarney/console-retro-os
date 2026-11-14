@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<gameList>
+	<game>
+		<path>./uCity.gbc</path>
+		<name>µCity</name>
+		<desc>Simulador de construção de cidades: planeje bairros, energia, transporte e serviços e veja a população crescer. Ótimo para testar o "continuar de onde parei". Jogo homebrew de código aberto (GPL-3.0) de Antonio Niño Díaz.</desc>
+		<genre>Simulação</genre>
+		<players>1</players>
+		<developer>Antonio Niño Díaz</developer>
+	</game>
+</gameList>

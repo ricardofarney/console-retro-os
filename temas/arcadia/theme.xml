@@ -125,10 +125,10 @@
     </image>
 
     <image name="logo">
-      <pos>0.04 0.065</pos>
+      <pos>0.035 0.065</pos>
       <origin>0 0.5</origin>
-      <maxSize>0.36 0.1</maxSize>
-      <path>./logos/${system.theme}.png</path>
+      <maxSize>0.45 0.1</maxSize>
+      <path>./logos/claro/${system.theme}.png</path>
       <linearSmooth>true</linearSmooth>
       <zIndex>50</zIndex>
     </image>
@@ -170,6 +170,8 @@
       <pos>0.76 0.4</pos>
       <origin>0.5 0.5</origin>
       <maxSize>0.4 0.42</maxSize>
+      <!-- jogo sem capa: mostra o logotipo do console -->
+      <default>./logos/${system.theme}.png</default>
       <zIndex>30</zIndex>
     </image>
 

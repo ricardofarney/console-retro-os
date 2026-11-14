@@ -16,6 +16,7 @@ Tema do EmulationStation do projeto Arcádia, em português do Brasil, para o Em
 | `theme.xml` | layout de todas as telas |
 | `arte/` | fundo, brilho, faixa e painel (gerados) |
 | `logos/<sistema>.png` | logotipos em texto (gerados) |
+| `logos/claro/<sistema>.png` | logotipos todos brancos, usados sobre a faixa colorida das listas (gerados) |
 | `cores/<sistema>.xml` | cor de cada console (gerados) |
 
 ## Como alterar

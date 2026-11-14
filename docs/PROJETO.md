@@ -40,9 +40,11 @@ D:\Adube Sistemas\Console de Jogo\
 ├── console-retro-os\          repositório do sistema (fork do EmuELEC) — fonte oficial de tudo
 │   ├── docs\                  documentos oficiais (este arquivo, análise, ambiente, prévia)
 │   ├── temas\arcadia\         tema Arcádia do EmulationStation
-│   └── ferramentas\           scripts (build no WSL, geração de artes, prévia, cópia de docs)
+│   └── ferramentas\           scripts: wsl\ (build), tema\ (artes), previa\ (RetroBat), copiar-docs.ps1
 ├── arcadia-emulationstation\  fork do EmulationStation (criado só quando for necessário)
-├── arcadia-preview\           prévia no Windows com RetroBat
+├── arcadia-preview\           prévia no Windows com RetroBat (atalho "Arcádia (prévia)" na Área de Trabalho)
+│   ├── _instalador\           instalador original do RetroBat
+│   └── _jogos-teste\          jogos homebrew de distribuição liberada
 ├── imagens-compiladas\        imagens prontas para gravar no cartão (.img.gz, .tar, .sha256)
 │   └── logs\                  log e situação de cada build
 ├── backups\                   backup do cartão original do aparelho (imagem inteira, dtb.img, roms)
