@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — PlayStation (Sony) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — PlayStation (Sony), cor 5F5E5A, fundo ECECEB -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>8E8E93A0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>8E8E93FF</color></image>
+    <image name="background"><color>ECECEBFF</color></image>
+    <image name="faixa"><color>5F5E5AFF</color></image>
     <textlist name="gamelist">
-      <selectorColor>8E8E93FF</selectorColor>
+      <selectorColor>5F5E5AFF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>8E8E93FF</secondaryColor>
-      <scrollbarColor>8E8E9380</scrollbarColor>
+      <secondaryColor>5F5E5AFF</secondaryColor>
+      <scrollbarColor>5F5E5A60</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

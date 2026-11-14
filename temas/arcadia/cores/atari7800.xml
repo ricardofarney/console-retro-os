@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Atari 7800 (Atari) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Atari 7800 (Atari), cor 993C1D, fundo F3E8E4 -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>8D4A2BA0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>8D4A2BFF</color></image>
+    <image name="background"><color>F3E8E4FF</color></image>
+    <image name="faixa"><color>993C1DFF</color></image>
     <textlist name="gamelist">
-      <selectorColor>8D4A2BFF</selectorColor>
+      <selectorColor>993C1DFF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>8D4A2BFF</secondaryColor>
-      <scrollbarColor>8D4A2B80</scrollbarColor>
+      <secondaryColor>993C1DFF</secondaryColor>
+      <scrollbarColor>993C1D60</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

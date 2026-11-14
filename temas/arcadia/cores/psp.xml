@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — PSP (Sony) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — PSP (Sony), cor 888780, fundo F1F1F0 -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>3A3A3CA0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>3A3A3CFF</color></image>
+    <image name="background"><color>F1F1F0FF</color></image>
+    <image name="faixa"><color>888780FF</color></image>
     <textlist name="gamelist">
-      <selectorColor>3A3A3CFF</selectorColor>
+      <selectorColor>888780FF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>3A3A3CFF</secondaryColor>
-      <scrollbarColor>3A3A3C80</scrollbarColor>
+      <secondaryColor>888780FF</secondaryColor>
+      <scrollbarColor>88878060</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Nintendo 64 (Nintendo) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Nintendo 64 (Nintendo), cor 0F6E56, fundo E2EEEB -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>2E9E44A0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>2E9E44FF</color></image>
+    <image name="background"><color>E2EEEBFF</color></image>
+    <image name="faixa"><color>0F6E56FF</color></image>
     <textlist name="gamelist">
-      <selectorColor>2E9E44FF</selectorColor>
+      <selectorColor>0F6E56FF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>2E9E44FF</secondaryColor>
-      <scrollbarColor>2E9E4480</scrollbarColor>
+      <secondaryColor>0F6E56FF</secondaryColor>
+      <scrollbarColor>0F6E5660</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

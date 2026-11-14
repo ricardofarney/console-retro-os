@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Master System (SEGA) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Master System (SEGA), cor 378ADD, fundo E7F1FB -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>E53935A0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>E53935FF</color></image>
+    <image name="background"><color>E7F1FBFF</color></image>
+    <image name="faixa"><color>378ADDFF</color></image>
     <textlist name="gamelist">
-      <selectorColor>E53935FF</selectorColor>
+      <selectorColor>378ADDFF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>E53935FF</secondaryColor>
-      <scrollbarColor>E5393580</scrollbarColor>
+      <secondaryColor>378ADDFF</secondaryColor>
+      <scrollbarColor>378ADD60</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

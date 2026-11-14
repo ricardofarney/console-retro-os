@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Atari 2600 (Atari) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Atari 2600 (Atari), cor D85A30, fundo FAEBE6 -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>B8692EA0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>B8692EFF</color></image>
+    <image name="background"><color>FAEBE6FF</color></image>
+    <image name="faixa"><color>D85A30FF</color></image>
     <textlist name="gamelist">
-      <selectorColor>B8692EFF</selectorColor>
+      <selectorColor>D85A30FF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>B8692EFF</secondaryColor>
-      <scrollbarColor>B8692E80</scrollbarColor>
+      <secondaryColor>D85A30FF</secondaryColor>
+      <scrollbarColor>D85A3060</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

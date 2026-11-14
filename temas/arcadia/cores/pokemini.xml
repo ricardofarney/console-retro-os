@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Pokémon mini (Nintendo) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Pokémon mini (Nintendo), cor 888780, fundo F1F1F0 -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>F0C419A0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>F0C419FF</color></image>
+    <image name="background"><color>F1F1F0FF</color></image>
+    <image name="faixa"><color>888780FF</color></image>
     <textlist name="gamelist">
-      <selectorColor>F0C419FF</selectorColor>
-      <selectedColor>0B0C18FF</selectedColor>
-      <secondaryColor>F0C419FF</secondaryColor>
-      <scrollbarColor>F0C41980</scrollbarColor>
+      <selectorColor>888780FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>888780FF</secondaryColor>
+      <scrollbarColor>88878060</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

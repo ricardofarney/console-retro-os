@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Fliperama (Arcade) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Arcade (Fliperama), cor 993556, fundo F3E7EB -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>FF3D7FA0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>FF3D7FFF</color></image>
+    <image name="background"><color>F3E7EBFF</color></image>
+    <image name="faixa"><color>993556FF</color></image>
     <textlist name="gamelist">
-      <selectorColor>FF3D7FFF</selectorColor>
+      <selectorColor>993556FF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>FF3D7FFF</secondaryColor>
-      <scrollbarColor>FF3D7F80</scrollbarColor>
+      <secondaryColor>993556FF</secondaryColor>
+      <scrollbarColor>99355660</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Game Gear (SEGA) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Game Gear (SEGA), cor 1D9E75, fundo E4F3EE -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>37474FA0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>37474FFF</color></image>
+    <image name="background"><color>E4F3EEFF</color></image>
+    <image name="faixa"><color>1D9E75FF</color></image>
     <textlist name="gamelist">
-      <selectorColor>37474FFF</selectorColor>
+      <selectorColor>1D9E75FF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>37474FFF</secondaryColor>
-      <scrollbarColor>37474F80</scrollbarColor>
+      <secondaryColor>1D9E75FF</secondaryColor>
+      <scrollbarColor>1D9E7560</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

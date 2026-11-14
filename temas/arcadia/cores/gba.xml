@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Game Boy Advance (Nintendo) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Game Boy Advance (Nintendo), cor 3C3489, fundo E8E7F1 -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>4B3BC4A0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>4B3BC4FF</color></image>
+    <image name="background"><color>E8E7F1FF</color></image>
+    <image name="faixa"><color>3C3489FF</color></image>
     <textlist name="gamelist">
-      <selectorColor>4B3BC4FF</selectorColor>
+      <selectorColor>3C3489FF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>4B3BC4FF</secondaryColor>
-      <scrollbarColor>4B3BC480</scrollbarColor>
+      <secondaryColor>3C3489FF</secondaryColor>
+      <scrollbarColor>3C348960</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

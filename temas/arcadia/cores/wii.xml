@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Wii (Nintendo) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Wii (Nintendo), cor 888780, fundo F1F1F0 -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>34BEEDA0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>34BEEDFF</color></image>
+    <image name="background"><color>F1F1F0FF</color></image>
+    <image name="faixa"><color>888780FF</color></image>
     <textlist name="gamelist">
-      <selectorColor>34BEEDFF</selectorColor>
-      <selectedColor>0B0C18FF</selectedColor>
-      <secondaryColor>34BEEDFF</secondaryColor>
-      <scrollbarColor>34BEED80</scrollbarColor>
+      <selectorColor>888780FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>888780FF</secondaryColor>
+      <scrollbarColor>88878060</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

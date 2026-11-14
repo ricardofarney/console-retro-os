@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — 3DO (Panasonic) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — 3DO (Panasonic), cor 888780, fundo F1F1F0 -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>B71C1CA0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>B71C1CFF</color></image>
+    <image name="background"><color>F1F1F0FF</color></image>
+    <image name="faixa"><color>888780FF</color></image>
     <textlist name="gamelist">
-      <selectorColor>B71C1CFF</selectorColor>
+      <selectorColor>888780FF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>B71C1CFF</secondaryColor>
-      <scrollbarColor>B71C1C80</scrollbarColor>
+      <secondaryColor>888780FF</secondaryColor>
+      <scrollbarColor>88878060</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

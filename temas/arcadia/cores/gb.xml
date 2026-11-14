@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Game Boy (Nintendo) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Game Boy (Nintendo), cor 3B6D11, fundo E7EDE2 -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>8BAC0FA0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>8BAC0FFF</color></image>
+    <image name="background"><color>E7EDE2FF</color></image>
+    <image name="faixa"><color>3B6D11FF</color></image>
     <textlist name="gamelist">
-      <selectorColor>8BAC0FFF</selectorColor>
+      <selectorColor>3B6D11FF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>8BAC0FFF</secondaryColor>
-      <scrollbarColor>8BAC0F80</scrollbarColor>
+      <secondaryColor>3B6D11FF</secondaryColor>
+      <scrollbarColor>3B6D1160</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

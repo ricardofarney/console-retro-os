@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Super Nintendo (Nintendo) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Super Nintendo (Nintendo), cor 534AB7, fundo EAE9F6 -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>7B5CD6A0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>7B5CD6FF</color></image>
+    <image name="background"><color>EAE9F6FF</color></image>
+    <image name="faixa"><color>534AB7FF</color></image>
     <textlist name="gamelist">
-      <selectorColor>7B5CD6FF</selectorColor>
+      <selectorColor>534AB7FF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>7B5CD6FF</secondaryColor>
-      <scrollbarColor>7B5CD680</scrollbarColor>
+      <secondaryColor>534AB7FF</secondaryColor>
+      <scrollbarColor>534AB760</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

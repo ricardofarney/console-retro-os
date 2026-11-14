@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Mega Drive (SEGA) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Mega Drive (SEGA), cor 185FA5, fundo E3ECF4 -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>1E88E5A0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>1E88E5FF</color></image>
+    <image name="background"><color>E3ECF4FF</color></image>
+    <image name="faixa"><color>185FA5FF</color></image>
     <textlist name="gamelist">
-      <selectorColor>1E88E5FF</selectorColor>
+      <selectorColor>185FA5FF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>1E88E5FF</secondaryColor>
-      <scrollbarColor>1E88E580</scrollbarColor>
+      <secondaryColor>185FA5FF</secondaryColor>
+      <scrollbarColor>185FA560</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

@@ -2,12 +2,20 @@
 
 Montada em 14/11/2026 (horário de Brasília). Objetivo: ver e testar o visual do Arcádia no computador antes de o aparelho chegar, usando o [RetroBat](https://www.retrobat.org) — frontend gratuito para Windows baseado no EmulationStation da linha Batocera, a mesma base do EmulationStation do EmuELEC.
 
-![Tela inicial em "Continuar jogando"](imagens/previa/01-tela-inicial-continuar-jogando.png)
+> **Tema v0.2 (14/11/2026, 16:05):** estilo "colorido por console" do [DESIGN.md](DESIGN.md). Capturas abaixo; as da v0.1 (tema escuro) ficam no fim deste documento.
+
+| Abertura | Início (consoles) |
+|---|---|
+| ![Abertura](imagens/previa/v02-1-abertura.png) | ![Início](imagens/previa/v02-2-inicio-consoles.png) |
+| **Lista do NES** | **Lista do Mega Drive** |
+| ![Lista NES](imagens/previa/v02-3-lista-nes.png) | ![Lista Mega Drive](imagens/previa/v02-4-lista-mega-drive.png) |
+
+Tela de abertura do EmuELEC (antes do EmulationStation, só no aparelho): [v02-5-splash-emuelec-1080.png](imagens/previa/v02-5-splash-emuelec-1080.png).
 
 ## Como abrir
 
 1. Dê dois cliques no atalho **"Arcádia (prévia)"** na Área de Trabalho (abre `D:\Adube Sistemas\Console de Jogo\arcadia-preview\RetroBat.exe`).
-2. Abre em tela cheia, sem vídeo de abertura, direto no tema Arcádia, em "Continuar jogando".
+2. Abre em tela cheia, sem vídeo e **sem música**, mostra a abertura do Arcádia e vai **direto para os consoles** (grade de cards).
 3. Para sair: botão **Start → Sair** (ou **Alt+F4**).
 
 ## Botões
@@ -31,13 +39,12 @@ Os rótulos do rodapé seguem o padrão Nintendo (A à direita, B embaixo), por 
 
 1. Entre em um console (ex.: Game Boy Color → µCity) e jogue um pouco.
 2. Saia do jogo (Select + Start, ou Esc). O RetroArch grava um save state automático.
-3. O jogo aparece em **"Continuar jogando"** na tela inicial; ao abrir de novo, ele volta exatamente do ponto onde você saiu.
+3. O jogo aparece em **"Continuar jogando"** na tela inicial.
+4. Ao abrir de novo, aparece a janela de **saves** (`ShowSaveStates` ligado): escolha o save automático (com miniatura e data) para continuar de onde parou, ou o item de começar do início.
 
-Favoritos: na lista de jogos, use o botão de cima (Q no teclado) para marcar ou desmarcar. "Nova the Squirrel" já vem marcado, para a coleção "Favoritos" aparecer desde o início.
+Favoritos: na lista de jogos, use o botão de cima (Q no teclado) para marcar ou desmarcar. "Nova the Squirrel" já vem marcado (★ dourada na lista), para a coleção "Favoritos" aparecer desde o início.
 
-![Favoritos](imagens/previa/02-favoritos.png)
-
-![Lista do Mega Drive](imagens/previa/03-lista-mega-drive.png)
+Favoritar **consoles** (botão Y na tela inicial) é função do `arcadia-emulationstation` e só existe na imagem do aparelho — no RetroBat o Y continua sendo "procurar".
 
 ## O que foi instalado
 
@@ -70,7 +77,9 @@ Script: [ferramentas/previa/instalar-previa.ps1](../ferramentas/previa/instalar-
 | Idioma | `es_settings.cfg` | `Language=pt_BR` (o RetroArch também recebe português do Brasil: `user_language = "7"`) |
 | Salvamento/carregamento automático | `es_settings.cfg` | `global.autosave=1` → ao abrir um jogo, o RetroBat grava `savestate_auto_save = "true"` e `savestate_auto_load = "true"` no `emulators\retroarch\retroarch.cfg` (**conferido** abrindo o µCity) |
 | Coleções | `es_settings.cfg` | `CollectionSystemsAuto=recent,favorites,all` (Continuar jogando, Favoritos, Todos os jogos) |
-| Tela inicial | `es_settings.cfg` | `StartupSystem=recent` (abre em "Continuar jogando") |
+| Tela inicial | `es_settings.cfg` | `StartupSystem=nes` (abre direto nos consoles; no aparelho, a ordem coloca os consoles favoritos primeiro) |
+| Música de fundo | `es_settings.cfg` | `audio.bgmusic=false` (desligada na prévia) |
+| Escolha de save ao abrir jogo | `es_settings.cfg` | `ShowSaveStates=true` (janela "continuar / começar do início") |
 | Tela cheia, sem vídeo de abertura, sem trocar idioma sozinho | `retrobat.ini` | `Fullscreen=1`, `EnableIntro=0`, `LanguageDetection=0` |
 | Fichas dos jogos em português | `roms\<console>\gamelist.xml` | modelos em [ferramentas/previa/gamelists](../ferramentas/previa/gamelists) |
 
@@ -90,7 +99,9 @@ O tema [temas/arcadia](../temas/arcadia) funcionou **sem nenhuma alteração de 
 
 | Item | RetroBat (prévia) | EmuELEC (aparelho) |
 |---|---|---|
-| Nome da coleção para abrir no início | `StartupSystem=recent` (nome da coleção, não da pasta do tema `auto-lastplayed`) | mesma regra |
+| Nome do item para abrir no início | `StartupSystem` usa o nome do sistema/coleção (`nes`, `recent`), não a pasta do tema (`auto-lastplayed`) | mesma regra |
+| Ordem da tela inicial | coleções e consoles na ordem do RetroBat (inclui "Jogos portados" e "Configurações", que só existem nele) | consoles favoritos → Continuar jogando / Favoritos → demais consoles (`arcadia-emulationstation`) |
+| Botão Y na tela inicial | procurar / aleatório | marcar/desmarcar console favorito (`arcadia-emulationstation`) |
 | Opção de salvamento automático | `global.autosave` dentro do `es_settings.cfg` | `global.autosave` no `emuelec.conf` |
 | Música de fundo | o RetroBat toca músicas e mostra o nome no topo | depende da configuração do EmuELEC |
 | Rótulos dos botões | padrão Nintendo no rodapé | igual (mesma base) |
@@ -100,7 +111,20 @@ O tema [temas/arcadia](../temas/arcadia) funcionou **sem nenhuma alteração de 
 - Logotipo **branco** na faixa colorida das listas de jogos (`logos/claro/`): antes, a linha do fabricante sumia sobre a faixa da mesma cor.
 - Jogo sem capa mostra o **logotipo do console** no lugar da imagem (`<default>` do `md_image`).
 
+### Tema v0.2 — o que a prévia ensinou
+
+- `!=` em `<visible>` derruba o EmulationStation ("arquivo de sistemas inválido"); trocado por `!(a == b)`.
+- Somar texto com número não funciona; o contador usa dois textos ("1 jogo" e "N jogos").
+- Com modelo por linha na lista, a barra de seleção é desenhada pelo tema (escura, arredondada).
+- O contorno do card selecionado (`rectangle`) não apareceu no RetroBat; a seleção é indicada pelo card ampliado.
+
 ## Pendências da prévia
 
 - "Continuar jogando" começa vazia: aparece com jogos assim que você jogar e sair de algum.
 - Os jogos de teste não têm capas/vídeos (seria preciso usar o "scraper" do RetroBat com conta no ScreenScraper).
+
+## Capturas da v0.1 (tema escuro, substituído)
+
+![v0.1 — tela inicial](imagens/previa/01-tela-inicial-continuar-jogando.png)
+![v0.1 — favoritos](imagens/previa/02-favoritos.png)
+![v0.1 — lista do Mega Drive](imagens/previa/03-lista-mega-drive.png)

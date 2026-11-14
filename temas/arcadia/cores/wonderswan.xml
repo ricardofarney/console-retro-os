@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — WonderSwan (Bandai) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — WonderSwan (Bandai), cor 444441, fundo E9E9E8 -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>78909CA0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>78909CFF</color></image>
+    <image name="background"><color>E9E9E8FF</color></image>
+    <image name="faixa"><color>444441FF</color></image>
     <textlist name="gamelist">
-      <selectorColor>78909CFF</selectorColor>
+      <selectorColor>444441FF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>78909CFF</secondaryColor>
-      <scrollbarColor>78909C80</scrollbarColor>
+      <secondaryColor>444441FF</secondaryColor>
+      <scrollbarColor>44444160</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

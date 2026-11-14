@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Favoritos (seus jogos preferidos) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Favoritos (seus jogos preferidos), cor C9A227, fundo F9F4E5 -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>FF5C7AA0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>FF5C7AFF</color></image>
+    <image name="background"><color>F9F4E5FF</color></image>
+    <image name="faixa"><color>C9A227FF</color></image>
     <textlist name="gamelist">
-      <selectorColor>FF5C7AFF</selectorColor>
+      <selectorColor>C9A227FF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>FF5C7AFF</secondaryColor>
-      <scrollbarColor>FF5C7A80</scrollbarColor>
+      <secondaryColor>C9A227FF</secondaryColor>
+      <scrollbarColor>C9A22760</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

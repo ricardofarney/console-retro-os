@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Intellivision (Mattel) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Intellivision (Mattel), cor 888780, fundo F1F1F0 -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>8D6E63A0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>8D6E63FF</color></image>
+    <image name="background"><color>F1F1F0FF</color></image>
+    <image name="faixa"><color>888780FF</color></image>
     <textlist name="gamelist">
-      <selectorColor>8D6E63FF</selectorColor>
+      <selectorColor>888780FF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>8D6E63FF</secondaryColor>
-      <scrollbarColor>8D6E6380</scrollbarColor>
+      <secondaryColor>888780FF</secondaryColor>
+      <scrollbarColor>88878060</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

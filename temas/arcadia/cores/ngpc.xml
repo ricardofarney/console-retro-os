@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Neo Geo Pocket Color (SNK) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Neo Geo Pocket Color (SNK), cor D4537E, fundo FAEAF0 -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>8D6E63A0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>8D6E63FF</color></image>
+    <image name="background"><color>FAEAF0FF</color></image>
+    <image name="faixa"><color>D4537EFF</color></image>
     <textlist name="gamelist">
-      <selectorColor>8D6E63FF</selectorColor>
+      <selectorColor>D4537EFF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>8D6E63FF</secondaryColor>
-      <scrollbarColor>8D6E6380</scrollbarColor>
+      <secondaryColor>D4537EFF</secondaryColor>
+      <scrollbarColor>D4537E60</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

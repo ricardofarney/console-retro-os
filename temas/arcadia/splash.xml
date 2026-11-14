@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Arcádia — tela de carregamento do EmulationStation (abertura, ver docs/DESIGN.md) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="splash">
+    <splash name="splash">
+      <backgroundColor>F4F1EA</backgroundColor>
+    </splash>
+    <image name="background">
+      <path>./arte/abertura.png</path>
+      <linearSmooth>true</linearSmooth>
+    </image>
+    <text name="label">
+      <pos>0 0.845</pos>
+      <size>1 0.04</size>
+      <fontSize>0.024</fontSize>
+      <color>5F5E5A</color>
+      <alignment>center</alignment>
+    </text>
+    <image name="progressbar">
+      <pos>0.32 0.8</pos>
+      <size>0.36 0.011</size>
+      <color>E2DED3</color>
+    </image>
+    <image name="progressbar:active">
+      <color>2C2C2A</color>
+    </image>
+  </view>
+</theme>

@@ -25,7 +25,7 @@ if [[ ${DEVICE} == "OdroidM1"  ]] || [[ ${DEVICE} == "RK356x"  ]]; then
 fi
 
 # themes for Emulationstation
-PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} Crystal"
+PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} Crystal es-theme-arcadia"
 
 pre_configure_target() {
 

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — CPS-2 (Capcom) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — CPS-2 (Capcom), cor 993556, fundo F3E7EB -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>283593A0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>283593FF</color></image>
+    <image name="background"><color>F3E7EBFF</color></image>
+    <image name="faixa"><color>993556FF</color></image>
     <textlist name="gamelist">
-      <selectorColor>283593FF</selectorColor>
+      <selectorColor>993556FF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>283593FF</secondaryColor>
-      <scrollbarColor>28359380</scrollbarColor>
+      <secondaryColor>993556FF</secondaryColor>
+      <scrollbarColor>99355660</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

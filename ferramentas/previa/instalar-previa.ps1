@@ -26,7 +26,9 @@ Definir 'string' 'global.autosave' '1'                        # savestate_auto_s
 Definir 'string' 'CollectionSystemsAuto' 'recent,favorites,all' # Continuar jogando, Favoritos, Todos os jogos
 Definir 'string' 'GamelistViewStyle' 'detailed'
 Definir 'bool'   'FavoritesFirst' 'true'
-Definir 'string' 'StartupSystem' 'recent'                    # abre em "Continuar jogando" (nome da coleção; se vazia, abre no primeiro item)
+Definir 'string' 'StartupSystem' 'nes'                       # abre direto nos consoles (DESIGN.md); no aparelho, o primeiro console favorito
+Definir 'bool'   'audio.bgmusic' 'false'                     # sem música de fundo na prévia
+Definir 'bool'   'ShowSaveStates' 'true'                     # ao abrir jogo com save: escolher continuar ou começar do início
 Definir 'bool'   'StartupOnGameList' 'false'
 $x.Save("$es\es_settings.cfg")
 

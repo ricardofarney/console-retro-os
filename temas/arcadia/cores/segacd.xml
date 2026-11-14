@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Mega CD (SEGA) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Sega CD (SEGA), cor 0C447C, fundo E2E9EF -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>0D47A1A0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>0D47A1FF</color></image>
+    <image name="background"><color>E2E9EFFF</color></image>
+    <image name="faixa"><color>0C447CFF</color></image>
     <textlist name="gamelist">
-      <selectorColor>0D47A1FF</selectorColor>
+      <selectorColor>0C447CFF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>0D47A1FF</secondaryColor>
-      <scrollbarColor>0D47A180</scrollbarColor>
+      <secondaryColor>0C447CFF</secondaryColor>
+      <scrollbarColor>0C447C60</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

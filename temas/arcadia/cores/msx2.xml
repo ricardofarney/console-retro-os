@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — MSX2 (ASCII) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — MSX2 (ASCII), cor E24B4A, fundo FCE9E9 -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>303F9FA0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>303F9FFF</color></image>
+    <image name="background"><color>FCE9E9FF</color></image>
+    <image name="faixa"><color>E24B4AFF</color></image>
     <textlist name="gamelist">
-      <selectorColor>303F9FFF</selectorColor>
+      <selectorColor>E24B4AFF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>303F9FFF</secondaryColor>
-      <scrollbarColor>303F9F80</scrollbarColor>
+      <secondaryColor>E24B4AFF</secondaryColor>
+      <scrollbarColor>E24B4A60</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — SuperGrafx (NEC) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — SuperGrafx (NEC), cor BA7517, fundo F7EEE3 -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>E65100A0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>E65100FF</color></image>
+    <image name="background"><color>F7EEE3FF</color></image>
+    <image name="faixa"><color>BA7517FF</color></image>
     <textlist name="gamelist">
-      <selectorColor>E65100FF</selectorColor>
+      <selectorColor>BA7517FF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>E65100FF</secondaryColor>
-      <scrollbarColor>E6510080</scrollbarColor>
+      <secondaryColor>BA7517FF</secondaryColor>
+      <scrollbarColor>BA751760</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>

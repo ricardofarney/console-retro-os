@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Famicom Disk (Nintendo) -->
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Famicom Disk System (Nintendo), cor A32D2D, fundo F4E6E6 -->
 <theme>
   <formatVersion>7</formatVersion>
-  <view name="system">
-    <image name="brilho"><color>C8102EA0</color></image>
-  </view>
   <view name="basic,detailed,video">
-    <image name="faixa"><color>C8102EFF</color></image>
+    <image name="background"><color>F4E6E6FF</color></image>
+    <image name="faixa"><color>A32D2DFF</color></image>
     <textlist name="gamelist">
-      <selectorColor>C8102EFF</selectorColor>
+      <selectorColor>A32D2DFF</selectorColor>
       <selectedColor>FFFFFFFF</selectedColor>
-      <secondaryColor>C8102EFF</secondaryColor>
-      <scrollbarColor>C8102E80</scrollbarColor>
+      <secondaryColor>A32D2DFF</secondaryColor>
+      <scrollbarColor>A32D2D60</scrollbarColor>
     </textlist>
+  </view>
+  <view name="detailed,video">
+    <image name="painel"><color>FFFFFFD8</color></image>
   </view>
 </theme>
