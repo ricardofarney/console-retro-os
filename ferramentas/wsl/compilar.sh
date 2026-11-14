@@ -31,6 +31,11 @@ cp "$STATUS" "$SAIDA/logs/status.txt" 2>/dev/null
 git config --global --get-all safe.directory | grep -qxF "$REPO_PROJETO" \
   || git config --global --add safe.directory "$REPO_PROJETO"
 
+# git nunca pede usuário/senha (um repositório removido travava o download por horas)
+export GIT_TERMINAL_PROMPT=0
+# submódulos do ECWolf migraram do Bitbucket (fora do ar) para o GitHub oficial
+git config --global url."https://github.com/ECWolfEngine/".insteadOf "https://bitbucket.org/ecwolf/"
+
 # 1) Área de compilação sincronizada a partir do repositório do projeto
 if [ ! -d "$AREA/.git" ]; then
   git clone "$REPO_PROJETO" "$AREA" || exit 1
