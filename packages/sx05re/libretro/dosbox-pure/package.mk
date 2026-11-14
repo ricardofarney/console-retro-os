@@ -5,7 +5,10 @@ PKG_NAME="dosbox-pure"
 PKG_VERSION="fe0bdab8a04eedb912634d89ad8137de75529cff"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/schellingb/dosbox-pure"
-PKG_URL="${PKG_SITE}.git"
+# Arcadia: o historico do projeto foi reescrito e este commit saiu da branch main;
+# o arquivo do commit continua no GitHub e e baixado com hash fixo.
+PKG_SHA256="79642ff46bce20e35ecf881cf9d99104af3375183c2eeee640f230af47eb39a9"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain linux glibc glib systemd dbus alsa-lib SDL2 SDL2_net SDL_sound libpng zlib libvorbis flac libogg fluidsynth-git munt opusfile"
 PKG_LONGDESC="DOSBox Pure is a new fork of DOSBox built for RetroArch/Libretro aiming for simplicity and ease of use. "
 PKG_TOOLCHAIN="make"
