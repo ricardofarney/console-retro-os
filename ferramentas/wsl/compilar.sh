@@ -47,15 +47,27 @@ git checkout -B "$BRANCH" "origin/$BRANCH" || exit 1
 git reset --hard "origin/$BRANCH"
 echo "Compilando commit $(git log -1 --format='%h %s')" | tee -a "$LOG"
 
-# 2) Build (ccache fora da pasta de build, para sobreviver a limpezas)
 export PROJECT=Amlogic-ce DEVICE=Amlogic-ng ARCH=aarch64 DISTRO=EmuELEC
 export CCACHE_DIR="$HOME/.ccache-arcadia"
 INICIO=$(date +%s)
+
+# 2) Baixar TODAS as fontes antes de compilar (mostra de uma vez os links quebrados)
+FALHAS="$LOGDIR/fontes-com-falha.txt"
+echo "Baixando fontes de todos os pacotes..." | tee -a "$LOG"
+JOBS=8 tools/download-tool --all 2>&1 | tee -a "$LOG" | grep -aE "Cannot get .* sources" | sort -u > "$FALHAS"
+if [ -s "$FALHAS" ]; then
+  echo "FALHOU no download de $(wc -l < "$FALHAS") pacote(s) em $(agora) - ver imagens-compiladas\\logs\\fontes-com-falha.txt" > "$STATUS"
+  cat "$FALHAS" | tee -a "$LOG"
+  cp "$LOG" "$STATUS" "$FALHAS" "$SAIDA/logs/" 2>/dev/null
+  exit 3
+fi
+
+# 3) Build (ccache fora da pasta de build, para sobreviver a limpezas)
 make image 2>&1 | tee -a "$LOG"
 RC=$?
 DUR=$(( ($(date +%s) - INICIO) / 60 ))
 
-# 3) Copiar resultado para a pasta do projeto
+# 4) Copiar resultado para a pasta do projeto
 if [ $RC -eq 0 ]; then
   cp -v target/*.img.gz target/*.tar target/*.sha256 "$SAIDA"/ 2>&1 | tee -a "$LOG"
   echo "OK em $(agora) - duracao ${DUR} min - commit $(git log -1 --format=%h) - imagens em D:\\Adube Sistemas\\Console de Jogo\\imagens-compiladas" > "$STATUS"

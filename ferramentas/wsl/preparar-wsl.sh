@@ -32,7 +32,8 @@ apt-get install -y gcc make git unzip wget xz-utils libsdl2-dev libsdl2-mixer-de
   libboost-all-dev cmake fonts-droid-fallback libvlc-dev libvlccore-dev vlc-bin texinfo premake4 golang \
   libssl-dev curl patchelf xmlstarlet default-jre xsltproc libvpx-dev rdfind tzdata xfonts-utils lzop \
   bc patchutils bzip2 gzip zstd perl gawk gperf zip diffutils file g++ python3 libc6-dev libncurses5-dev \
-  libjson-perl libxml-parser-perl libparse-yapp-perl locales sudo ccache
+  libjson-perl libxml-parser-perl libparse-yapp-perl locales sudo ccache parallel
+mkdir -p /home/console/.parallel && touch /home/console/.parallel/will-cite && chown -R console:console /home/console/.parallel
 locale-gen en_US.UTF-8 pt_BR.UTF-8
 update-locale LANG=en_US.UTF-8
 echo "PREPARACAO-OK"
