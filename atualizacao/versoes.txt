@@ -1,0 +1,2 @@
+# Arcadia: versoes publicadas nas Releases do fork, uma linha por canal (versao;canal).
+# Preenchido por ferramentas/publicar-versao.ps1. Nenhuma versao publicada ainda.

@@ -53,6 +53,10 @@ git reset --hard "origin/$BRANCH"
 echo "Compilando commit $(git log -1 --format='%h %s')" | tee -a "$LOG"
 
 export PROJECT=Amlogic-ce DEVICE=Amlogic-ng ARCH=aarch64 DISTRO=EmuELEC
+# Arcadia: nome da imagem = Arcadia-<device>.<arch>-<versao> (versao em packages/sx05re/emuelec/config/EE_VERSION)
+VERSAO_ARCADIA="$(tr -d '[:space:]' < packages/sx05re/emuelec/config/EE_VERSION)"
+export CUSTOM_IMAGE_NAME="Arcadia-${DEVICE}.${ARCH}-${VERSAO_ARCADIA}"
+echo "Imagem: ${CUSTOM_IMAGE_NAME}" | tee -a "$LOG"
 export CCACHE_DIR="$HOME/.ccache-arcadia"
 INICIO=$(date +%s)
 
