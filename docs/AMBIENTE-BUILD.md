@@ -67,3 +67,29 @@ A linha `[NNN/689] [DONE] build <pacote>` mostra o avanço (689 etapas no primei
 ## Espaço em disco
 
 O disco virtual do Ubuntu (`D:\Adube Sistemas\Console de Jogo\wsl\Ubuntu-22.04\ext4.vhdx`) cresce conforme o uso — espere 150–250 GB após o primeiro build. Ele não encolhe sozinho ao apagar arquivos; para recuperar espaço: `wsl --shutdown` e compactar o VHDX (`Optimize-VHD` ou `diskpart` → `compact vdisk`).
+
+## Correções necessárias para o build funcionar (14/11/2026)
+
+O EmuELEC de 15/10/2026 tinha links de código-fonte quebrados. Cada fonte trocada foi conferida (mesmo SHA-256, ou versão oficial equivalente quando o arquivo original sumiu de todos os espelhos).
+
+| Pacote | Problema | Correção | Commit |
+|---|---|---|---|
+| `xz` 5.4.1 | `tukaani.org` responde 403; espelhos CoreELEC/LibreELEC não têm | GitHub oficial `tukaani-project/xz` (mesmo SHA-256) | `e4c25a6` |
+| `u-boot-tools` 2016.03 | `ftp.denx.de` fora do ar (FTP, HTTP e HTTPS) | espelho do OpenWrt (mesmo SHA-256) | `6d111ae` |
+| `ecwolf` | submódulos SDL/SDL_mixer/SDL_net no Bitbucket (removido; o git ficava **horas** parado pedindo senha) | `compilar.sh` redireciona `bitbucket.org/ecwolf/` → `github.com/ECWolfEngine/` e define `GIT_TERMINAL_PROMPT=0` | `6d111ae` |
+| `evtest` 1.35 | `repo.or.cz` passou a exigir verificação anti-robô (entregava HTML) | GitLab oficial do freedesktop.org (mesma versão; novo SHA-256 e `PKG_SOURCE_DIR`) | `4152e6a` |
+| `portaudio` (dependência do `hatarisa`) | fork `zhang-ray/portaudio` apagado; o commit não existe no projeto oficial | PortAudio oficial **v19.7.0** | `4152e6a` |
+| `soundfont-generaluser` 1.471 | link do Dropbox só funciona com `?dl=1` | `?dl=1` + `PKG_SOURCE_NAME` fixo (mesmo SHA-256) | `4152e6a` |
+| `xroar` 1.11 | versão retirada do site oficial e de todos os espelhos | atualizado para **1.12.1** (oficial mais próxima) | `4152e6a` |
+
+Melhorias no fluxo, nascidas dessas falhas:
+
+- o `compilar.sh` baixa **todas** as fontes antes de compilar (`tools/download-tool --all`) e lista de uma vez os pacotes com falha em `imagens-compiladas\logs\fontes-com-falha.txt`;
+- `GNU parallel` instalado no Ubuntu (downloads em paralelo);
+- a área de compilação guarda os downloads entre builds (`~/arcadia-build/sources`, 32 GB em 14/11/2026).
+
+Outras regras do build do Arcádia (detalhes em [CONFIGURACAO-DE-FABRICA.md](CONFIGURACAO-DE-FABRICA.md) e [ATUALIZACOES.md](ATUALIZACOES.md)):
+
+- nome da imagem: `Arcadia-Amlogic-ng.aarch64-<versão>` (`CUSTOM_IMAGE_NAME`, versão em `packages/sx05re/emuelec/config/EE_VERSION`);
+- senhas do root e do Samba lidas de `docs/SENHAS-LOCAIS.md` (fora do Git) pelo `compilar.ps1`; `busybox` e `samba` recompilam quando mudam;
+- o EmulationStation vem do fork `ricardofarney/arcadia-emulationstation` ([FUNCOES-ARCADIA.md](FUNCOES-ARCADIA.md)).
