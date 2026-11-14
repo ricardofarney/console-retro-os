@@ -78,7 +78,9 @@ while pgrep -f emulationstation; do
     sleep 1
 done
 
-	emuelec-utils clearconfig EMUS
+	# Arcádia: a atualização forçada não apaga mais as configurações (antes: emuelec-utils clearconfig EMUS);
+	# faz uma cópia de segurança datada em /storage/roms/backup/arcadia/
+	arcadia-dados.sh backup
 	systemctl reboot
 	exit 0
 }

@@ -17,7 +17,9 @@
   GREETING4="##############################################"
 
 # Root password to integrate in the target system
-  ROOT_PASSWORD="emuelec"
+# Arcádia: a senha vem de docs/SENHAS-LOCAIS.md (fora do Git) via compilar.ps1;
+# sem ela, mantém a senha padrão do EmuELEC
+  ROOT_PASSWORD="${ARCADIA_ROOT_PASSWORD:-emuelec}"
 
 # Partition labels for USB/SD installation media
   DISTRO_BOOTLABEL="EMUELEC"

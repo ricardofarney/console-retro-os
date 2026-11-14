@@ -151,6 +151,8 @@ makeinstall_target() {
 
   # Saving
   echo "savestate_thumbnail_enable = \"true\"" >> ${INSTALL}/etc/retroarch.cfg
+  # Arcádia: grava o save da bateria (.srm) a cada 10 s (protege contra desligar na tomada)
+  echo "autosave_interval = \"10\"" >> ${INSTALL}/etc/retroarch.cfg
   
   # Input
   sed -i -e "s/# input_driver = sdl/input_driver = udev/" ${INSTALL}/etc/retroarch.cfg

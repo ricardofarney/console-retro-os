@@ -75,6 +75,9 @@ if [ -z "${MOUNT_HANDLER}" ]; then
 fi
 ${MOUNT_HANDLER} &> /emuelec/logs/eemount.log
 
+# Arcádia: gamelist.xml (favoritos, últimos jogados) sempre junto das roms
+arcadia-dados.sh migrar-gamelists &
+
 # copy default bezel to /storage/roms/bezel if it doesn't exists
 if [ ! -f "/storage/roms/bezels/default.cfg" ]; then 
 mkdir -p /storage/roms/bezels/

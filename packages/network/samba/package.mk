@@ -201,6 +201,8 @@ post_makeinstall_target() {
 
     mkdir -p ${INSTALL}/usr/share/services
       cp -P ${PKG_DIR}/default.d/*.conf ${INSTALL}/usr/share/services
+      # Arcádia: senha do compartilhamento de rede (docs/SENHAS-LOCAIS.md, fora do Git)
+      sed -i "s|@ARCADIA_SAMBA_PASSWORD@|${ARCADIA_SAMBA_PASSWORD:-arcadia}|" ${INSTALL}/usr/share/services/samba.conf
   fi
   
   chmod +x ${INSTALL}/usr/sbin/*

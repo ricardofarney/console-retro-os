@@ -51,3 +51,8 @@ packages/sx05re/emuelec-emulationstation/api_keys.txt
 
 # cache/temporários da ferramenta de limpeza de ROMs (DATs, testes)
 ferramentas/roms/.cache/
+
+# senhas locais do Arcádia (nunca enviar ao GitHub)
+docs/SENHAS-LOCAIS.md
+# cache do Python
+__pycache__/

@@ -67,6 +67,19 @@ if [ -s "$FALHAS" ]; then
   exit 3
 fi
 
+# Senhas (vêm do compilar.ps1, lidas de docs/SENHAS-LOCAIS.md, que fica fora do Git)
+if [ -z "${ARCADIA_ROOT_PASSWORD}" ] || [ -z "${ARCADIA_SAMBA_PASSWORD}" ]; then
+  echo "AVISO: senhas locais não encontradas; a imagem sairá com as senhas padrão (root emuelec / samba arcadia)." | tee -a "$LOG"
+fi
+export ARCADIA_ROOT_PASSWORD ARCADIA_SAMBA_PASSWORD
+# os pacotes que gravam as senhas não percebem a troca sozinhos: recompila-os quando mudarem
+HASH_SENHAS="$(printf '%s|%s' "${ARCADIA_ROOT_PASSWORD}" "${ARCADIA_SAMBA_PASSWORD}" | sha256sum | cut -c1-16)"
+if [ "$(cat "$LOGDIR/.senhas.hash" 2>/dev/null)" != "$HASH_SENHAS" ]; then
+  echo "Senhas mudaram: recompilando busybox e samba." | tee -a "$LOG"
+  ./scripts/clean busybox >/dev/null 2>&1; ./scripts/clean samba >/dev/null 2>&1
+  echo "$HASH_SENHAS" > "$LOGDIR/.senhas.hash"
+fi
+
 # 3) Build (ccache fora da pasta de build, para sobreviver a limpezas)
 make image 2>&1 | tee -a "$LOG"
 RC=$?

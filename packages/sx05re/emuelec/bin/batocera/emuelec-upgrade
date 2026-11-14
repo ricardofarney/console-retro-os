@@ -38,6 +38,9 @@ echo "starting the upgrade..."
 # download directory
 mkdir -p /storage/.update || exit 1
 
+# Arcádia: cópia de segurança das configurações, favoritos e coleções antes de atualizar
+arcadia-dados.sh backup
+
 # get size to download
 url=$(updatecheck.sh geturl)
 UFILE=${url##*/}
