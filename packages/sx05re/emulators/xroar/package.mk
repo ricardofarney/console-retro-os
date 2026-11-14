@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 
 PKG_NAME="xroar"
-PKG_VERSION="1.11"
-PKG_SHA256="70270805ebd52c0b62237cc2f28b32b5c7df9764d10a7c7190de584cfc6e95af"
+PKG_VERSION="1.12.1"
+PKG_SHA256="ba525225fbd732c4dbf2cbb571dc9d2810fd9dcedf0482133cf637e2eef61f88"
 PKG_ARCH="aarch64"
 PKG_LICENSE="GPL-3.0-or-later"
 PKG_SITE="https://www.6809.org.uk/xroar/"
