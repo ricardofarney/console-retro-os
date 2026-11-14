@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Mega CD (SEGA) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>0D47A1A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>0D47A1FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>0D47A1FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>0D47A1FF</secondaryColor>
+      <scrollbarColor>0D47A180</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — MSX (ASCII) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>3949ABA0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>3949ABFF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>3949ABFF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>3949ABFF</secondaryColor>
+      <scrollbarColor>3949AB80</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

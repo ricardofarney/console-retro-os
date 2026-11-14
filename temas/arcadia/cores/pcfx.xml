@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — PC-FX (NEC) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>BF360CA0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>BF360CFF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>BF360CFF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>BF360CFF</secondaryColor>
+      <scrollbarColor>BF360C80</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

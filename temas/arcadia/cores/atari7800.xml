@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Atari 7800 (Atari) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>8D4A2BA0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>8D4A2BFF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>8D4A2BFF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>8D4A2BFF</secondaryColor>
+      <scrollbarColor>8D4A2B80</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

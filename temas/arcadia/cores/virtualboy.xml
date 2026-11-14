@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Virtual Boy (Nintendo) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>D50000A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>D50000FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>D50000FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>D50000FF</secondaryColor>
+      <scrollbarColor>D5000080</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

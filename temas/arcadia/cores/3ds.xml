@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Nintendo 3DS (Nintendo) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>D12228A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>D12228FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>D12228FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>D12228FF</secondaryColor>
+      <scrollbarColor>D1222880</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

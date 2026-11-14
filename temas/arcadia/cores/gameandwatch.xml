@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Game & Watch (Nintendo) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>C9A227A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>C9A227FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>C9A227FF</selectorColor>
+      <selectedColor>0B0C18FF</selectedColor>
+      <secondaryColor>C9A227FF</secondaryColor>
+      <scrollbarColor>C9A22780</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

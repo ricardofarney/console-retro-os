@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — CPS-3 (Capcom) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>4527A0A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>4527A0FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>4527A0FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>4527A0FF</secondaryColor>
+      <scrollbarColor>4527A080</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

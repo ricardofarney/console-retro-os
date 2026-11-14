@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Todos os jogos (biblioteca completa) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>8E9AAFA0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>8E9AAFFF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>8E9AAFFF</selectorColor>
+      <selectedColor>0B0C18FF</selectedColor>
+      <secondaryColor>8E9AAFFF</secondaryColor>
+      <scrollbarColor>8E9AAF80</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

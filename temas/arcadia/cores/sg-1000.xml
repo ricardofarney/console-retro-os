@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — SG-1000 (SEGA) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>C62828A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>C62828FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>C62828FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>C62828FF</secondaryColor>
+      <scrollbarColor>C6282880</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

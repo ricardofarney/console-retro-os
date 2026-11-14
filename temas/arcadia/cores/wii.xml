@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Wii (Nintendo) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>34BEEDA0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>34BEEDFF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>34BEEDFF</selectorColor>
+      <selectedColor>0B0C18FF</selectedColor>
+      <secondaryColor>34BEEDFF</secondaryColor>
+      <scrollbarColor>34BEED80</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

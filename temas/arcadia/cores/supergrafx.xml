@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — SuperGrafx (NEC) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>E65100A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>E65100FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>E65100FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>E65100FF</secondaryColor>
+      <scrollbarColor>E6510080</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — OpenBOR (Pancadaria) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>FF7043A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>FF7043FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>FF7043FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>FF7043FF</secondaryColor>
+      <scrollbarColor>FF704380</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — NAOMI (SEGA) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>FF8F00A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>FF8F00FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>FF8F00FF</selectorColor>
+      <selectedColor>0B0C18FF</selectedColor>
+      <secondaryColor>FF8F00FF</secondaryColor>
+      <scrollbarColor>FF8F0080</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Saturn (SEGA) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>546E7AA0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>546E7AFF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>546E7AFF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>546E7AFF</secondaryColor>
+      <scrollbarColor>546E7A80</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

@@ -37,7 +37,9 @@ if [ ! -d "$AREA/.git" ]; then
 fi
 cd "$AREA" || exit 1
 git remote set-url origin "$REPO_PROJETO"
-if [ -n "$(git -C "$REPO_PROJETO" status --porcelain 2>/dev/null)" ]; then
+# A verificação de alterações não commitadas é feita no Windows pelo compilar.ps1
+# (o git do Linux é lento em /mnt/d e veria os finais de linha CRLF como alteração)
+if [ "${ARCADIA_NAO_COMMITADO:-0}" = "1" ]; then
   echo "AVISO: há alterações NÃO commitadas no repositório do projeto; elas NÃO entram neste build." | tee -a "$LOG"
 fi
 git fetch --prune origin || exit 1

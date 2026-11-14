@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Kodi (Mídia) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>17B2E7A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>17B2E7FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>17B2E7FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>17B2E7FF</secondaryColor>
+      <scrollbarColor>17B2E780</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

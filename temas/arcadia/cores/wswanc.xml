@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — WonderSwan Color (Bandai) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>00897BA0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>00897BFF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>00897BFF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>00897BFF</secondaryColor>
+      <scrollbarColor>00897B80</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

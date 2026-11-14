@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Atomiswave (Sammy) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>FF6F00A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>FF6F00FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>FF6F00FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>FF6F00FF</secondaryColor>
+      <scrollbarColor>FF6F0080</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

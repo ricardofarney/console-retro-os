@@ -71,7 +71,7 @@
 
 ### 1.4 Cuidados no WSL
 
-- Compilar **dentro do Linux** (`~/console-retro-os`), nunca em `/mnt/d/...`: o NTFS montado é lento, não diferencia maiúsculas/minúsculas e não guarda permissões Unix.
+- Compilar **dentro do Linux** (área de compilação `~/arcadia-build`, sincronizada a partir do repositório da pasta do projeto — ver [AMBIENTE-BUILD.md](AMBIENTE-BUILD.md)), nunca em `/mnt/d/...`: o NTFS montado é lento, não diferencia maiúsculas/minúsculas e não guarda permissões Unix.
 - A cópia em `D:\Adube Sistemas\Console de Jogo\console-retro-os` foi clonada pelo Git do Windows com `core.autocrlf=true`, então os scripts estão com finais de linha CRLF. **Ela serve para documentação e edição, não para compilar.** O build usa um clone separado dentro do WSL.
 
 ---
@@ -92,13 +92,15 @@ sudo apt install gcc make git unzip wget xz-utils libsdl2-dev libsdl2-mixer-dev 
 ### 2.3 Comando exato de build
 
 ```bash
-git clone https://github.com/ricardofarney/console-retro-os.git ~/console-retro-os
-cd ~/console-retro-os
+git clone "/mnt/d/Adube Sistemas/Console de Jogo/console-retro-os" ~/arcadia-build
+cd ~/arcadia-build
 git checkout dev
 PROJECT=Amlogic-ce DEVICE=Amlogic-ng ARCH=aarch64 DISTRO=EmuELEC make image
 ```
 
-Resultado em `target/`:
+Na prática, use o script [ferramentas/wsl/compilar.ps1](../ferramentas/wsl/compilar.ps1), que faz a sincronização, o build e a cópia das imagens para `D:\Adube Sistemas\Console de Jogo\imagens-compiladas` (ver [AMBIENTE-BUILD.md](AMBIENTE-BUILD.md)).
+
+Resultado em `target/` (copiado para `imagens-compiladas\`):
 
 - `EmuELEC-Amlogic-ng.aarch64-<versão>.img.gz` → gravar no microSD (balenaEtcher ou Rufus);
 - `EmuELEC-Amlogic-ng.aarch64-<versão>.tar` → pacote de atualização.

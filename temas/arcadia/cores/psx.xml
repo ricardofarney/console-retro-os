@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — PlayStation (Sony) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>8E8E93A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>8E8E93FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>8E8E93FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>8E8E93FF</secondaryColor>
+      <scrollbarColor>8E8E9380</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — PC-98 (NEC) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>5C6BC0A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>5C6BC0FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>5C6BC0FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>5C6BC0FF</secondaryColor>
+      <scrollbarColor>5C6BC080</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

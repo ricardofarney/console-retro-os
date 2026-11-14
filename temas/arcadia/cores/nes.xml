@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — NES (Nintendo) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>E4002BA0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>E4002BFF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>E4002BFF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>E4002BFF</secondaryColor>
+      <scrollbarColor>E4002B80</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

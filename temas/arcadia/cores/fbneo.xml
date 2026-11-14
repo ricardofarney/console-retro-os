@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Fliperama (FBNeo) (Arcade) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>E91E63A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>E91E63FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>E91E63FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>E91E63FF</secondaryColor>
+      <scrollbarColor>E91E6380</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

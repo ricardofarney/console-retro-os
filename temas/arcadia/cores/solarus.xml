@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Solarus (Aventuras) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>26C6DAA0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>26C6DAFF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>26C6DAFF</selectorColor>
+      <selectedColor>0B0C18FF</selectedColor>
+      <secondaryColor>26C6DAFF</secondaryColor>
+      <scrollbarColor>26C6DA80</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

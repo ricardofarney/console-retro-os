@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Dreamcast (SEGA) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>F57C00A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>F57C00FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>F57C00FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>F57C00FF</secondaryColor>
+      <scrollbarColor>F57C0080</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Jogos Portados (PC) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>29B6F6A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>29B6F6FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>29B6F6FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>29B6F6FF</secondaryColor>
+      <scrollbarColor>29B6F680</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

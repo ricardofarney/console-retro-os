@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Lynx (Atari) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>F9A825A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>F9A825FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>F9A825FF</selectorColor>
+      <selectedColor>0B0C18FF</selectedColor>
+      <secondaryColor>F9A825FF</secondaryColor>
+      <scrollbarColor>F9A82580</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

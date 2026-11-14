@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — ZX81 (Sinclair) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>FF8A65A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>FF8A65FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>FF8A65FF</selectorColor>
+      <selectedColor>0B0C18FF</selectedColor>
+      <secondaryColor>FF8A65FF</secondaryColor>
+      <scrollbarColor>FF8A6580</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

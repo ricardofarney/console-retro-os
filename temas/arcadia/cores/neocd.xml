@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Neo Geo CD (SNK) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>C5A028A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>C5A028FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>C5A028FF</selectorColor>
+      <selectedColor>0B0C18FF</selectedColor>
+      <secondaryColor>C5A028FF</secondaryColor>
+      <scrollbarColor>C5A02880</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — PC Engine CD (NEC) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>EF6C00A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>EF6C00FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>EF6C00FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>EF6C00FF</secondaryColor>
+      <scrollbarColor>EF6C0080</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

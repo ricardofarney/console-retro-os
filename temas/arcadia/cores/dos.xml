@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — MS-DOS (PC) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>43A047A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>43A047FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>43A047FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>43A047FF</secondaryColor>
+      <scrollbarColor>43A04780</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

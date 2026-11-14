@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — ScummVM (Aventuras) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>66BB6AA0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>66BB6AFF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>66BB6AFF</selectorColor>
+      <selectedColor>0B0C18FF</selectedColor>
+      <secondaryColor>66BB6AFF</secondaryColor>
+      <scrollbarColor>66BB6A80</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

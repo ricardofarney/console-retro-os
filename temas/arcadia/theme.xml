@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Tema: Arcádia (versão 0.1)
+  Projeto: Arcádia — Console de Jogos Retrô (KINHANK Super Console X2 Pro)
+  Compatível com o EmulationStation da linha Batocera (EmuELEC e RetroBat).
+  Artes geradas por ferramentas/tema/gerar-arte.ps1 — não editar as imagens à mão.
+  Cores por console: cores/<sistema>.xml (geradas pelo mesmo script).
+-->
+<theme defaultView="detailed">
+  <formatVersion>7</formatVersion>
+
+  <variables>
+    <corDestaque>F2B33D</corDestaque>
+    <corTexto>F4F1EA</corTexto>
+    <corTextoSuave>B9B6C9</corTextoSuave>
+    <corFundoLista>0B0C18C0</corFundoLista>
+  </variables>
+
+  <!-- ===================== Tela inicial (sistemas) ===================== -->
+  <view name="system">
+    <image name="background" extra="static">
+      <pos>0 0</pos>
+      <size>1 1</size>
+      <path>./arte/fundo.png</path>
+      <zIndex>10</zIndex>
+    </image>
+
+    <!-- Brilho colorido atrás do console selecionado (cor definida em cores/<sistema>.xml) -->
+    <image name="brilho" extra="true">
+      <pos>0.5 0.5</pos>
+      <origin>0.5 0.5</origin>
+      <size>1 1</size>
+      <path>./arte/brilho.png</path>
+      <color>${corDestaque}A0</color>
+      <zIndex>11</zIndex>
+    </image>
+
+    <text name="marca" extra="static">
+      <text>ARCÁDIA</text>
+      <pos>0.04 0.05</pos>
+      <size>0.5 0.07</size>
+      <fontSize>0.055</fontSize>
+      <color>${corTexto}</color>
+      <alignment>left</alignment>
+      <forceUppercase>true</forceUppercase>
+      <zIndex>50</zIndex>
+    </text>
+
+    <text name="subtitulo" extra="static">
+      <text>Escolha onde jogar</text>
+      <pos>0.04 0.115</pos>
+      <size>0.5 0.04</size>
+      <fontSize>0.028</fontSize>
+      <color>${corTextoSuave}</color>
+      <alignment>left</alignment>
+      <zIndex>50</zIndex>
+    </text>
+
+    <carousel name="systemcarousel">
+      <type>horizontal</type>
+      <pos>0 0.36</pos>
+      <size>1 0.28</size>
+      <color>00000000</color>
+      <logoSize>0.26 0.2</logoSize>
+      <logoScale>1.25</logoScale>
+      <maxLogoCount>3</maxLogoCount>
+      <minLogoOpacity>0.35</minLogoOpacity>
+      <defaultTransition>slide</defaultTransition>
+      <zIndex>40</zIndex>
+    </carousel>
+
+    <image name="logo">
+      <path>./logos/${system.theme}.png</path>
+      <linearSmooth>true</linearSmooth>
+    </image>
+
+    <text name="logoText">
+      <fontSize>0.06</fontSize>
+      <color>${corTexto}</color>
+      <forceUppercase>false</forceUppercase>
+    </text>
+
+    <text name="systemInfo">
+      <pos>0 0.66</pos>
+      <size>1 0.05</size>
+      <fontSize>0.03</fontSize>
+      <color>${corTexto}</color>
+      <backgroundColor>00000000</backgroundColor>
+      <alignment>center</alignment>
+      <zIndex>45</zIndex>
+    </text>
+
+    <helpsystem name="help">
+      <pos>0.04 0.94</pos>
+      <textColor>${corTextoSuave}</textColor>
+      <iconColor>${corTextoSuave}</iconColor>
+      <fontSize>0.025</fontSize>
+    </helpsystem>
+  </view>
+
+  <!-- ===================== Listas de jogos ===================== -->
+  <view name="basic,detailed,video">
+    <image name="background" extra="static">
+      <pos>0 0</pos>
+      <size>1 1</size>
+      <path>./arte/fundo.png</path>
+      <zIndex>10</zIndex>
+    </image>
+
+    <!-- Faixa superior na cor do console (cor definida em cores/<sistema>.xml) -->
+    <image name="faixa" extra="true">
+      <pos>0 0</pos>
+      <size>1 0.13</size>
+      <path>./arte/faixa.png</path>
+      <color>${corDestaque}FF</color>
+      <zIndex>12</zIndex>
+    </image>
+
+    <image name="painelLista" extra="true">
+      <pos>0.03 0.16</pos>
+      <size>0.47 0.76</size>
+      <path>./arte/branco.png</path>
+      <color>${corFundoLista}</color>
+      <zIndex>13</zIndex>
+    </image>
+
+    <image name="logo">
+      <pos>0.04 0.065</pos>
+      <origin>0 0.5</origin>
+      <maxSize>0.36 0.1</maxSize>
+      <path>./logos/${system.theme}.png</path>
+      <linearSmooth>true</linearSmooth>
+      <zIndex>50</zIndex>
+    </image>
+
+    <text name="logoText">
+      <pos>0.04 0.02</pos>
+      <size>0.6 0.09</size>
+      <fontSize>0.05</fontSize>
+      <color>${corTexto}</color>
+      <alignment>left</alignment>
+      <zIndex>50</zIndex>
+    </text>
+
+    <textlist name="gamelist">
+      <pos>0.04 0.18</pos>
+      <size>0.45 0.72</size>
+      <fontSize>0.034</fontSize>
+      <lineSpacing>1.7</lineSpacing>
+      <alignment>left</alignment>
+      <horizontalMargin>0.012</horizontalMargin>
+      <selectorColor>${corDestaque}FF</selectorColor>
+      <selectedColor>0B0C18FF</selectedColor>
+      <primaryColor>${corTexto}FF</primaryColor>
+      <secondaryColor>${corDestaque}FF</secondaryColor>
+      <scrollbarColor>${corDestaque}80</scrollbarColor>
+      <zIndex>40</zIndex>
+    </textlist>
+
+    <helpsystem name="help">
+      <pos>0.04 0.94</pos>
+      <textColor>${corTextoSuave}</textColor>
+      <iconColor>${corTextoSuave}</iconColor>
+      <fontSize>0.025</fontSize>
+    </helpsystem>
+  </view>
+
+  <view name="detailed,video">
+    <image name="md_image">
+      <pos>0.76 0.4</pos>
+      <origin>0.5 0.5</origin>
+      <maxSize>0.4 0.42</maxSize>
+      <zIndex>30</zIndex>
+    </image>
+
+    <video name="md_video">
+      <pos>0.76 0.4</pos>
+      <origin>0.5 0.5</origin>
+      <maxSize>0.4 0.42</maxSize>
+      <zIndex>31</zIndex>
+    </video>
+
+    <text name="md_description">
+      <pos>0.55 0.66</pos>
+      <size>0.41 0.17</size>
+      <fontSize>0.022</fontSize>
+      <color>${corTexto}</color>
+      <alignment>left</alignment>
+      <zIndex>30</zIndex>
+    </text>
+
+    <!-- Informações curtas: último jogo e vezes jogadas (ajudam o "continuar de onde parei") -->
+    <text name="md_lbl_lastplayed"><pos>0.55 0.85</pos><size>0.13 0.035</size><fontSize>0.022</fontSize><color>${corTextoSuave}</color><zIndex>30</zIndex></text>
+    <datetime name="md_lastplayed"><pos>0.68 0.85</pos><size>0.12 0.035</size><fontSize>0.022</fontSize><color>${corTexto}</color><zIndex>30</zIndex></datetime>
+    <text name="md_lbl_playcount"><pos>0.81 0.85</pos><size>0.09 0.035</size><fontSize>0.022</fontSize><color>${corTextoSuave}</color><zIndex>30</zIndex></text>
+    <text name="md_playcount"><pos>0.9 0.85</pos><size>0.06 0.035</size><fontSize>0.022</fontSize><color>${corTexto}</color><zIndex>30</zIndex></text>
+    <text name="md_lbl_genre"><pos>0.55 0.89</pos><size>0.13 0.035</size><fontSize>0.022</fontSize><color>${corTextoSuave}</color><zIndex>30</zIndex></text>
+    <text name="md_genre"><pos>0.68 0.89</pos><size>0.28 0.035</size><fontSize>0.022</fontSize><color>${corTexto}</color><zIndex>30</zIndex></text>
+
+    <!-- Itens ocultos nesta versão para manter a tela limpa -->
+    <text name="md_lbl_rating"><visible>false</visible></text>
+    <rating name="md_rating"><visible>false</visible></rating>
+    <text name="md_lbl_releasedate"><visible>false</visible></text>
+    <datetime name="md_releasedate"><visible>false</visible></datetime>
+    <text name="md_lbl_developer"><visible>false</visible></text>
+    <text name="md_developer"><visible>false</visible></text>
+    <text name="md_lbl_publisher"><visible>false</visible></text>
+    <text name="md_publisher"><visible>false</visible></text>
+    <text name="md_lbl_players"><visible>false</visible></text>
+    <text name="md_players"><visible>false</visible></text>
+  </view>
+
+  <!-- Cores e ajustes de cada console (arquivo ausente = cor padrão dourada) -->
+  <include>./cores/${system.theme}.xml</include>
+</theme>

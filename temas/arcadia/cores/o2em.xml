@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Odyssey² (Philips) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>9E9D24A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>9E9D24FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>9E9D24FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>9E9D24FF</secondaryColor>
+      <scrollbarColor>9E9D2480</scrollbarColor>
+    </textlist>
+  </view>
+</theme>

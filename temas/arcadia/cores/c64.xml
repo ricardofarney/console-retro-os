@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Gerado por ferramentas/tema/gerar-arte.ps1 — Commodore 64 (Commodore) -->
+<theme>
+  <formatVersion>7</formatVersion>
+  <view name="system">
+    <image name="brilho"><color>7E57C2A0</color></image>
+  </view>
+  <view name="basic,detailed,video">
+    <image name="faixa"><color>7E57C2FF</color></image>
+    <textlist name="gamelist">
+      <selectorColor>7E57C2FF</selectorColor>
+      <selectedColor>FFFFFFFF</selectedColor>
+      <secondaryColor>7E57C2FF</secondaryColor>
+      <scrollbarColor>7E57C280</scrollbarColor>
+    </textlist>
+  </view>
+</theme>
