@@ -2,12 +2,13 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="emuelec-emulationstation"
-PKG_VERSION="3de652c69481de5fad2178ceebb9470950b3e683"
-PKG_GIT_CLONE_BRANCH="EmuELEC"
+PKG_VERSION="0c64beb77534e3b379acd745ebf12c2c1ffe6d5a"
+PKG_GIT_CLONE_BRANCH="arcadia"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/EmuELEC/emuelec-emulationstation"
+# Arcadia: fork com consoles favoritos, escolha de save e menu simplificado (docs/FUNCOES-ARCADIA.md)
+PKG_SITE="https://github.com/ricardofarney/arcadia-emulationstation"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain SDL2 freetype freeimage vlc rapidjson ${OPENGLES} SDL2_mixer fping p7zip espeak"
 PKG_SECTION="emuelec"
