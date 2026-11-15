@@ -79,6 +79,11 @@ item "Consoles sem jogos escondidos (exceto Continuar jogando/Favoritos)" $? "Lo
 grep -q '{game:releaseyear}' "$T/theme.xml" && grep -q '<datetime name="md_releasedate"><visible>false</visible>' "$T/theme.xml"
 item "Ficha do jogo sem \"Lançamento: Desconhecido\"" $? "ano por {game:releaseyear}, linha some sem data"
 
+# 6b) desempenho no S905X2 (docs/DESEMPENHO-S905X2.md)
+RCO="$S/usr/config/retroarch/retroarch-core-options.cfg"
+grep -qx 'global.shaderset=none' "$EC" && grep -q '^mupen64plus-43screensize = "320x240"' "$RCO" && grep -q '^pcsx_rearmed_neon_enhancement_enable = "disabled"' "$RCO"
+item "Padrões de desempenho do S905X2" $? "shaders desligados; N64 320x240 + repetição de quadro; PS1 resolução nativa; vídeo $(grep -oP '^ee_videomode=\K\S+' "$EC")"
+
 # 7) senha do root
 SH="$S/usr/cache/shadow"; HASH="$(sudo grep '^root:' "$SH" 2>/dev/null | cut -d: -f2)"   # arquivo com permissão 000
 python3 -W ignore -c "import crypt,sys; h=sys.argv[1]; sys.exit(0 if h and h not in ('*','!') and crypt.crypt('emuelec',h)!=h else 1)" "$HASH"

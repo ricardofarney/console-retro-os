@@ -20,6 +20,7 @@ Sem argumento, confere `Arcadia-Amlogic-ng.aarch64-<EE_VERSION>-Generic.img.gz`;
 | "ONDE VOCÊ QUER COMEÇAR?" | `global.savestates=2` no `emuelec.conf`; `setsettings.sh` mantém o salvar ao sair em "COMEÇAR DO INÍCIO" |
 | Coleções e ordem (DESIGN.md) | `CollectionSystemsAuto=recent,favorites,all` + função de ordem no binário |
 | Consoles vazios escondidos | `LoadEmptySystems` não ligado (padrão `false` do ES esconde consoles sem jogos; Continuar jogando/Favoritos aparecem mesmo vazios — comprovado em [TESTE-WSLG.md](TESTE-WSLG.md)) |
+| Desempenho S905X2 | `global.shaderset=none`; `retroarch-core-options.cfg` com N64 em 320×240 e PS1 em resolução nativa ([DESEMPENHO-S905X2.md](DESEMPENHO-S905X2.md)) |
 | Ficha do jogo | tema usa `{game:releaseyear}` e esconde `md_releasedate` (sem "Lançamento: Desconhecido") |
 | Senha do root | hash em `/usr/cache/shadow` (permissão 000, lido com `sudo`) não confere com `emuelec` |
 | Atualização | `updatecheck.sh` com `versoes.txt` e Releases de `ricardofarney/console-retro-os`, arquivo `Arcadia-*`, comparação X.Y.Z |
