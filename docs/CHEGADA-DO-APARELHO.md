@@ -9,7 +9,7 @@ KINHANK Super Console X2 Pro (Amlogic S905X2) + Arcádia. Preparado em 14/11/202
 - Cartão microSD **novo**, de preferência do mesmo tamanho ou maior que o original (classe A1/U3).
 - Leitor de cartão USB.
 - Espaço livre em `D:` de pelo menos 2× o tamanho do cartão original.
-- Imagem do Arcádia: `D:\Adube Sistemas\Console de Jogo\imagens-compiladas\Arcadia-Amlogic-ng.aarch64-1.0.0.img.gz` (+ `.sha256`).
+- Imagem do Arcádia: `D:\Adube Sistemas\Console de Jogo\imagens-compiladas\Arcadia-Amlogic-ng.aarch64-1.0.0-Generic.img.gz` (+ `.sha256`).
 - [balenaEtcher](https://etcher.balena.io) ou [Rufus](https://rufus.ie) para gravar o cartão novo.
 - Senhas do Arcádia: `docs/SENHAS-LOCAIS.md` (arquivo local, fora do Git).
 
@@ -56,7 +56,7 @@ O `dtb.img` copiado no passo 2a é o que funciona no X2 Pro. Para saber qual DTB
 
 ## 4. Gravar o Arcádia num cartão NOVO
 
-1. Confira o SHA-256 da imagem: `Get-FileHash "D:\Adube Sistemas\Console de Jogo\imagens-compiladas\Arcadia-Amlogic-ng.aarch64-1.0.0.img.gz"` e compare com o `.sha256`.
+1. Confira o SHA-256 da imagem: `Get-FileHash "D:\Adube Sistemas\Console de Jogo\imagens-compiladas\Arcadia-Amlogic-ng.aarch64-1.0.0-Generic.img.gz"` e compare com o `.sha256`.
 2. Coloque o **cartão novo** no leitor (só ele).
 3. balenaEtcher → *Flash from file* → o `.img.gz` → *Select target* → o cartão novo (confira o tamanho!) → *Flash*.
 4. Coloque o DTB do original no cartão novo:

@@ -8,7 +8,7 @@
 #   powershell -ExecutionPolicy Bypass -File ferramentas\publicar-versao.ps1 -Versao 1.1.0 -Canal beta -Notas notas.md -Publicar
 #
 # O que faz:
-#   1. procura em imagens-compiladas\ os arquivos Arcadia-Amlogic-ng.aarch64-<versão>.img.gz e .tar;
+#   1. procura em imagens-compiladas\ os arquivos Arcadia-Amlogic-ng.aarch64-<versão>-Generic.img.gz (TV boxes) e .tar;
 #   2. copia para imagens-compiladas\publicar\v<versão>\ e gera um .sha256 para cada um;
 #   3. gera as notas da versão em português (ou usa -Notas);
 #   4. (-Publicar) cria a Release v<versão> com os arquivos, e atualiza atualizacao\versoes.txt
@@ -41,7 +41,7 @@ if ($Versao -notmatch '^\d+\.\d+\.\d+$') { throw "Versão inválida '$Versao' (u
 $versaoRepo = (Get-Content (Join-Path $repo 'packages\sx05re\emuelec\config\EE_VERSION') -Raw).Trim()
 if ($versaoRepo -ne $Versao) { throw "A versão pedida ($Versao) é diferente da versão da imagem ($versaoRepo em packages\sx05re\emuelec\config\EE_VERSION). Compile a versão certa antes." }
 
-$img = Join-Path $imagens "$base.img.gz"
+$img = Join-Path $imagens "$base-Generic.img.gz"   # imagem para TV boxes (as de placas Odroid/Radxa etc. não são publicadas)
 $tar = Join-Path $imagens "$base.tar"
 foreach ($f in $img, $tar) { if (-not (Test-Path $f)) { throw "Arquivo não encontrado: $f (compile com ferramentas\wsl\compilar.ps1)." } }
 foreach ($f in $img, $tar) {
@@ -72,7 +72,7 @@ if ($Notas) {
     $anterior = (git -C $repo tag --list 'v*' --sort=-v:refname 2>$null | Select-Object -First 1)
     $faixa = if ($anterior) { "$anterior..HEAD" } else { 'HEAD~30..HEAD' }
     $mudancas = (git -C $repo log --pretty='- %s' $faixa 2>$null | Select-Object -First 40) -join "`n"
-    $hashImg = (Get-Content "$saida\$base.img.gz.sha256").Split(' ')[0]
+    $hashImg = (Get-Content "$saida\$base-Generic.img.gz.sha256").Split(' ')[0]
     $hashTar = (Get-Content "$saida\$base.tar.sha256").Split(' ')[0]
     $tipo = if ($Canal -eq 'beta') { 'versão de testes (beta)' } else { 'versão estável' }
     $texto = @"
@@ -82,7 +82,7 @@ Sistema de jogos retrô do projeto Arcádia para o KINHANK Super Console X2 Pro 
 
 ## Instalação nova (cartão microSD novo)
 
-1. Baixe **$base.img.gz** e confira o SHA-256.
+1. Baixe **$base-Generic.img.gz** e confira o SHA-256.
 2. Grave no cartão com o balenaEtcher (ou Rufus) — não é preciso descompactar.
 3. Coloque o DTB do aparelho como ``dtb.img`` na partição de boot (ver docs/CHEGADA-DO-APARELHO.md).
 
@@ -94,7 +94,7 @@ Menu **Atualizações** no próprio console: ele baixa **$base.tar**, confere o 
 
 | Arquivo | SHA-256 |
 |---|---|
-| $base.img.gz | ``$hashImg`` |
+| $base-Generic.img.gz | ``$hashImg`` |
 | $base.tar | ``$hashTar`` |
 
 ## Mudanças

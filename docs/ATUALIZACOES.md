@@ -23,7 +23,7 @@ próximo boot: o initramfs aplica o .tar (KERNEL + SYSTEM); /storage não é toc
 | Versão da imagem | [packages/sx05re/emuelec/config/EE_VERSION](../packages/sx05re/emuelec/config/EE_VERSION) = `1.0.0` |
 | Versões publicadas (lido pelos aparelhos) | [atualizacao/versoes.txt](../atualizacao/versoes.txt) — vazio até a primeira publicação |
 | Canal do aparelho | `updates.type=stable` (ou `beta`) no `emuelec.conf`; `updates.enabled=1` verifica no boot |
-| Nome dos arquivos | o build gera `Arcadia-Amlogic-ng.aarch64-<versão>.img.gz` e `.tar` (`CUSTOM_IMAGE_NAME` no [compilar.sh](../ferramentas/wsl/compilar.sh)) |
+| Nome dos arquivos | o build gera `Arcadia-Amlogic-ng.aarch64-<versão>-Generic.img.gz` (TV boxes, como o X2 Pro), imagens de placas (`-Odroid_N2`, `-Radxa_Zero`… — não usadas) e o `.tar` de atualização (`CUSTOM_IMAGE_NAME` no [compilar.sh](../ferramentas/wsl/compilar.sh)) |
 
 O que mudou em relação ao EmuELEC:
 
@@ -35,7 +35,7 @@ O que mudou em relação ao EmuELEC:
 ## Como publicar uma versão
 
 1. Ajuste a versão em `packages/sx05re/emuelec/config/EE_VERSION` (ex.: `1.0.1`), faça commit.
-2. Compile: `ferramentas\wsl\compilar.ps1` (ver [AMBIENTE-BUILD.md](AMBIENTE-BUILD.md)). Saem `Arcadia-Amlogic-ng.aarch64-<versão>.img.gz` e `.tar` em `imagens-compiladas\`.
+2. Compile: `ferramentas\wsl\compilar.ps1` (ver [AMBIENTE-BUILD.md](AMBIENTE-BUILD.md)). Saem `Arcadia-Amlogic-ng.aarch64-<versão>-Generic.img.gz` e `.tar` em `imagens-compiladas\` (mais as imagens de placas, que não são publicadas).
 3. Teste a imagem no aparelho.
 4. Simule (não envia nada):
 

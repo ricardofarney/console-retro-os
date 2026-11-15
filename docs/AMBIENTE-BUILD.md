@@ -95,3 +95,17 @@ Outras regras do build do Arcádia (detalhes em [CONFIGURACAO-DE-FABRICA.md](CON
 - nome da imagem: `Arcadia-Amlogic-ng.aarch64-<versão>` (`CUSTOM_IMAGE_NAME`, versão em `packages/sx05re/emuelec/config/EE_VERSION`);
 - senhas do root e do Samba lidas de `docs/SENHAS-LOCAIS.md` (fora do Git) pelo `compilar.ps1`; `busybox` e `samba` recompilam quando mudam;
 - o EmulationStation vem do fork `ricardofarney/arcadia-emulationstation` ([FUNCOES-ARCADIA.md](FUNCOES-ARCADIA.md)).
+
+## Resultado do build final (14/11/2026, 22:17)
+
+Build do commit `ae97c2b` concluído com sucesso em 201 minutos (depois das correções acima). Arquivos em `D:\Adube Sistemas\Console de Jogo\imagens-compiladas\`:
+
+| Arquivo | Uso | SHA-256 |
+|---|---|---|
+| `Arcadia-Amlogic-ng.aarch64-1.0.0-Generic.img.gz` (1,3 GB) | **gravar no cartão do X2 Pro** (TV boxes) | `687c6bb8…2e73fe0f` |
+| `Arcadia-Amlogic-ng.aarch64-1.0.0.tar` (1,4 GB) | atualização pelo menu | `ecf4522c…17e860c0` |
+| `…-Odroid_N2`, `-Odroid_N2L`, `-Odroid_C4`, `-Odroid_HC4`, `-LePotato`, `-LaFrite`, `-Radxa_Zero`, `-Radxa_Zero2` `.img.gz` | placas de desenvolvimento (geradas automaticamente pelo EmuELEC; **não usadas**) | — |
+
+Conferido dentro da imagem (sistema extraído do `.tar`): versão `1.0.0`; `ThemeSet=arcadia`, `CollectionSystemsAuto=recent,favorites,all`, `ShowSaveStates=true`; `pt_BR`, `America/Sao_Paulo`, `ARCADIA`, `global.autosave=1`; tema `arcadia` com a grade; `arcadia-dados.sh`; `updatecheck.sh` apontando para o fork; Samba com usuário `arcadia` e senha definida; senha do root = a de `docs/SENHAS-LOCAIS.md` (a padrão `emuelec` não funciona); EmulationStation aarch64 do fork com as traduções novas; tela de abertura nova (1920×1080).
+
+Para gerar só a imagem `Generic`, seria preciso esvaziar `SUBDEVICES` em `projects/Amlogic-ce/devices/Amlogic-ng/options`, o que muda o caminho de montagem da imagem de boot — **não alterado** até haver o aparelho para testar.

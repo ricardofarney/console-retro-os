@@ -58,7 +58,7 @@ Regra aprendida: **nada de acento em comentários do código C++** — o `xgette
 ## Compilação
 
 - **Teste rápido (x86_64, Ubuntu do WSL):** `ferramentas-arcadia/compilar-teste-wsl.sh` no fork — compilou sem erros em 14/11/2026 (`COMPILACAO-OK`), com `-DENABLE_EMUELEC=1`.
-- **Imagem do aparelho (aarch64):** compilado pelo build completo (`ferramentas\wsl\compilar.ps1`); resultado em [AMBIENTE-BUILD.md](AMBIENTE-BUILD.md).
+- **Imagem do aparelho (aarch64):** compilou no build completo de 14/11/2026 (binário `ELF 64-bit ARM aarch64`, `.mo` pt-BR com os textos novos) e está na imagem `Arcadia-Amlogic-ng.aarch64-1.0.0` — ver [AMBIENTE-BUILD.md](AMBIENTE-BUILD.md#resultado-do-build-final-14112026-2217).
 
 ## O que só pode ser testado no aparelho
 

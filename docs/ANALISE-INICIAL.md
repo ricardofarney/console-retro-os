@@ -102,8 +102,8 @@ Na prática, use o script [ferramentas/wsl/compilar.ps1](../ferramentas/wsl/comp
 
 Resultado em `target/` (copiado para `imagens-compiladas\`):
 
-- `EmuELEC-Amlogic-ng.aarch64-<versão>.img.gz` → gravar no microSD (balenaEtcher ou Rufus);
-- `EmuELEC-Amlogic-ng.aarch64-<versão>.tar` → pacote de atualização.
+- `Arcadia-Amlogic-ng.aarch64-<versão>-Generic.img.gz` → gravar no microSD (balenaEtcher ou Rufus);
+- `Arcadia-Amlogic-ng.aarch64-<versão>.tar` → pacote de atualização.
 
 Recompilar só um pacote: `PROJECT=Amlogic-ce DEVICE=Amlogic-ng ARCH=aarch64 DISTRO=EmuELEC ./scripts/clean <pacote>` e, em seguida, o mesmo `make image`.
 
