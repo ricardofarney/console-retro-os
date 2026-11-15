@@ -80,7 +80,7 @@ Proteções do script: recusa versão fora do formato X.Y.Z ou diferente do `EE_
    bash simular-atualizacao.sh 1.0.0 1.0.1-teste
    ```
 
-4. Apague o rascunho: `gh release delete v1.0.1-teste --repo ricardofarney/console-retro-os --yes`.
+4. Apague o rascunho: `gh release delete v1.0.1-teste --repo ricardofarney/console-retro-os --yes` (sem `--cleanup-tag`: rascunho não cria tag). O rascunho do ensaio de 15/11/2026 foi apagado depois de mostrado ao usuário.
 
 **Nunca instale uma versão de teste no aparelho de verdade.** Para o `sort -V`, `1.0.1-teste` vem **depois** de `1.0.1`. Um aparelho com a versão de teste só receberia a partir da `1.0.2`. Se acontecer, regrave o cartão ou copie o `.tar` certo para `\\ARCADIA\Update`.
 

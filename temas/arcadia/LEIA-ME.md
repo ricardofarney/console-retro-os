@@ -23,7 +23,6 @@ Telas de abertura do EmuELEC (antes do EmulationStation abrir), geradas pelo mes
 | `logos/<sistema>.png` | **cards** dos consoles 640×400 (gerados) — usados pela grade via `{system:logo}` |
 | `logos/claro/<sistema>.png` | nome em branco para a faixa das listas (gerados) |
 | `cores/<sistema>.xml` | cor do console e tom claro do fundo das listas (gerados) |
-| `arte/fundo.png`, `arte/brilho.png`, `arte/faixa.png` | sobras da v0.1 (não usadas; candidatas a remoção) |
 
 ## Como alterar
 

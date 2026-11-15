@@ -154,9 +154,9 @@ Os jogos rodando (miniaturas que o próprio RetroArch salvou junto com o save):
 
 **Fork:** commit `6ad7cae` na branch `arcadia`, com `PKG_VERSION` atualizado no `package.mk`.
 
-### Decisão sua: "COMEÇAR DO INÍCIO" salva ao sair?
+### Decisão: "COMEÇAR DO INÍCIO" salva ao sair (confirmada pelo usuário em 15/11/2026)
 
-Mudei para **sim**: quem escolhe começar do início e joga um pouco, na próxima vez vê "CONTINUAR DE ONDE PAREI" levando ao ponto mais recente. O efeito colateral é que o ponto antigo é substituído.
+Ficou **sim**: quem escolhe começar do início e joga um pouco, na próxima vez vê "CONTINUAR DE ONDE PAREI" levando ao ponto mais recente. O efeito colateral é que o ponto antigo é substituído.
 
 Para guardar um ponto importante, use os espaços de save do RetroArch (Hotkey + R1) ou "COPIAR PARA UM ESPAÇO LIVRE" (botão X) na própria janela.
 

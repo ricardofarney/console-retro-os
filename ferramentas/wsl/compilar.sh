@@ -91,7 +91,9 @@ DUR=$(( ($(date +%s) - INICIO) / 60 ))
 
 # 4) Copiar resultado para a pasta do projeto
 if [ $RC -eq 0 ]; then
-  cp -v target/*.img.gz target/*.tar target/*.sha256 "$SAIDA"/ 2>&1 | tee -a "$LOG"
+  # só os arquivos desta versão (o target guarda builds antigos, ex.: imagens de placas que não usamos mais)
+  cp -v "target/${CUSTOM_IMAGE_NAME}-Generic.img.gz" "target/${CUSTOM_IMAGE_NAME}-Generic.img.gz.sha256" \
+        "target/${CUSTOM_IMAGE_NAME}.tar" "target/${CUSTOM_IMAGE_NAME}.tar.sha256" "$SAIDA"/ 2>&1 | tee -a "$LOG"
   echo "OK em $(agora) - duracao ${DUR} min - commit $(git log -1 --format=%h) - imagens em D:\\Adube Sistemas\\Console de Jogo\\imagens-compiladas" > "$STATUS"
 else
   echo "FALHOU (codigo $RC) em $(agora) - duracao ${DUR} min - ver imagens-compiladas\\logs\\build-$DATA.log" > "$STATUS"

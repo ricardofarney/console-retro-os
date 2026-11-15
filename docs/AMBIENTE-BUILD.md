@@ -104,7 +104,7 @@ Build do commit `ae97c2b` concluído com sucesso em 201 minutos (depois das corr
 |---|---|---|
 | `Arcadia-Amlogic-ng.aarch64-1.0.0-Generic.img.gz` (1,3 GB) | **gravar no cartão do X2 Pro** (TV boxes) | `687c6bb8…2e73fe0f` (substituída pela de 15/11, abaixo) |
 | `Arcadia-Amlogic-ng.aarch64-1.0.0.tar` (1,4 GB) | atualização pelo menu | `ecf4522c…17e860c0` |
-| `…-Odroid_N2`, `-Odroid_N2L`, `-Odroid_C4`, `-Odroid_HC4`, `-LePotato`, `-LaFrite`, `-Radxa_Zero`, `-Radxa_Zero2` `.img.gz` | placas de desenvolvimento (geradas automaticamente pelo EmuELEC; **não usadas**) | — |
+| `…-Odroid_N2`, `-Odroid_N2L`, `-Odroid_C4`, `-Odroid_HC4`, `-LePotato`, `-LaFrite`, `-Radxa_Zero`, `-Radxa_Zero2` `.img.gz` | placas de desenvolvimento (geradas automaticamente pelo EmuELEC; **não usadas**). LaFrite, LePotato e Odroid_C4 apagadas de `imagens-compiladas` em 15/11/2026, com OK do usuário; o `compilar.sh` agora copia só a Generic e o `.tar` da versão compilada | — |
 
 Conferido dentro da imagem (sistema extraído do `.tar`): versão `1.0.0`; `ThemeSet=arcadia`, `CollectionSystemsAuto=recent,favorites,all`, `ShowSaveStates=true`; `pt_BR`, `America/Sao_Paulo`, `ARCADIA`, `global.autosave=1`; tema `arcadia` com a grade; `arcadia-dados.sh`; `updatecheck.sh` apontando para o fork; Samba com usuário `arcadia` e senha definida; senha do root = a de `docs/SENHAS-LOCAIS.md` (a padrão `emuelec` não funciona); EmulationStation aarch64 do fork com as traduções novas; tela de abertura nova (1920×1080).
 
