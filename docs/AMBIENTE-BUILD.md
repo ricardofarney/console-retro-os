@@ -102,10 +102,12 @@ Build do commit `ae97c2b` concluído com sucesso em 201 minutos (depois das corr
 
 | Arquivo | Uso | SHA-256 |
 |---|---|---|
-| `Arcadia-Amlogic-ng.aarch64-1.0.0-Generic.img.gz` (1,3 GB) | **gravar no cartão do X2 Pro** (TV boxes) | `687c6bb8…2e73fe0f` |
+| `Arcadia-Amlogic-ng.aarch64-1.0.0-Generic.img.gz` (1,3 GB) | **gravar no cartão do X2 Pro** (TV boxes) | `687c6bb8…2e73fe0f` (substituída pela de 15/11, abaixo) |
 | `Arcadia-Amlogic-ng.aarch64-1.0.0.tar` (1,4 GB) | atualização pelo menu | `ecf4522c…17e860c0` |
 | `…-Odroid_N2`, `-Odroid_N2L`, `-Odroid_C4`, `-Odroid_HC4`, `-LePotato`, `-LaFrite`, `-Radxa_Zero`, `-Radxa_Zero2` `.img.gz` | placas de desenvolvimento (geradas automaticamente pelo EmuELEC; **não usadas**) | — |
 
 Conferido dentro da imagem (sistema extraído do `.tar`): versão `1.0.0`; `ThemeSet=arcadia`, `CollectionSystemsAuto=recent,favorites,all`, `ShowSaveStates=true`; `pt_BR`, `America/Sao_Paulo`, `ARCADIA`, `global.autosave=1`; tema `arcadia` com a grade; `arcadia-dados.sh`; `updatecheck.sh` apontando para o fork; Samba com usuário `arcadia` e senha definida; senha do root = a de `docs/SENHAS-LOCAIS.md` (a padrão `emuelec` não funciona); EmulationStation aarch64 do fork com as traduções novas; tela de abertura nova (1920×1080).
+
+**Rebuild de 15/11/2026 02:35** (commit `02a38bdd`, 2 min, incremental), só a imagem Generic: `…-1.0.0-Generic.img.gz` SHA-256 `a235bba02762d56aaf600dc205cbf80c6ec5e9f56f361f7e394dbfef2a396634`; `…-1.0.0.tar` `fe357ed988310ac714d8abb61631c75ea1c063a5530ab9ae310f4e06e241b165`. `verificar-imagem.sh`: 14 OK.
 
 **Desde 15/11/2026 o build gera só a imagem `Generic`:** `SUBDEVICES=""` em `projects/Amlogic-ce/devices/Amlogic-ng/options` (as u-boots das placas não são mais compiladas) e `scripts/image` passou a gerar a `Generic` no Amlogic-ce mesmo sem subdevices. O caminho de montagem da `Generic` é o mesmo de antes (`SUBDEVICE=Generic`, sem u-boot de placa; `dtb.img` escolhido no cartão), por isso o nome do arquivo continua `…-Generic.img.gz`.

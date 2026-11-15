@@ -29,6 +29,17 @@ Sem argumento, confere `Arcadia-Amlogic-ng.aarch64-<EE_VERSION>-Generic.img.gz`;
 
 ## Resultados
 
+### 15/11/2026 02:36: imagem 1.0.0 final (commit `02a38bdd`, com todas as correções das Etapas 2 a 6)
+
+**14 OK, 0 FALHOU.** SHA-256:
+
+| Arquivo | SHA-256 |
+|---|---|
+| `Arcadia-Amlogic-ng.aarch64-1.0.0-Generic.img.gz` | `a235bba02762d56aaf600dc205cbf80c6ec5e9f56f361f7e394dbfef2a396634` |
+| `Arcadia-Amlogic-ng.aarch64-1.0.0.tar` | `fe357ed988310ac714d8abb61631c75ea1c063a5530ab9ae310f4e06e241b165` |
+
+A mesma verificação na imagem de ensaio 1.0.1-teste (02:20) também deu 14 OK.
+
 ### 15/11/2026 01:18 — imagem 1.0.0 do build de 14/11 (commit `ae97c2b`)
 
 **10 OK, 1 FALHOU**
