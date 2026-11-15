@@ -13,11 +13,14 @@
 #   3. gera as notas da versão em português (ou usa -Notas);
 #   4. (-Publicar) cria a Release v<versão> com os arquivos, e atualiza atualizacao\versoes.txt
 #      (é o arquivo que os aparelhos consultam) com commit e push.
+#   -Rascunho (com -Publicar): cria a Release como RASCUNHO (draft), invisível ao público e aos aparelhos,
+#      e NÃO mexe no versoes.txt. Serve para ensaiar a publicação (ex.: -Versao 1.0.1-teste).
 param(
     [Parameter(Mandatory = $true)][string]$Versao,
     [ValidateSet('stable', 'beta')][string]$Canal = 'stable',
     [string]$Notas,
     [switch]$Publicar,
+    [switch]$Rascunho,
     [string]$PastaImagens = 'D:\Adube Sistemas\Console de Jogo\imagens-compiladas'   # para testes
 )
 $ErrorActionPreference = 'Stop'
@@ -37,9 +40,14 @@ function Aviso($t) { Write-Host "AVISO: $t" -ForegroundColor Yellow }
 function Passo($t) { Write-Host "==> $t" -ForegroundColor Cyan }
 
 # ---------- 1. conferências ----------
-if ($Versao -notmatch '^\d+\.\d+\.\d+$') { throw "Versão inválida '$Versao' (use X.Y.Z, ex.: 1.0.0)." }
+if ($Versao -notmatch '^\d+\.\d+\.\d+(-[0-9A-Za-z]+)?$') { throw "Versão inválida '$Versao' (use X.Y.Z, ex.: 1.0.0; versões de teste: X.Y.Z-teste)." }
+if ($Versao -match '-' -and -not $Rascunho) { throw "Versão de teste ($Versao) só pode ser publicada como rascunho (-Rascunho)." }
 $versaoRepo = (Get-Content (Join-Path $repo 'packages\sx05re\emuelec\config\EE_VERSION') -Raw).Trim()
-if ($versaoRepo -ne $Versao) { throw "A versão pedida ($Versao) é diferente da versão da imagem ($versaoRepo em packages\sx05re\emuelec\config\EE_VERSION). Compile a versão certa antes." }
+if ($versaoRepo -ne $Versao) {
+    $msg = "A versão pedida ($Versao) é diferente da versão da branch atual ($versaoRepo em packages\sx05re\emuelec\config\EE_VERSION)."
+    if ($Rascunho) { Aviso "$msg Aceito porque é rascunho (versão de teste compilada de outra branch)." }
+    else { throw "$msg Compile a versão certa antes." }
+}
 
 $img = Join-Path $imagens "$base-Generic.img.gz"   # imagem para TV boxes (as de placas Odroid/Radxa etc. não são publicadas)
 $tar = Join-Path $imagens "$base.tar"
@@ -107,21 +115,35 @@ Write-Host "   notas: $notasArq"
 
 if (-not $Publicar) {
     Passo 'SIMULAÇÃO concluída (nada foi enviado ao GitHub).'
-    Write-Host "Para publicar: acrescente -Publicar. Seria criada a Release $tag em $github$(if ($Canal -eq 'beta') { ' (pré-lançamento)' }) e a linha '$Versao;$Canal' em atualizacao\versoes.txt."
+    if ($Rascunho) {
+        Write-Host "Para publicar: acrescente -Publicar. Seria criada a Release $tag em $github como RASCUNHO (versoes.txt não muda)."
+    } else {
+        Write-Host "Para publicar: acrescente -Publicar. Seria criada a Release $tag em $github$(if ($Canal -eq 'beta') { ' (pré-lançamento)' }) e a linha '$Versao;$Canal' em atualizacao\versoes.txt."
+    }
     exit 0
 }
 
 # ---------- 4. publicação ----------
+# No PowerShell 5.1, com 'Stop', qualquer texto do gh/git na saída de erro (ex.: "release not found",
+# barra de progresso do upload) vira erro fatal. Daqui em diante, vale o código de saída ($LASTEXITCODE).
+$ErrorActionPreference = 'Continue'
 Passo 'Conferindo o gh e a tag'
 gh auth status 2>&1 | Out-Null; if ($LASTEXITCODE -ne 0) { throw 'gh não está autenticado (gh auth login).' }
 gh release view $tag --repo $github 2>$null | Out-Null
 if ($LASTEXITCODE -eq 0) { throw "A Release $tag já existe em $github." }
-if (git -C $repo status --porcelain) { throw 'Há alterações não commitadas no repositório; faça commit antes de publicar.' }
+if (-not $Rascunho -and (git -C $repo status --porcelain)) { throw 'Há alterações não commitadas no repositório; faça commit antes de publicar.' }
 
-Passo "Criando a Release $tag"
-$extra = @(); if ($Canal -eq 'beta') { $extra += '--prerelease' }
+Passo "Criando a Release $tag$(if ($Rascunho) { ' (RASCUNHO)' })"
+$extra = @(); if ($Canal -eq 'beta') { $extra += '--prerelease' }; if ($Rascunho) { $extra += '--draft' }
 gh release create $tag @arquivos --repo $github --target dev --title "Arcádia $Versao" --notes-file $notasArq @extra
 if ($LASTEXITCODE -ne 0) { throw 'Falha ao criar a Release.' }
+
+if ($Rascunho) {
+    Passo "Rascunho criado (não aparece para o público nem para os aparelhos; versoes.txt não foi alterado)."
+    Write-Host "Ver:    gh release view $tag --repo $github"
+    Write-Host "Apagar: gh release delete $tag --repo $github --yes"
+    exit 0
+}
 
 Passo 'Atualizando atualizacao\versoes.txt'
 $vers = Join-Path $repo 'atualizacao\versoes.txt'

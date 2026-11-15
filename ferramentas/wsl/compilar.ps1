@@ -2,6 +2,8 @@
 # O build continua mesmo fechando o terminal ou o Claude.
 # Uso (PowerShell normal, sem administrador):
 #   Start-Process powershell -WindowStyle Hidden -ArgumentList '-NoProfile','-ExecutionPolicy','Bypass','-File','"D:\Adube Sistemas\Console de Jogo\console-retro-os\ferramentas\wsl\compilar.ps1"'
+#   Outra branch (ex.: ensaio de versão de teste): acrescente  ,'-Branch','teste-1.0.1'
+param([string]$Branch = 'dev')
 
 Add-Type -Namespace Win32 -Name Energia -MemberDefinition @'
 [DllImport("kernel32.dll")]
@@ -21,7 +23,8 @@ if (Test-Path $senhas) {
         if ($linha -match '^(ARCADIA_(ROOT|SAMBA)_PASSWORD)=(\S+)$') { Set-Item -Path "Env:$($Matches[1])" -Value $Matches[3] }
     }
 }
-$env:WSLENV = 'ARCADIA_NAO_COMMITADO:ARCADIA_ROOT_PASSWORD:ARCADIA_SAMBA_PASSWORD'
+$env:BRANCH = $Branch
+$env:WSLENV = 'ARCADIA_NAO_COMMITADO:ARCADIA_ROOT_PASSWORD:ARCADIA_SAMBA_PASSWORD:BRANCH'
 
 try {
     wsl.exe -d Ubuntu-22.04 -u console -- bash -lc "tr -d '\r' < '/mnt/d/Adube Sistemas/Console de Jogo/console-retro-os/ferramentas/wsl/compilar.sh' > ~/compilar.sh && bash ~/compilar.sh"
