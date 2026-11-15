@@ -1,0 +1,28 @@
+Origem: https://github.com/libretro/libretro-database (pasta metadat/)
+Commit: b2e5eaa256eb30c6301ed42a8eab3ba2afd74b8a (2026-11-15T00:42:24Z)
+Atualizado em: 15/11/2026 01:24 (horário de Brasília)
+Arquivos (tamanho em bytes):
+no-intro/Atari - 2600.dat	189028
+no-intro/Atari - 7800.dat	77646
+no-intro/Nintendo - Nintendo Entertainment System.dat	3231338
+no-intro/Nintendo - Family Computer Disk System.dat	185999
+no-intro/Nintendo - Super Nintendo Entertainment System.dat	880732
+no-intro/Nintendo - Nintendo 64.dat	598359
+no-intro/Nintendo - Game Boy.dat	531037
+no-intro/Nintendo - Game Boy Color.dat	676081
+no-intro/Nintendo - Game Boy Advance.dat	1021268
+no-intro/Sega - Master System - Mark III.dat	260247
+no-intro/Sega - Mega Drive - Genesis.dat	785317
+no-intro/Sega - 32X.dat	20799
+no-intro/Sega - Game Gear.dat	143826
+no-intro/NEC - PC Engine - TurboGrafx 16.dat	111986
+no-intro/NEC - PC Engine SuperGrafx.dat	1409
+no-intro/SNK - Neo Geo Pocket.dat	3030
+no-intro/SNK - Neo Geo Pocket Color.dat	30363
+no-intro/Bandai - WonderSwan.dat	54741
+no-intro/Bandai - WonderSwan Color.dat	59053
+no-intro/Microsoft - MSX.dat	188145
+no-intro/Microsoft - MSX2.dat	43946
+redump/Sega - Mega-CD - Sega CD.dat	150366
+redump/Sony - PlayStation.dat	3945098
+redump/NEC - PC Engine CD - TurboGrafx-CD.dat	141019

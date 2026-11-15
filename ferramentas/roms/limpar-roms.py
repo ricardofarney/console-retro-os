@@ -19,15 +19,27 @@ megadrive, gb, gbc, gba, psx, ...):
   f) gera relatório em <roms>\\_relatorios\\limpeza-AAAA-MM-DD_HHMM.md;
   g) --simular faz tudo menos mover/baixar/alterar (só gera o relatório).
 
+Fontes locais (usadas PRIMEIRO, também no modo normal):
+  - DATs guardadas no repositório: ferramentas\\roms\\dats\\<no-intro|redump>\\
+    (<nome>.dat ou <nome>.zip com o .dat dentro);
+  - cache de capas: ferramentas\\roms\\.cache\\capas\\<Sistema libretro>\\Named_Boxarts\\
+    (montado por baixar-capas.py; outro local com --cache-capas).
+  --offline não acessa a internet de jeito nenhum: só DATs locais e cache de
+  capas (capa ausente no cache = "não encontrada").
+
 Uso:
-  python limpar-roms.py <pasta_roms> [--simular] [--sem-capas] [--sem-dat]
-                        [--mover-corrompidos] [--txt] [--consoles nes,snes]
+  python limpar-roms.py <pasta_roms> [--simular] [--offline] [--sem-capas]
+                        [--sem-dat] [--mover-corrompidos] [--txt]
+                        [--consoles nes,snes] [--cache-capas <pasta>]
+  python limpar-roms.py --atualizar-dats      # só atualiza ferramentas\\roms\\dats\\
 """
 
 from __future__ import annotations
 
 import argparse
 import hashlib
+import io
+import json
 import os
 import re
 import shutil
@@ -45,7 +57,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-VERSAO = "1.0"
+VERSAO = "1.1"
 
 # Brasil não tem horário de verão desde 2019: Brasília = UTC-3 fixo.
 # (Evita depender do pacote tzdata, que não vem no Python do Windows.)
@@ -53,11 +65,47 @@ FUSO_BRASILIA = timezone(timedelta(hours=-3), "BRT")
 
 PASTA_SCRIPT = Path(__file__).resolve().parent
 CACHE_PADRAO = PASTA_SCRIPT / ".cache"
+PASTA_DATS = PASTA_SCRIPT / "dats"                 # DATs versionadas no git
+CACHE_CAPAS_PADRAO = CACHE_PADRAO / "capas"        # fora do git (.gitignore)
 
-URL_DAT = "https://raw.githubusercontent.com/libretro/libretro-database/master/metadat/{tipo}/{arquivo}.dat"
+URL_DAT = "https://raw.githubusercontent.com/libretro/libretro-database/{ref}/metadat/{tipo}/{arquivo}.dat"
+URL_COMMIT_DB = "https://api.github.com/repos/libretro/libretro-database/commits/master"
 URL_CAPA = "https://thumbnails.libretro.com/{sistema}/Named_Boxarts/{nome}.png"
 AGENTE_HTTP = "arcadia-limpar-roms/" + VERSAO
 DIAS_VALIDADE_DAT = 30
+LIMITE_DAT_TEXTO = 50 * 1024 * 1024   # acima disso a DAT é guardada em .zip
+
+# DATs guardadas no repositório (consoles da paleta do Arcádia).
+DATS_PALETA = [
+    ("no-intro", "Atari - 2600"),
+    ("no-intro", "Atari - 7800"),
+    ("no-intro", "Nintendo - Nintendo Entertainment System"),
+    ("no-intro", "Nintendo - Family Computer Disk System"),
+    ("no-intro", "Nintendo - Super Nintendo Entertainment System"),
+    ("no-intro", "Nintendo - Nintendo 64"),
+    ("no-intro", "Nintendo - Game Boy"),
+    ("no-intro", "Nintendo - Game Boy Color"),
+    ("no-intro", "Nintendo - Game Boy Advance"),
+    ("no-intro", "Sega - Master System - Mark III"),
+    ("no-intro", "Sega - Mega Drive - Genesis"),
+    ("no-intro", "Sega - 32X"),
+    ("no-intro", "Sega - Game Gear"),
+    ("no-intro", "NEC - PC Engine - TurboGrafx 16"),
+    ("no-intro", "NEC - PC Engine SuperGrafx"),
+    ("no-intro", "SNK - Neo Geo Pocket"),
+    ("no-intro", "SNK - Neo Geo Pocket Color"),
+    ("no-intro", "Bandai - WonderSwan"),
+    ("no-intro", "Bandai - WonderSwan Color"),
+    ("no-intro", "Microsoft - MSX"),
+    ("no-intro", "Microsoft - MSX2"),
+    ("redump", "Sega - Mega-CD - Sega CD"),
+    ("redump", "Sony - PlayStation"),
+    ("redump", "NEC - PC Engine CD - TurboGrafx-CD"),
+]
+
+# Modo offline: quando True, qualquer tentativa de acesso à rede é bloqueada.
+OFFLINE = False
+ACESSOS_REDE: list[str] = []   # URLs acessadas nesta execução (vai para o relatório)
 
 # --------------------------------------------------------------------------
 # Mapeamento console -> DAT / nome libretro / extensões / checagem de cabeçalho
@@ -455,37 +503,66 @@ class IndiceDat:
 
     @classmethod
     def carregar(cls, caminho: Path, nome: str) -> "IndiceDat":
+        """Lê uma DAT clrmamepro em texto (.dat) ou compactada (.zip com o .dat)."""
+        if ext_de(caminho) == "zip":
+            with zipfile.ZipFile(caminho) as z:
+                membros = [i for i in z.infolist() if i.filename.lower().endswith(".dat")]
+                if not membros:
+                    raise RuntimeError("o .zip não contém nenhum .dat")
+                with z.open(membros[0]) as bruto:
+                    return cls._ler(io.TextIOWrapper(bruto, encoding="utf-8", errors="replace"), nome)
+        with open(caminho, encoding="utf-8", errors="replace") as f:
+            return cls._ler(f, nome)
+
+    @classmethod
+    def _ler(cls, f, nome: str) -> "IndiceDat":
         idx = cls(nome)
         jogo = None
-        with open(caminho, encoding="utf-8", errors="replace") as f:
-            for linha in f:
-                s = linha.strip()
-                if s.startswith("game (") or s == "game (":
-                    jogo = None
+        for linha in f:
+            s = linha.strip()
+            if s.startswith("game (") or s == "game (":
+                jogo = None
+                continue
+            if jogo is None:
+                m = RE_DAT_GAME_NAME.match(linha)
+                if m:
+                    jogo = m.group(1)
                     continue
-                if jogo is None:
-                    m = RE_DAT_GAME_NAME.match(linha)
-                    if m:
-                        jogo = m.group(1)
-                        continue
-                m = RE_DAT_ROM.search(linha)
-                if m and jogo:
-                    rom = m.group(1)
-                    rom_stem = rom.rsplit(".", 1)[0] if "." in rom else rom
-                    chave = (int(m.group(2)), m.group(3).upper())
-                    idx.por_crc.setdefault(chave, (jogo, rom_stem))
-                    lst = idx.por_titulo.setdefault(chave_jogo(jogo), [])
-                    if (jogo, rom_stem) not in lst:
-                        lst.append((jogo, rom_stem))
+            m = RE_DAT_ROM.search(linha)
+            if m and jogo:
+                rom = m.group(1)
+                rom_stem = rom.rsplit(".", 1)[0] if "." in rom else rom
+                chave = (int(m.group(2)), m.group(3).upper())
+                idx.por_crc.setdefault(chave, (jogo, rom_stem))
+                lst = idx.por_titulo.setdefault(chave_jogo(jogo), [])
+                if (jogo, rom_stem) not in lst:
+                    lst.append((jogo, rom_stem))
         return idx
 
 
+def dat_local(pasta: Path, tipo: str, nome: str) -> Path | None:
+    """DAT guardada no repositório: dats\\<tipo>\\<nome>.dat|.zip (ou direto em dats\\)."""
+    for base in (pasta / tipo, pasta):
+        for ext in (".dat", ".zip"):
+            p = base / f"{nome}{ext}"
+            if p.is_file():
+                return p
+    return None
+
+
 class GerenciadorDats:
-    def __init__(self, pasta_cache: Path, ativo: bool, forcar: bool):
+    """Ordem de busca: 1) dats\\ do repositório; 2) cache .cache\\dats\\ (baixadas
+    antes); 3) download do libretro-database (nunca no modo offline)."""
+
+    def __init__(self, pasta_cache: Path, ativo: bool, forcar: bool,
+                 offline: bool = False, pasta_local: Path = PASTA_DATS):
         self.pasta = pasta_cache / "dats"
+        self.local = pasta_local
         self.ativo = ativo
         self.forcar = forcar
+        self.offline = offline
         self.indices: dict[str, IndiceDat | None] = {}
+        self.origens: dict[str, str] = {}
         self.avisos: list[str] = []
 
     def obter(self, sis: Sistema) -> IndiceDat | None:
@@ -493,11 +570,24 @@ class GerenciadorDats:
             return None
         if sis.dat in self.indices:
             return self.indices[sis.dat]
+        local = dat_local(self.local, sis.tipo_dat, sis.dat)
+        if local:
+            return self._carregar(sis, local, "repositório: " + local.relative_to(self.local.parent).as_posix())
         arq = self.pasta / f"{sis.dat}.dat"
+        if self.offline:
+            if arq.exists():
+                return self._carregar(sis, arq, "cache local: .cache/dats/" + arq.name)
+            msg = f"Sem DAT local para '{sis.dat}' (modo offline: não baixada)"
+            self.avisos.append(msg)
+            log("  AVISO: " + msg)
+            self.indices[sis.dat] = None
+            return None
         velho = (not arq.exists()) or self.forcar or \
             (time.time() - arq.stat().st_mtime > DIAS_VALIDADE_DAT * 86400)
+        origem = "cache local: .cache/dats/" + arq.name
         if velho:
-            url = URL_DAT.format(tipo=sis.tipo_dat, arquivo=urllib.parse.quote(sis.dat))
+            url = URL_DAT.format(ref="master", tipo=sis.tipo_dat, arquivo=urllib.parse.quote(sis.dat))
+            origem = "baixada agora do libretro-database → .cache/dats/" + arq.name
             log(f"  baixando DAT {sis.tipo_dat}/{sis.dat}.dat ...")
             try:
                 self.pasta.mkdir(parents=True, exist_ok=True)
@@ -509,6 +599,7 @@ class GerenciadorDats:
                 os.replace(tmp, arq)
             except Exception as e:  # noqa: BLE001
                 msg = f"Não foi possível baixar a DAT '{sis.dat}': {e}"
+                origem = "cache local antigo: .cache/dats/" + arq.name
                 if arq.exists():
                     msg += " (usando a cópia antiga do cache)"
                 self.avisos.append(msg)
@@ -516,20 +607,88 @@ class GerenciadorDats:
         if not arq.exists():
             self.indices[sis.dat] = None
             return None
+        return self._carregar(sis, arq, origem)
+
+    def _carregar(self, sis: Sistema, arq: Path, origem: str) -> IndiceDat | None:
         try:
             idx = IndiceDat.carregar(arq, sis.dat)
+            self.origens[sis.dat] = origem
         except Exception as e:  # noqa: BLE001
-            self.avisos.append(f"DAT '{sis.dat}' ilegível: {e}")
+            self.avisos.append(f"DAT '{sis.dat}' ilegível ({arq}): {e}")
             idx = None
         self.indices[sis.dat] = idx
         return idx
+
+
+def atualizar_dats_repositorio(pasta: Path = PASTA_DATS) -> int:
+    """Baixa de novo as DATs da paleta para ferramentas\\roms\\dats\\ (versionadas
+    no git), todas do MESMO commit do libretro-database, e grava VERSAO.txt.
+    DAT com mais de 50 MB é guardada como .zip. Retorna a quantidade de erros."""
+    if OFFLINE:
+        log("ERRO: --atualizar-dats precisa de internet (não combina com --offline).")
+        return 1
+    log("Atualizando DATs do repositório (libretro-database) ...")
+    try:
+        info = json.loads(http_get(URL_COMMIT_DB, timeout=60) or b"{}")
+        ref = info["sha"]
+        data_commit = info["commit"]["committer"]["date"]
+    except Exception as e:  # noqa: BLE001
+        log(f"  AVISO: não foi possível descobrir o commit atual ({e}); usando 'master'")
+        ref, data_commit = "master", "?"
+    erros = 0
+    linhas = []
+    for tipo, nome in DATS_PALETA:
+        url = URL_DAT.format(ref=ref, tipo=tipo, arquivo=urllib.parse.quote(nome))
+        destino_dir = pasta / tipo
+        try:
+            dados = http_get(url, timeout=120)
+            if dados is None or b"clrmamepro" not in dados[:300]:
+                raise RuntimeError("resposta inesperada (não é DAT clrmamepro)")
+            destino_dir.mkdir(parents=True, exist_ok=True)
+            txt, zp = destino_dir / f"{nome}.dat", destino_dir / f"{nome}.zip"
+            if len(dados) > LIMITE_DAT_TEXTO:
+                tmp = zp.with_suffix(".zip.part")
+                with zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as z:
+                    z.writestr(f"{nome}.dat", dados)
+                os.replace(tmp, zp)
+                if txt.exists():
+                    txt.unlink()          # substituída pelo .zip (é só um índice, não um jogo)
+                final = zp
+            else:
+                tmp = txt.with_suffix(".dat.part")
+                tmp.write_bytes(dados)
+                os.replace(tmp, txt)
+                if zp.exists():
+                    zp.unlink()
+                final = txt
+            linhas.append(f"{tipo}/{final.name}\t{final.stat().st_size}")
+            log(f"  ok  {tipo}/{final.name} ({tamanho_legivel(final.stat().st_size)})")
+        except Exception as e:  # noqa: BLE001
+            erros += 1
+            linhas.append(f"{tipo}/{nome}.dat\tERRO: {e}")
+            log(f"  ERRO {tipo}/{nome}: {e}")
+    (pasta / "VERSAO.txt").write_text(
+        "Origem: https://github.com/libretro/libretro-database (pasta metadat/)\n"
+        f"Commit: {ref} ({data_commit})\n"
+        f"Atualizado em: {agora().strftime('%d/%m/%Y %H:%M')} (horário de Brasília)\n"
+        "Arquivos (tamanho em bytes):\n" + "\n".join(linhas) + "\n",
+        encoding="utf-8")
+    log(f"DATs atualizadas: {len(DATS_PALETA) - erros} ok, {erros} erro(s). Versão em {pasta / 'VERSAO.txt'}")
+    return erros
 
 
 # --------------------------------------------------------------------------
 # HTTP
 # --------------------------------------------------------------------------
 
+class AcessoRedeBloqueado(RuntimeError):
+    pass
+
+
 def _req(url: str, metodo: str = "GET") -> urllib.request.Request:
+    if OFFLINE:
+        raise AcessoRedeBloqueado(f"modo offline: acesso à rede bloqueado ({url})")
+    ACESSOS_REDE.append(url)
     return urllib.request.Request(url, method=metodo, headers={"User-Agent": AGENTE_HTTP})
 
 
@@ -988,9 +1147,111 @@ def candidatos_capa(u: Unidade, dat: IndiceDat | None) -> list[str]:
     return cands[:10]
 
 
+def caminho_longo(p: Path) -> Path:
+    """No Windows, caminhos com mais de ~260 caracteres só abrem com o prefixo
+    \\\\?\\ (alguns nomes de capas do libretro-thumbnails são enormes)."""
+    s = str(p)
+    if os.name == "nt" and len(s) >= 240 and not s.startswith("\\\\?\\"):
+        return Path("\\\\?\\" + os.path.abspath(s))
+    return p
+
+
+class CacheCapas:
+    """Cache local: <pasta>\\<Sistema libretro>\\Named_Boxarts\\<nome>.png
+    (montado por baixar-capas.py). Busca sem diferenciar maiúsculas; aceita
+    também os 'links simbólicos em texto' que o git grava no Windows."""
+
+    def __init__(self, pasta: Path):
+        self.pasta = pasta
+        self._indices: dict[str, dict[str, Path]] = {}
+        self._por_chave: dict[str, dict[str, list[str]]] = {}
+
+    def indice(self, sistema: str) -> dict[str, Path]:
+        if sistema not in self._indices:
+            d = self.pasta / sistema / "Named_Boxarts"
+            idx: dict[str, Path] = {}
+            try:
+                for p in d.iterdir():
+                    if p.suffix.lower() == ".png":
+                        idx[p.stem.casefold()] = p
+            except OSError:
+                pass
+            self._indices[sistema] = idx
+        return self._indices[sistema]
+
+    def disponivel(self, sistema: str) -> bool:
+        return bool(self.indice(sistema))
+
+    def quantidade(self, sistema: str) -> int:
+        return len(self.indice(sistema))
+
+    def achar(self, sistema: str, nome: str) -> Path | None:
+        """Arquivo PNG real para o nome (já com nome_thumb aplicado), ou None."""
+        p = self.indice(sistema).get(nome_thumb(nome).casefold())
+        for _ in range(3):                      # segue até 3 'links em texto'
+            if p is None:
+                return None
+            p = caminho_longo(p)
+            try:
+                with open(p, "rb") as f:
+                    ini = f.read(512)
+            except OSError:
+                return None
+            if ini.startswith(b"\x89PNG"):
+                return p
+            alvo = ini.decode("utf-8", errors="replace").strip()
+            if not alvo or "\n" in alvo or len(alvo) > 400:
+                return None
+            p = caminho_longo(Path(os.path.normpath(p.parent / alvo)))
+            if not p.is_file():
+                return None
+        return None
+
+    def por_titulo(self, sistema: str, chaves: set) -> list[str]:
+        """Nomes de capas do cache cujo título normalizado bate com o do jogo
+        (útil para hacks/traduções e arquivos sem DAT); melhores versões primeiro."""
+        if sistema not in self._por_chave:
+            m: dict[str, list[str]] = {}
+            for p in self.indice(sistema).values():
+                m.setdefault(chave_jogo(p.stem), []).append(p.stem)
+            self._por_chave[sistema] = m
+        achados = set()
+        for k in chaves:
+            achados.update(self._por_chave[sistema].get(k, []))
+        return sorted(achados, key=lambda n: ordem_de(classificar(n, None), n))
+
+
 def buscar_capa(sistema_libretro: str, candidatos: list[str], destino: Path,
-                simular: bool, pasta_tmp: Path) -> tuple[str, str | None]:
-    """Retorna (status, nome_usado). status: baixada | disponivel | nao_encontrada | erro:..."""
+                simular: bool, pasta_tmp: Path, cache: "CacheCapas | None" = None,
+                offline: bool = False, extras_cache: list[str] | None = None) -> tuple[str, str | None, str]:
+    """Retorna (status, nome_usado, origem). status: baixada | disponivel |
+    nao_encontrada | erro:...; origem: 'cache' | 'internet' | ''.
+    Procura PRIMEIRO no cache local; só vai à internet se não achar e não
+    estiver no modo offline."""
+    if cache is not None:
+        for nome in candidatos + [n for n in (extras_cache or []) if n not in candidatos]:
+            achado = cache.achar(sistema_libretro, nome)
+            if not achado:
+                continue
+            if simular:
+                return "disponivel", nome, "cache"
+            try:
+                pasta_tmp.mkdir(parents=True, exist_ok=True)
+                tmp = pasta_tmp / f"capa-{os.getpid()}-{abs(hash((str(destino), nome)))}.png"
+                shutil.copyfile(achado, tmp)
+                destino.parent.mkdir(parents=True, exist_ok=True)
+                shutil.move(str(tmp), str(destino))
+                return "baixada", nome, "cache"
+            except OSError as e:
+                return f"erro: {e}", None, "cache"
+    if offline:
+        return "nao_encontrada", None, ""
+    st, nome = _buscar_capa_internet(sistema_libretro, candidatos, destino, simular, pasta_tmp)
+    return st, nome, ("internet" if nome else "")
+
+
+def _buscar_capa_internet(sistema_libretro: str, candidatos: list[str], destino: Path,
+                          simular: bool, pasta_tmp: Path) -> tuple[str, str | None]:
     for nome in candidatos:
         url = URL_CAPA.format(sistema=urllib.parse.quote(sistema_libretro),
                               nome=urllib.parse.quote(nome_thumb(nome)))
@@ -1178,14 +1439,18 @@ class ResultadoConsole:
     capas_existentes: int = 0
     capas_nao: list = field(default_factory=list)        # arquivo
     capas_erro: list = field(default_factory=list)       # (arquivo, erro)
+    capas_cache: int = 0                                 # vindas do cache local
+    capas_internet: int = 0                              # vindas da internet
     dat_usada: str | None = None
+    dat_origem: str | None = None
     dat_casados: int = 0
     gamelist: ResultadoGamelist | None = None
     erros: list = field(default_factory=list)
 
 
 def processar_console(console: str, raiz: Path, sis: Sistema, args, dats: GerenciadorDats,
-                      pasta_roms: Path, carimbo: str) -> ResultadoConsole | None:
+                      pasta_roms: Path, carimbo: str,
+                      cache_capas: "CacheCapas | None" = None) -> ResultadoConsole | None:
     arquivos, ignorados = listar_arquivos(raiz, sis)
     if not arquivos:
         return None
@@ -1202,6 +1467,7 @@ def processar_console(console: str, raiz: Path, sis: Sistema, args, dats: Gerenc
     dat = dats.obter(sis)
     if dat:
         r.dat_usada = f"{sis.tipo_dat}/{sis.dat}.dat"
+        r.dat_origem = dats.origens.get(sis.dat)
     for u in unidades:
         if dat:
             for c in u.crcs:
@@ -1300,17 +1566,27 @@ def processar_console(console: str, raiz: Path, sis: Sistema, args, dats: Gerenc
             if not sis.libretro:
                 r.capas_nao.append(u.rel())
                 continue
-            tarefas.append((u, destino, candidatos_capa(u, dat)))
+            extras = cache_capas.por_titulo(sis.libretro, u.chaves)[:6] if cache_capas else []
+            tarefas.append((u, destino, candidatos_capa(u, dat), extras))
         if tarefas:
-            log(f"  procurando {len(tarefas)} capa(s) no libretro-thumbnails ...")
+            tem_cache = bool(cache_capas and cache_capas.disponivel(sis.libretro))
+            onde = ("no cache local" + ("" if args.offline else " e, se faltar, no libretro-thumbnails")
+                    if tem_cache else ("(cache local vazio para este sistema)" if args.offline
+                                       else "no libretro-thumbnails (sem cache local deste sistema)"))
+            log(f"  procurando {len(tarefas)} capa(s) {onde} ...")
             tmp = Path(args.cache) / "tmp"
             with ThreadPoolExecutor(max_workers=8) as ex:
-                futuros = [(u, destino, ex.submit(buscar_capa, sis.libretro, cands, destino, args.simular, tmp))
-                           for u, destino, cands in tarefas]
+                futuros = [(u, destino, ex.submit(buscar_capa, sis.libretro, cands, destino, args.simular, tmp,
+                                                  cache_capas, args.offline, extras))
+                           for u, destino, cands, extras in tarefas]
                 for u, destino, fut in futuros:
-                    status, nome = fut.result()
+                    status, nome, origem = fut.result()
                     if status in ("baixada", "disponivel"):
-                        r.capas_baixadas.append((u.rel(), nome))
+                        r.capas_baixadas.append((u.rel(), nome, origem))
+                        if origem == "cache":
+                            r.capas_cache += 1
+                        else:
+                            r.capas_internet += 1
                         capas[id(u)] = "./images/" + destino.name   # na simulação só conta
                     elif status == "nao_encontrada":
                         r.capas_nao.append(u.rel())
@@ -1329,7 +1605,8 @@ def processar_console(console: str, raiz: Path, sis: Sistema, args, dats: Gerenc
 
     log(f"  jogos: {r.antes_qtd} -> {r.depois_qtd} | movidos: {len(r.movidos)}"
         f"{' (simulado)' if args.simular else ''} | corrompidos: {len(r.corrompidos)}"
-        f" | capas novas: {len(r.capas_baixadas)} | sem capa: {len(r.capas_nao)}")
+        f" | capas novas: {len(r.capas_baixadas)} (cache local {r.capas_cache}, internet {r.capas_internet})"
+        f" | sem capa: {len(r.capas_nao)}")
     return r
 
 
@@ -1366,7 +1643,7 @@ def _capa_existente(raiz: Path, u: Unidade, gl_imagens: dict) -> str | None:
 # --------------------------------------------------------------------------
 
 def gerar_relatorio(resultados: list[ResultadoConsole], ignoradas: list[str], args, pasta_roms: Path,
-                    inicio: datetime, dats: GerenciadorDats) -> str:
+                    inicio: datetime, dats: GerenciadorDats, cache_capas: "CacheCapas | None" = None) -> str:
     L = []
     sim = args.simular
     L.append(f"# Relatório de limpeza de ROMs — Arcádia{' (SIMULAÇÃO)' if sim else ''}")
@@ -1374,11 +1651,19 @@ def gerar_relatorio(resultados: list[ResultadoConsole], ignoradas: list[str], ar
     L.append(f"- **Data/hora (Brasília):** {inicio.strftime('%d/%m/%Y %H:%M')}")
     L.append(f"- **Pasta:** `{pasta_roms}`")
     modo = "SIMULAÇÃO — nada foi movido, baixado ou alterado" if sim else "REAL — arquivos movidos/baixados"
+    if args.offline:
+        modo += " — OFFLINE (sem acesso à internet)"
     L.append(f"- **Modo:** {modo}")
-    opcoes = [o for o, v in (("--sem-capas", args.sem_capas), ("--sem-dat", args.sem_dat),
+    opcoes = [o for o, v in (("--offline", args.offline), ("--sem-capas", args.sem_capas),
+                             ("--sem-dat", args.sem_dat),
                              ("--mover-corrompidos", args.mover_corrompidos)) if v]
     L.append(f"- **Opções:** {' '.join(opcoes) if opcoes else '(padrão)'}")
     L.append(f"- **Ferramenta:** limpar-roms.py v{VERSAO}")
+    L.append(f"- **DATs locais:** `{PASTA_DATS}`")
+    if not args.sem_capas:
+        L.append(f"- **Cache de capas:** `{cache_capas.pasta if cache_capas else '—'}`")
+    L.append(f"- **Acessos à internet nesta execução:** {len(ACESSOS_REDE)}"
+             + (" (bloqueados pelo modo offline)" if args.offline else ""))
     L.append("")
     verbo = "seriam movidos" if sim else "movidos"
 
@@ -1401,9 +1686,11 @@ def gerar_relatorio(resultados: list[ResultadoConsole], ignoradas: list[str], ar
     L.append(f"| Jogos depois | {tot_d} ({tamanho_legivel(tam_d)}) |")
     L.append(f"| Duplicados/versões {verbo} | {tot_mov} ({tamanho_legivel(sum(u.tamanho for r in resultados for u in r.movidos))}) |")
     L.append(f"| Corrompidos encontrados | {tot_cor}{' (movidos)' if args.mover_corrompidos and not sim else ' (não movidos)'} |")
-    L.append(f"| Capas {'disponíveis para baixar' if sim else 'baixadas'} | {tot_capa} |")
+    L.append(f"| Capas {'disponíveis' if sim else 'novas (copiadas/baixadas)'} | {tot_capa} "
+             f"(cache local: {sum(r.capas_cache for r in resultados)}; "
+             f"internet: {sum(r.capas_internet for r in resultados)}) |")
     L.append(f"| Capas já existentes | {tot_exist} |")
-    L.append(f"| Jogos sem capa no libretro-thumbnails | {tot_nao} |")
+    L.append(f"| Jogos sem capa {'no cache local' if args.offline else 'no libretro-thumbnails'} | {tot_nao} |")
     L.append("")
     L.append("| Console | Antes | Depois | Movidos | Corrompidos | Capas novas | Sem capa | DAT (casados) |")
     L.append("|---|---|---|---|---|---|---|---|")
@@ -1425,7 +1712,8 @@ def gerar_relatorio(resultados: list[ResultadoConsole], ignoradas: list[str], ar
         L.append(f"- Antes: **{r.antes_qtd}** jogo(s), {tamanho_legivel(r.antes_tam)}")
         L.append(f"- Depois: **{r.depois_qtd}** jogo(s), {tamanho_legivel(r.depois_tam)}")
         if r.dat_usada:
-            L.append(f"- DAT: `{r.dat_usada}` — {r.dat_casados} jogo(s) reconhecido(s) pelo CRC32")
+            L.append(f"- DAT: `{r.dat_usada}` — {r.dat_casados} jogo(s) reconhecido(s) pelo CRC32"
+                     + (f" (origem: {r.dat_origem})" if r.dat_origem else ""))
         elif r.sistema.dat:
             L.append("- DAT: não usada")
         if r.ignorados:
@@ -1455,17 +1743,18 @@ def gerar_relatorio(resultados: list[ResultadoConsole], ignoradas: list[str], ar
             L.append("### Capas")
             L.append("")
             if r.capas_baixadas:
-                L.append(f"{'Disponíveis (seriam baixadas)' if sim else 'Baixadas'}:")
-                for arq, nome in r.capas_baixadas:
-                    L.append(f"- {_md(arq)} ← `{nome}`")
+                L.append(f"{'Disponíveis (seriam copiadas/baixadas)' if sim else 'Copiadas/baixadas'}:")
+                for arq, nome, origem in r.capas_baixadas:
+                    L.append(f"- {_md(arq)} ← `{nome}` ({'cache local' if origem == 'cache' else 'internet'})")
             if r.capas_existentes:
                 L.append(f"- Já tinham capa: {r.capas_existentes}")
             if r.capas_nao:
-                L.append("Não encontradas no libretro-thumbnails (não é erro):")
+                L.append(("Não encontradas no cache local (modo offline; não é erro):" if args.offline
+                          else "Não encontradas no cache local nem no libretro-thumbnails (não é erro):"))
                 for arq in r.capas_nao:
                     L.append(f"- {_md(arq)}")
             for arq, err in r.capas_erro:
-                L.append(f"- Falha de rede em {_md(arq)}: {_md(err)}")
+                L.append(f"- Falha ao obter a capa de {_md(arq)}: {_md(err)}")
             L.append("")
         g = r.gamelist
         if g:
@@ -1530,7 +1819,8 @@ def main(argv=None) -> int:
         prog="limpar-roms.py",
         description="Arcádia — remove duplicados/versões repetidas de ROMs (movendo para _removidos), "
                     "lista corrompidos, baixa capas do libretro-thumbnails e atualiza o gamelist.xml.")
-    ap.add_argument("pasta_roms", help="pasta 'roms' com subpastas por console (nes, snes, megadrive...)")
+    ap.add_argument("pasta_roms", nargs="?",
+                    help="pasta 'roms' com subpastas por console (nes, snes, megadrive...)")
     ap.add_argument("--simular", action="store_true", help="não move, não baixa e não altera nada; só gera o relatório")
     ap.add_argument("--sem-capas", action="store_true", help="não procura/baixa capas")
     ap.add_argument("--sem-dat", action="store_true", help="não usa DATs No-Intro/Redump (só nomes e hashes locais)")
@@ -1540,9 +1830,27 @@ def main(argv=None) -> int:
     ap.add_argument("--consoles", default="", help="processa só estes consoles (ex.: nes,snes,gba)")
     ap.add_argument("--limite-hash-mb", type=int, default=1024,
                     help="não calcula hash de arquivos maiores que isso (padrão: 1024 MB)")
-    ap.add_argument("--atualizar-dats", action="store_true", help="baixa as DATs de novo mesmo com cache recente")
+    ap.add_argument("--offline", action="store_true",
+                    help="não acessa a internet: usa só ferramentas\\roms\\dats\\ e o cache local de capas")
+    ap.add_argument("--cache-capas", default=str(CACHE_CAPAS_PADRAO),
+                    help="pasta do cache local de capas (padrão: ferramentas\\roms\\.cache\\capas)")
+    ap.add_argument("--atualizar-dats", action="store_true",
+                    help="baixa de novo as DATs da paleta para ferramentas\\roms\\dats\\ (e ignora o "
+                         "prazo do cache das demais); pode ser usada sem pasta de ROMs")
     ap.add_argument("--cache", default=str(CACHE_PADRAO), help=argparse.SUPPRESS)
     args = ap.parse_args(argv)
+
+    global OFFLINE
+    OFFLINE = bool(args.offline)
+    if args.atualizar_dats:
+        if args.offline:
+            log("ERRO: --atualizar-dats precisa de internet; não use junto com --offline.")
+            return 2
+        erros = atualizar_dats_repositorio()
+        if not args.pasta_roms:
+            return 1 if erros else 0
+    if not args.pasta_roms:
+        ap.error("informe a pasta de ROMs (ou use só --atualizar-dats)")
 
     pasta_roms = Path(args.pasta_roms).resolve()
     if not pasta_roms.is_dir():
@@ -1554,9 +1862,17 @@ def main(argv=None) -> int:
     log(f"Pasta: {pasta_roms}")
     if args.simular:
         log("MODO SIMULAÇÃO: nada será movido, baixado ou alterado.")
+    if args.offline:
+        log("MODO OFFLINE: nenhuma conexão com a internet será feita (só DATs locais e cache de capas).")
+    cache_capas = None if args.sem_capas else CacheCapas(Path(args.cache_capas).resolve())
+    if cache_capas:
+        n_sis = 0
+        if cache_capas.pasta.is_dir():
+            n_sis = sum(1 for d in cache_capas.pasta.glob("*/Named_Boxarts") if d.is_dir())
+        log(f"Cache de capas: {cache_capas.pasta} ({n_sis} sistema(s))")
 
     filtro = {c.strip().lower() for c in args.consoles.split(",") if c.strip()}
-    dats = GerenciadorDats(Path(args.cache), not args.sem_dat, args.atualizar_dats)
+    dats = GerenciadorDats(Path(args.cache), not args.sem_dat, args.atualizar_dats, args.offline)
     resultados: list[ResultadoConsole] = []
     ignoradas: list[str] = []
     for pasta in sorted(pasta_roms.iterdir(), key=lambda p: p.name.lower()):
@@ -1572,14 +1888,14 @@ def main(argv=None) -> int:
                 ignoradas.append(pasta.name)
             continue
         try:
-            r = processar_console(pasta.name, pasta, sis, args, dats, pasta_roms, carimbo)
+            r = processar_console(pasta.name, pasta, sis, args, dats, pasta_roms, carimbo, cache_capas)
         except Exception as e:  # noqa: BLE001
             log(f"  ERRO no console {pasta.name}: {e}")
             continue
         if r:
             resultados.append(r)
 
-    md = gerar_relatorio(resultados, ignoradas, args, pasta_roms, inicio, dats)
+    md = gerar_relatorio(resultados, ignoradas, args, pasta_roms, inicio, dats, cache_capas)
     pasta_rel = pasta_roms / "_relatorios"
     pasta_rel.mkdir(parents=True, exist_ok=True)
     base = f"limpeza-{inicio.strftime('%Y-%m-%d_%H%M')}{'-simulacao' if args.simular else ''}"
@@ -1596,6 +1912,8 @@ def main(argv=None) -> int:
         f"{' (simulado)' if args.simular else ''} | corrompidos: {sum(len(r.corrompidos) for r in resultados)}")
     if ignoradas:
         log(f"Pastas ignoradas (sem mapeamento): {', '.join(ignoradas)}")
+    log(f"Acessos à internet nesta execução: {len(ACESSOS_REDE)}"
+        + (" (modo offline)" if args.offline else ""))
     log(f"Relatório: {arq}")
     return 0
 

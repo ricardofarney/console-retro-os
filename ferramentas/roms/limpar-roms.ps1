@@ -4,6 +4,7 @@
 # Exemplos:
 #   .\limpar-roms.ps1 "D:\Adube Sistemas\Console de Jogo\arcadia-preview\roms" --simular
 #   .\limpar-roms.ps1 "E:\roms" --sem-capas --txt
+#   .\limpar-roms.ps1 "E:\roms" --offline --simular   (sem internet: DATs de dats\ e cache de capas)
 #
 # Se o PowerShell bloquear scripts, rode uma vez nesta janela (não exige administrador):
 #   Set-ExecutionPolicy -Scope Process Bypass
