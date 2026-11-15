@@ -194,7 +194,10 @@ case ${1} in
     ;;
     "autosave")
         if [[ -z "${AUTOSAVE}" || "${AUTOSAVE}" == "0" ]]; then
-            echo 'savestate_auto_save = "false"' >> ${RACONF}
+            # Arcádia: "COMEÇAR DO INÍCIO" não carrega o save, mas continua salvando ao sair
+            # (se o salvamento automático estiver ligado), para "CONTINUAR DE ONDE PAREI"
+            # sempre levar ao último lugar onde a pessoa parou.
+            write_bool "savestate_auto_save" "${2}"
             echo 'savestate_auto_load = "false"' >> ${RACONF}
         else
         write_log "Autosave ${AUTOSAVE}"
@@ -208,7 +211,7 @@ case ${1} in
             echo "state_slot = \"${SNAPSHOT}\"" >> ${RACONF}
         else
             if [[ "${AUTOLOAD}" == "false" ]]; then
-                echo 'savestate_auto_save = "false"' >> ${RACONF}
+                # Arcádia: só deixa de carregar; o salvar ao sair segue a opção "autosave"
                 echo 'savestate_auto_load = "false"' >> ${RACONF}
             fi
             echo 'state_slot = "0"' >> ${RACONF}

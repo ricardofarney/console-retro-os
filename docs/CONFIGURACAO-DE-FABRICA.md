@@ -19,6 +19,7 @@ Lembrete: os padrões abaixo valem para **cartões novos** (no primeiro boot o E
 | Tema | [es_settings.cfg](../packages/sx05re/emuelec-emulationstation/config/es_settings.cfg) | `ThemeSet=arcadia` (pacote `es-theme-arcadia`) |
 | Coleções | `es_settings.cfg` | `CollectionSystemsAuto=recent,favorites,all` (Continuar jogando, Favoritos, Todos os jogos) |
 | Escolha de save ao abrir jogo | `es_settings.cfg` | `ShowSaveStates=true` (janela "Continuar de onde parei / Começar do início" — textos no `arcadia-emulationstation`) |
+| Mostrar a escolha ao abrir | `emuelec.conf` | `global.savestates=2` — a janela "ONDE VOCÊ QUER COMEÇAR?" aparece quando o jogo já tem save (sem isso ela nunca aparecia; achado no [teste do WSLg](TESTE-WSLG.md)) |
 | Favoritos no topo das listas | `es_settings.cfg` | `FavoritesFirst=true` (já era padrão) |
 
 ## Salvamento automático em todos os sistemas
@@ -27,6 +28,7 @@ Lembrete: os padrões abaixo valem para **cartões novos** (no primeiro boot o E
 |---|---|---|
 | Opção geral | `emuelec.conf` | `global.autosave=1` (antes comentado) |
 | Padrão aplicado a cada jogo | [setsettings.sh](../packages/sx05re/emuelec/bin/setsettings.sh) (`default_settings`) | `savestate_auto_save` e `savestate_auto_load` = `"true"` (antes `"false"`) |
+| "COMEÇAR DO INÍCIO" | [setsettings.sh](../packages/sx05re/emuelec/bin/setsettings.sh) (opção `autosave`) | com `-autosave 0` só deixa de **carregar**; continua **salvando ao sair** se `global.autosave=1`, para "Continuar de onde parei" levar sempre ao último ponto |
 | Save da bateria (.srm) | [retroarch/package.mk](../packages/sx05re/libretro_base/retroarch/package.mk) | `autosave_interval = "10"` (grava a cada 10 s; protege contra desligar na tomada) |
 
 Emuladores standalone (PPSSPP, Flycast SA, DuckStation SA, Mupen64Plus SA, Dolphin…) não usam essas opções do RetroArch.

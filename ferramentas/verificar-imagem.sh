@@ -46,7 +46,7 @@ S="$TRAB/sys"; [ -d "$TRAB/sysx" ] && S="$TRAB/sysx"
 # 2) EmulationStation do fork + textos pt-BR
 ES="$S/usr/bin/emulationstation"; MO="$(find "$S/usr/config/emuelec/configs/locale/pt_BR" -name emulationstation2.mo 2>/dev/null | head -1)"
 faltam=""; for k in ArcadiaMenuSimples ArcadiaFavoriteSystems FavoriteSystems "CONTINUE WHERE I LEFT OFF" "START FROM THE BEGINNING"; do grep -aq "$k" "$ES" || faltam="$faltam [$k]"; done
-item "EmulationStation é o do fork arcadia (≥ 0c64beb)" "$([ -z "$faltam" ] && echo 0 || echo 1)" "$( [ -z "$faltam" ] && echo "binário $(file -b "$ES" | cut -d, -f2 | xargs) com as funções do fork; PKG_VERSION no repositório: $(grep -oP '^PKG_VERSION="\K[0-9a-f]{7}' "$REPO/packages/sx05re/emuelec-emulationstation/package.mk")" || echo "faltam:$faltam")"
+item "EmulationStation é o do fork arcadia (≥ 6ad7cae)" "$([ -z "$faltam" ] && echo 0 || echo 1)" "$( [ -z "$faltam" ] && echo "binário $(file -b "$ES" | cut -d, -f2 | xargs) com as funções do fork; PKG_VERSION no repositório: $(grep -oP '^PKG_VERSION="\K[0-9a-f]{7}' "$REPO/packages/sx05re/emuelec-emulationstation/package.mk")" || echo "faltam:$faltam")"
 faltam=""; for k in "CONTINUAR DE ONDE PAREI" "COMEÇAR DO INÍCIO" "FAVORITAR CONSOLE" "MODO AVANÇADO" "DESLIGAR COM SEGURANÇA" "ONDE VOCÊ QUER COMEÇAR?"; do grep -aq "$k" "$MO" 2>/dev/null || faltam="$faltam [$k]"; done
 item "Textos novos em pt-BR no EmulationStation" "$([ -z "$faltam" ] && echo 0 || echo 1)" "$( [ -z "$faltam" ] && echo "6 textos conferidos no emulationstation2.mo" || echo "faltam:$faltam")"
 
@@ -63,13 +63,21 @@ item "Idioma pt_BR e fuso America/Sao_Paulo" $? "$(grep -E '^system.(language|ti
 # 5) salvamento automático + escolha de save
 grep -qx 'global.autosave=1' "$EC" && grep -q 'savestate_auto_save = "true"' "$S/usr/bin/setsettings.sh" && grep -q '<bool name="ShowSaveStates" value="true" />' "$ESS" && grep -q 'autosave_interval = "10"' "$S/usr/config/retroarch/retroarch.cfg" 2>/dev/null
 item "Salvamento automático e ShowSaveStates de fábrica" $? "global.autosave=1, setsettings padrão true, ShowSaveStates=true, autosave_interval=10"
+# janela "ONDE VOCÊ QUER COMEÇAR?" ao abrir jogo com save; "COMEÇAR DO INÍCIO" continua salvando ao sair
+grep -qx 'global.savestates=2' "$EC" && grep -q 'write_bool "savestate_auto_save" "${2}"' "$S/usr/bin/setsettings.sh"
+item "Escolha \"ONDE VOCÊ QUER COMEÇAR?\" ao abrir jogo com save" $? "global.savestates=$(grep -oP '^global.savestates=\K\S+' "$EC"); COMEÇAR DO INÍCIO salva ao sair: $(grep -q 'write_bool "savestate_auto_save" "${2}"' "$S/usr/bin/setsettings.sh" && echo sim || echo não)"
 
 # 6) coleções e ordem (DESIGN.md)
 grep -q '<string name="CollectionSystemsAuto" value="recent,favorites,all" />' "$ESS" && grep -aq ArcadiaFavoriteSystems "$ES"
 item "Coleções e ordem da tela inicial (DESIGN.md)" $? "recent,favorites,all; ordem consoles favoritos → Continuar jogando → Favoritos → demais (no binário)"
-HIDE="$(grep -oP 'name="HideEmptySystems" value="\K[^"]+' "$ESS" 2>/dev/null)"
-[ -n "$HIDE" ] || grep -aq ArcadiaHideEmpty "$ES"
-item "Consoles e coleções sem jogos escondidos (exceto Continuar jogando/Favoritos)" $? "$( [ -n "$HIDE" ] && echo "HideEmptySystems=$HIDE" || (grep -aq ArcadiaHideEmpty "$ES" && echo "função no binário" || echo "não configurado"))"
+# o ES já esconde consoles sem jogos quando LoadEmptySystems não está ligado (padrão false);
+# Continuar jogando e Favoritos aparecem mesmo vazios (comprovado no teste do WSLg, docs/TESTE-WSLG.md)
+VAZIOS="$(grep -oP 'name="LoadEmptySystems" value="\K[^"]+' "$ESS" 2>/dev/null)"
+[ "$VAZIOS" != "true" ] && grep -aq LoadEmptySystems "$ES"
+item "Consoles sem jogos escondidos (exceto Continuar jogando/Favoritos)" $? "LoadEmptySystems=${VAZIOS:-padrão (false)}"
+# ficha do jogo: "Lançamento" só aparece com data (sem "Desconhecido")
+grep -q '{game:releaseyear}' "$T/theme.xml" && grep -q '<datetime name="md_releasedate"><visible>false</visible>' "$T/theme.xml"
+item "Ficha do jogo sem \"Lançamento: Desconhecido\"" $? "ano por {game:releaseyear}, linha some sem data"
 
 # 7) senha do root
 SH="$S/usr/cache/shadow"; HASH="$(sudo grep '^root:' "$SH" 2>/dev/null | cut -d: -f2)"   # arquivo com permissão 000

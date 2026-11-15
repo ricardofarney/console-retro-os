@@ -316,12 +316,16 @@
       <zIndex>30</zIndex>
     </text>
 
-    <text name="md_lbl_releasedate"><pos>0.555 0.57</pos><size>0.11 0.034</size><fontSize>0.022</fontSize><color>${corTexto2}</color><zIndex>30</zIndex></text>
-    <datetime name="md_releasedate"><pos>0.665 0.57</pos><size>0.27 0.034</size><fontSize>0.022</fontSize><color>${corTexto}</color><format>%Y</format><zIndex>30</zIndex></datetime>
-    <text name="md_lbl_genre"><pos>0.555 0.606</pos><size>0.11 0.034</size><fontSize>0.022</fontSize><color>${corTexto2}</color><zIndex>30</zIndex></text>
-    <text name="md_genre"><pos>0.665 0.606</pos><size>0.27 0.034</size><fontSize>0.022</fontSize><color>${corTexto}</color><zIndex>30</zIndex></text>
-    <text name="md_lbl_players"><pos>0.555 0.642</pos><size>0.11 0.034</size><fontSize>0.022</fontSize><color>${corTexto2}</color><zIndex>30</zIndex></text>
-    <text name="md_players"><pos>0.665 0.642</pos><size>0.27 0.034</size><fontSize>0.022</fontSize><color>${corTexto}</color><zIndex>30</zIndex></text>
+    <text name="md_lbl_genre"><pos>0.555 0.57</pos><size>0.11 0.034</size><fontSize>0.022</fontSize><color>${corTexto2}</color><zIndex>30</zIndex></text>
+    <text name="md_genre"><pos>0.665 0.57</pos><size>0.27 0.034</size><fontSize>0.022</fontSize><color>${corTexto}</color><zIndex>30</zIndex></text>
+    <text name="md_lbl_players"><pos>0.555 0.606</pos><size>0.11 0.034</size><fontSize>0.022</fontSize><color>${corTexto2}</color><zIndex>30</zIndex></text>
+    <text name="md_players"><pos>0.665 0.606</pos><size>0.27 0.034</size><fontSize>0.022</fontSize><color>${corTexto}</color><zIndex>30</zIndex></text>
+    <!-- Lançamento: só aparece quando o jogo tem data (sem data, nada de "Desconhecido");
+         fica por último para não deixar buraco entre as linhas -->
+    <text name="md_lbl_releasedate"><visible>false</visible></text>
+    <datetime name="md_releasedate"><visible>false</visible></datetime>
+    <text name="arcadia_lbl_ano" extra="true"><text>Lançamento:</text><pos>0.555 0.642</pos><size>0.11 0.034</size><fontSize>0.022</fontSize><color>${corTexto2}</color><zIndex>30</zIndex><visible>!({game:releaseyear} == "")</visible></text>
+    <text name="arcadia_ano" extra="true"><text>{game:releaseyear}</text><pos>0.665 0.642</pos><size>0.27 0.034</size><fontSize>0.022</fontSize><color>${corTexto}</color><zIndex>30</zIndex><visible>!({game:releaseyear} == "")</visible></text>
 
     <text name="md_description">
       <pos>0.555 0.69</pos>
