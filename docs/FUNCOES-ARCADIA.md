@@ -39,7 +39,7 @@ Menu principal (Start) com **6 itens** + modo avançado:
 |---|---|
 | Wi-Fi | configurações de rede do EmuELEC |
 | Parear controle Bluetooth | pareamento automático (`ThreadedBluetooth`) |
-| Configurar botões | configuração de controle |
+| Configurar botões | submenu: **Mapear um controle** (configuração de controle de antes) e **Ordem dos jogadores** (jogadores 1 a 4, ver abaixo) |
 | Atualizações | atualizações e downloads (servidor do Arcádia — [ATUALIZACOES.md](ATUALIZACOES.md)) |
 | Som e tela | submenu com "Ajustes de áudio" e "Tela" (resolução e opções de vídeo do EmuELEC) |
 | Desligar com segurança | confirmação "DESLIGAR O CONSOLE?" e desligamento normal |
@@ -47,11 +47,21 @@ Menu principal (Start) com **6 itens** + modo avançado:
 
 Desligar: `ArcadiaMenuSimples=false` no `es_settings.cfg` volta ao menu completo direto. Em modo Kiosk/Criança o menu simplificado não é usado (mantém o comportamento do EmuELEC).
 
-Arquivos: `es-app/src/guis/GuiMenu.{h,cpp}` (`addArcadiaEntries`, `openArcadiaSomTela`, parâmetro `arcadiaCompleto`).
+Arquivos: `es-app/src/guis/GuiMenu.{h,cpp}` (`addArcadiaEntries`, `openArcadiaSomTela`, `openArcadiaBotoes`, parâmetro `arcadiaCompleto`).
+
+## 4. Ordem dos jogadores (até 4 jogadores)
+
+Commit `50df2c3` (16/11/2026), decisão "até 4 jogadores" ([MULTIJOGADOR.md](MULTIJOGADOR.md)):
+
+- **Configurar botões → Ordem dos jogadores**: a tela de atribuição de controles do EmuELEC, só com os jogadores 1 a 4 (`GuiControllersSettings` com o parâmetro `arcadiaOrdem`, aberta por `openArcadiaPlayerOrder`). Cada "JOGADOR n" escolhe um controle conectado ou **AUTOMÁTICO**. **VOLTAR À ORDEM DE CONEXÃO** apaga as escolhas (`INPUT Pn*` = `DEFAULT`).
+- **Ordem de conexão**: os controles sem jogador escolhido são ordenados pelo número de instância do SDL (cresce a cada controle conectado), em vez do caminho do dispositivo (`InputManager::computePlayersConfigs`). Opção `ArcadiaOrdemConexao` (padrão `true`); com `false` volta a ordem do EmuELEC.
+- O menu completo (Modo avançado → Controles) continua igual, com 8 jogadores.
+
+![Ordem dos jogadores](imagens/wslg/16-ordem-dos-jogadores.png)
 
 ## Traduções
 
-13 textos novos em `locale/lang/pt_BR/LC_MESSAGES/emulationstation2.po` (validado com `msgfmt --check`): WI-FI, PAREAR CONTROLE BLUETOOTH, CONFIGURAR BOTÕES, ATUALIZAÇÕES, SOM E TELA, TELA, DESLIGAR COM SEGURANÇA, MODO AVANÇADO, FAVORITAR CONSOLE, avisos de favorito, CONTINUAR DE ONDE PAREI, COMEÇAR DO INÍCIO.
+13 textos novos em `locale/lang/pt_BR/LC_MESSAGES/emulationstation2.po` (validado com `msgfmt --check`): WI-FI, PAREAR CONTROLE BLUETOOTH, CONFIGURAR BOTÕES, ATUALIZAÇÕES, SOM E TELA, TELA, DESLIGAR COM SEGURANÇA, MODO AVANÇADO, FAVORITAR CONSOLE, avisos de favorito, CONTINUAR DE ONDE PAREI, COMEÇAR DO INÍCIO. Em 16/11/2026, mais 6: MAPEAR UM CONTROLE, ORDEM DOS JOGADORES, QUAL CONTROLE CADA JOGADOR USA, JOGADOR %i, AUTOMÁTICO, VOLTAR À ORDEM DE CONEXÃO.
 
 Regra aprendida: **nada de acento em comentários do código C++** — o `xgettext` do build falha com "Non-ASCII comment". Textos com acento só no `.po`.
 

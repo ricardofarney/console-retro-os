@@ -15,7 +15,9 @@ megadrive, gb, gbc, gba, psx, ...):
   c) MOVE os descartados para <roms>\\_removidos\\<console>\\ (nunca apaga);
   d) lista arquivos corrompidos (só move com --mover-corrompidos);
   e) baixa capas do libretro-thumbnails e atualiza o gamelist.xml
-     preservando favoritos, descrições, contagem de jogadas etc.;
+     preservando favoritos, descrições, contagem de jogadas etc.; preenche o
+     número de jogadores (<players>, ex.: "1-4") quando falta (dats\\maxusers
+     + listas de ferramentas\\multijogador);
   f) gera relatório em <roms>\\_relatorios\\limpeza-AAAA-MM-DD_HHMM.md;
   g) --simular faz tudo menos mover/baixar/alterar (só gera o relatório).
 

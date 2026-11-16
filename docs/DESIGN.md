@@ -11,6 +11,7 @@ Visual aprovado pelo usuário em 14/11/2026 (horário de Brasília). Este docume
 | Estilo | **colorido por console**: fundo claro, cada console com a sua cor |
 | Marcas | **sem logotipos oficiais** — só o nome do console em texto |
 | Formas | cantos arredondados em cards, painéis e barra de seleção |
+| Jogadores | **até 4** (decisão de 16/11/2026): o padrão é 2; 3 ou 4 só nos jogos que permitem, com o multitap ligado automaticamente — [MULTIJOGADOR.md](MULTIJOGADOR.md) |
 
 ## Cores base
 
@@ -78,7 +79,7 @@ Menu com **6 itens**:
 
 1. **Wi-Fi**
 2. **Parear controle Bluetooth**
-3. **Configurar botões**
+3. **Configurar botões** — submenu com **Mapear um controle** e **Ordem dos jogadores** (jogadores 1 a 4; "automático" = ordem de conexão)
 4. **Atualizações**
 5. **Som e tela**
 6. **Desligar com segurança**

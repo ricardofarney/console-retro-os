@@ -44,7 +44,8 @@ D:\Adube Sistemas\Console de Jogo\
 │   ├── temas\arcadia\         tema Arcádia do EmulationStation (v0.2, ver DESIGN.md)
 │   ├── atualizacao\           versoes.txt (lido pelos aparelhos para achar atualizações)
 │   └── ferramentas\           wsl\ (build), tema\ (artes), previa\ (RetroBat), roms\ (limpeza),
-│                              aparelho\ (chegada do aparelho), publicar-versao.ps1, copiar-docs.ps1
+│                              multijogador\ (listas e gerador do multitap), aparelho\ (chegada do aparelho),
+│                              publicar-versao.ps1, copiar-docs.ps1
 ├── arcadia-emulationstation\  fork do EmulationStation (branch arcadia)
 ├── arcadia-preview\           prévia no Windows com RetroBat (atalho "Arcádia (prévia)" na Área de Trabalho)
 │   ├── _instalador\           instalador original do RetroBat
@@ -89,6 +90,12 @@ Situação do build: `D:\Adube Sistemas\Console de Jogo\imagens-compiladas\logs\
 3. Linha "Continuar jogando" (coleção de jogados recentemente) na tela inicial.
 4. Favoritos na tela inicial.
 
+## Decisões do usuário
+
+| Data | Decisão | Detalhes |
+|---|---|---|
+| 16/11/2026 | **Até 4 jogadores.** O padrão é 2; 3 ou 4 jogadores só quando o jogo permitir (multitap ligado automaticamente só nesses jogos). | [MULTIJOGADOR.md](MULTIJOGADOR.md) |
+
 ## Documentos
 
 | Documento | Conteúdo |
@@ -101,5 +108,6 @@ Situação do build: `D:\Adube Sistemas\Console de Jogo\imagens-compiladas\logs\
 | [ATUALIZACOES.md](ATUALIZACOES.md) | atualização pelas Releases do fork e publicação de versões |
 | [PREVIA-WINDOWS.md](PREVIA-WINDOWS.md) | prévia no RetroBat, capturas |
 | [LIMPEZA-ROMS.md](LIMPEZA-ROMS.md) | ferramenta de limpeza da coleção de jogos |
+| [MULTIJOGADOR.md](MULTIJOGADOR.md) | até 4 jogadores: ordem dos controles, multitap automático por jogo |
 | [CHEGADA-DO-APARELHO.md](CHEGADA-DO-APARELHO.md) | passo a passo quando o aparelho chegar |
 | `SENHAS-LOCAIS.md` | senhas do root e do Samba — **só local, fora do Git** |

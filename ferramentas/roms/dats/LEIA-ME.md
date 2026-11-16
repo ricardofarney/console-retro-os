@@ -40,6 +40,10 @@ Esta pasta guarda, **dentro do repositório**, as DATs usadas pela ferramenta `f
 
 **Arcade e Neo Geo (MAME / FinalBurn Neo) não usam No-Intro nem Redump**: os romsets de arcade são definidos pelas DATs do próprio emulador (versão exata do MAME ou do FBNeo que o EmuELEC usa), e um romset só funciona com a versão do emulador para a qual foi montado. Por isso não há DAT de arcade aqui — a ferramenta trata `neogeo`/arcade só verificando a integridade dos `.zip` e nunca agrupa versões (clones dependem dos pais). Para validar romsets de arcade use o ClrMamePro/RomVault com a DAT do emulador correspondente.
 
+## Número de jogadores (`maxusers/`)
+
+Desde 16/11/2026 (limpar-roms.py 1.2) a pasta `maxusers/` guarda as DATs da pasta `metadat/maxusers` do mesmo commit `b2e5eaa` do libretro-database: 22 arquivos, 1,9 MB, um para cada console da paleta que tem essa base (não existe para Sega CD nem PlayStation). Cada jogo traz `users N` e o CRC da ROM; a ferramenta usa isso para preencher `<players>` no `gamelist.xml`. A base mistura jogos simultâneos com jogos de turnos, por isso **não** é usada para ligar o multitap (ver `docs/MULTIJOGADOR.md`). `--atualizar-dats` baixa também esta pasta.
+
 ## Como a ferramenta usa
 
 Ordem de busca da DAT de um console:
