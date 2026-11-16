@@ -1,0 +1,80 @@
+# Arcádia — fonte da lista multijogador (snes-super-multitap.txt)
+# Origem: https://nintendo.fandom.com/wiki/Super_Multitap (revisão 1195819)
+# Baixada em: 16/11/2026 13:23 (horário de Brasília) por montar-listas.py 1.0
+# Formato: título<TAB>jogadores (? = a fonte não informa)<TAB>observação
+Bakkyū Renpatsu‼ Super B-Daman (Japan)	4	
+Barkley Shut Up and Jam!	4	
+Battle Cross (Japan)	5	
+Battle Jockey (Japan)	4	
+Bill Walsh College Football	5	
+Bomberman B-Daman	4	
+Capcom's Soccer Shootout	4	
+College Slam	4	
+Crystal Beans from Dungeon Explorer (Japan)	3	
+Dragon: The Bruce Lee Story	3	
+Dynamic Stadium (Japan)	4	
+ESPN National Hockey Night	5	
+FIFA International Soccer	5	
+FIFA Soccer 96	5	
+FIFA Soccer 97	5	
+FIFA: Road to World Cup 98	5	
+Firestriker	4	
+HammerLock Wrestling	4	
+Hanna Barbera's Turbo Toons (PAL)	4	
+Head-On Soccer	5	
+Hebereke no Oishii Puzzle (Japan)	5	
+Human Grand Prix III: F1 Triple Battle (Japan)	3	
+Human Grand Prix IV: F1 Dream Battle (Japan)	3	
+Hungry Dinosaurs (PAL)	4	
+International Superstar Soccer Deluxe	4	
+J.R.R. Tolkien's The Lord of the Rings, Vol. I	5	
+Jeopardy! Deluxe Edition	3	
+Jeopardy! Sports Edition	3	
+Kunio-kun no Dodgeball da yo Zen'in Shūgō! (Japan)	4	
+Las Vegas Dream (Japan)	4	Japanese version of Vegas Stakes
+Looney Tunes B-Ball	4	
+Madden NFL '94	5	
+Madden NFL '98	5	
+Micro Machines 2: Turbo Tournament	4	
+Micro Machines	4	
+NBA Give 'n Go	4	
+NBA Hang Time	4	
+NBA Jam: Tournament Edition	4	
+NBA Jam	4	
+NBA Live 95	5	
+NBA Live 96	5	
+NBA Live 97	5	
+NBA Live 98	5	
+NCAA Final Four Basketball	5	
+NCAA Football	4	
+NFL Quarterback Club '96	5	
+NFL Quarterback Club	5	
+NHL '94	5	
+NHL '98	5	
+Natsume Championship Wrestling	4	
+Olympic Summer Games: Atlanta 1996	5	
+Pieces	5	
+Rap Jam: Volume One	5	
+Saturday Night Slam Masters	4	
+Secret of Mana	3	
+Slam Dunk 2: IH Yosen Kanzenban!!	5	
+Slam Dunk: Yonkyo Taiketsu!!	5	
+Smash Tennis (PAL) / Super Family Tennis (Japan)	4	
+Sterling Sharpe: End 2 End	5	
+Street Hockey '95	4	
+Street Racer	4	
+Sugoi Hebereke (Japan)	4	
+Sugoro Quest++ Dicenics (Japan)	4	
+Super Bomberman	4	
+Super Bomberman 2	4	
+Super Bomberman 3 (PAL & Japan)	5	
+Super Bomberman 4 (Japan)	5	
+Super Bomberman 5 (Japan)	5	
+Super Puyo Puyo 2 Remix	4	
+Super Tetris 3	4	
+The Peace Keepers	4	versus mode only
+The Sporting News: Baseball	4	
+Tiny Toon Adventures: Wacky Sports Challenge	4	
+Top Gear 3000	4	
+WCW Super Brawl Wrestling	4	
+WWF Raw	4	

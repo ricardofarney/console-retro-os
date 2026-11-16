@@ -1,0 +1,331 @@
+# Arcádia — fonte da lista multijogador (psx-multitap.txt)
+# Origem: https://en.wikipedia.org/wiki/PlayStation_Multitap (revisão 1377234328)
+# Baixada em: 16/11/2026 13:23 (horário de Brasília) por montar-listas.py 1.0
+# Formato: título<TAB>jogadores (? = a fonte não informa)<TAB>observação
+Bishi Bashi Special	3	
+Capcom Generations: Blazing Guns	3	
+Captain Commando	3	
+Rampage Through Time	3	
+Rampage 2: Universal Tour	3	
+Actua Golf 3	4	
+Actua Ice Hockey	4	
+Actua Ice Hockey 2	4	
+Actua Soccer 2	4	
+Actua Tennis	4	
+Adidas Power Soccer	4	
+Adidas Power Soccer 2	4	
+Adidas Power Soccer 98	4	
+Adidas Power Soccer International 97	4	
+All Star Tennis 2000	4	
+All Star Tennis '99	4	
+All Star Watersports	4	
+Anna Kournikova's Smash Court Tennis	4	
+Anokodokonoko	4	
+Arcade's Greatest Hits: The Atari Collection 2	4	
+Art Camion Sugorokuden	4	
+Atari Anniversary Edition Redux	4	
+Backyard Soccer	4	
+Battle Hunter	4	
+Blast Chamber	4	
+Blaze and Blade: Eternal Quest	4	
+Blaze and Blade Busters	4	
+Bleach Blade Battlers 2nd	4	
+Blood Lines	4	
+Bomberman Land	4	
+Breakout	4	
+Break Point	4	
+Brian Lara Cricket	4	
+Buttsubushi	4	
+Caesars Palace 2000	4	
+Caesars Palace II	4	
+California Surfing	4	
+Card Shark	4	
+Catan: Die Erste Insel	4	
+Chessmaster II	4	
+Chocobo Collection	4	
+Circuit Breakers	4	
+College Slam	4	
+Crash Bash	4	
+Crash Team Racing	4	
+Cubix - Robots for Everyone: Race 'N Robots	4	
+CyberTiger	4	
+David Beckham Soccer	4	
+Davis Cup Complete Tennis	4	
+Destruction Derby Raw	4	
+Dinomaster Party	4	
+Dioramos	4	
+Disney's Pooh's Party Game: In Search of the Treasure	4	
+Dragon Money	4	
+Dynamite Soccer 98	4	
+ECW Anarchy Rulz	4	
+ECW Hardcore Revolution	4	
+ESPN MLS GameNight	4	
+European Super League	4	
+Family Games Compendium	4	
+Fantastic Four	4	
+The F.A. Premier League Stars	4	
+The F.A. Premier League Stars 2001	4	
+Fire Pro Wrestling G	4	
+Fox Sports Golf '99	4	
+Frogger	4	
+Frogger 2: Swampy's Revenge	4	
+Galaxian 3	4	
+Gekido	4	
+Gritz: The Pyramid Adventure	4	
+High School! Kimengumi: The Table Hockey	4	
+Hi・Hou・Ou: Mou Omae Tobakuchi Kikan!!	4	
+Hogs of War	4	
+Hot Shots Golf	4	
+Hot Shots Golf 2	4	
+Hot Wheels Extreme Racing	4	
+Hyper Tennis: Final Match	4	
+International Superstar Soccer 2000	4	
+International Superstar Soccer Deluxe	4	
+International Track & Field	4	
+International Track & Field 2000	4	
+ISS Pro Evolution	4	
+ISS Pro Evolution 2	4	
+Itadaki Street: Gorgeous King	4	
+Jarrett & Labonte Stock Car Racing	4	
+Jetracer	4	
+Jigsaw Island: Japan Graffiti	4	
+Jigsaw Madness	4	
+Jonah Lomu Rugby	4	
+Jun Classic C.C. & Rope Club	4	
+Karei Naru Casino Club: Double Draw	4	
+Kero Kero King	4	
+Kick Off World	4	
+Klonoa Beach Volleyball	4	
+Kurt Warner's Arena Football Unleashed	4	
+Love Game's WaiWai Tennis Plus	4	
+Meru Purana	4	
+Michael Owen's World League Soccer '99	4	
+Missland 2	4	
+Monster Racer	4	
+Monte Carlo Games Compendium	4	
+Motor Mash	4	
+Motto Trump Shiyouyo!: i-mode no Grand Prix	4	
+Ms. Pac-Man Maze Madness	4	
+Music 2000	4	
+Nagano Winter Olympics '98	4	
+NBA Hangtime	4	
+NBA Jam Extreme	4	
+NBA Jam Tournament Edition	4	
+NBA Showtime: NBA on NBC	4	
+Need for Speed: Porsche Unleashed (US) / [[Need For Speed: Porsche 2000|Need for Speed: Porsche 2000]] (PAL)	4	
+Need for Speed: V-Rally 2	4	
+NFL Blitz 2000	4	
+NFL Blitz 2001	4	
+NHL Open Ice: 2 On 2 Challenge	4	
+NOON: New Type Action Game	4	
+Olympic Soccer	4	
+Pangaea	4	
+Panzer Bandit	4	
+Paro Wars	4	
+Peter Jacobsen's Golden Tee Golf	4	
+Pete Sampras Tennis 97	4	
+Pitball	4	
+Polaris SnoCross	4	
+Pong: The Next Level	4	
+Power Play Sports Trivia	4	
+Power Spike: Pro Beach Volleyball	4	
+Poy Poy	4	
+Poy Poy 2	4	
+Premier Manager 2000	4	
+Premier Manager: Ninety Nine	4	
+Pro Evolution Soccer	4	
+Pro Evolution Soccer 2	4	
+Pro Wrestling Sengokuden: Hyper Tag Match	4	
+Putter Golf	4	
+Puyo Puyo Box	4	
+Quake II	4	
+Rageball	4	
+Rakugaki Showtime (Japan)	4	
+Rally Cross	4	
+Rat Attack!	4	
+Risk: The Game of Global Domination	4	
+Road Rash: Jailbreak	4	
+Running Wild	4	
+S.C.A.R.S.	4	
+Scrabble	4	
+Shinobi no Roku	4	
+Simple 1500 Series: Vol.55 - The Darts	4	
+Simple 1500 Series: Vol.60 - The Table Hockey	4	
+Simple 1500 Series: Vol.65 - The Golf	4	
+Simple 1500 Series: Vol.72 - The Beach Volleyball	4	
+Sky Sports Football Quiz	4	
+Sky Sports Football Quiz Season 02	4	
+Slam 'N Jam '96 featuring Magic & Kareem	4	
+Sled Storm	4	
+Smash Court	4	
+Soccer '97	4	
+South Park: Chef's Luv Shack	4	
+Speed Punks	4	
+Striker '96	4	
+Striker Pro 2000	4	
+Suchie-Pai Adventure: Doki Doki Nightmare	4	
+Super Football Champ	4	
+SuperLite 1500 Series: Anokodokonoko Endless Season	4	
+Syndicate Wars	4	
+Tales of Destiny II	4	
+Tales of Eternia	4	
+Team Buddies	4	
+Tennis	4	
+Tennis Arena	4	
+Tiger Woods 99 PGA Tour Golf	4	
+Tiger Woods PGA Tour 2000	4	
+Tiger Woods PGA Tour 2001	4	
+TOCA World Touring Cars	4	
+Trash It	4	
+Trump Shiyouyo! Fukkoku-ban	4	
+Twisted Metal 3	4	
+Twisted Metal 4	4	
+Uchū Gōshōden: Bakuretsu Akindo	4	
+UEFA Challenge	4	
+UEFA Champions League Season 1998/99	4	
+Vegas Casino	4	
+Vegas Games 2000	4	
+Viva Soccer	4	
+VR Golf '97	4	
+Waku Waku Derby	4	
+WCW Mayhem	4	
+Westlife Fan-O-Mania	4	
+Who Wants to Be a Millionaire	4	
+Who Wants to Be a Millionaire: 2nd Edition	4	
+World League Soccer '98	4	
+World Soccer: Winning Eleven 6 International	4	
+Wu-Tang: Shaolin Style	4	
+WWF Attitude	4	
+WWF in Your House	4	
+WWF Smackdown!	4	
+WWF Smackdown! 2: Know Your Role	4	
+WWF War Zone	4	
+Yeh Yeh Tennis	4	
+ZigZagBall	4	
+Zipangujima: Unmei wa Saikoro ga Kimeru!?	4	
+Aquarian Age: Tokyo Wars	5	
+Bomberman Party Edition	5	
+Bomberman World	5	
+Devil Dice	5	
+Overboard!	5	
+Shipwreckers!	5	
+Brunswick Circuit Pro Bowling	6	
+The Game of Life	6	
+NBA Hoopz	6	
+Space Jam	6	
+Ten Pin Alley	6	
+Top Shop	6	
+2002 FIFA World Cup	8	
+Actua Soccer 3	8	
+All Star Soccer	8	
+Chris Kamara's Street Soccer	8	
+Dare Devil Derby 3D	8	
+FIFA 2000: Major League Soccer	8	
+FIFA 2001	8	
+FIFA 99	8	
+FIFA: Road to World Cup 98	8	
+FIFA Soccer 2002	8	
+FIFA Soccer 2003	8	
+FIFA Soccer 2004	8	
+FIFA Soccer 2005	8	
+FIFA Soccer 96	8	
+FIFA Soccer 97	8	
+FoxKids.com Micro Maniacs Racing	8	
+Fox Sports Soccer '99	8	
+Inspector Gadget: Gadget's Crazy Maze	8	
+Jimmy Johnson's VR Football '98	8	
+Madden NFL 2000	8	
+Madden NFL 2001	8	
+Madden NFL 2002	8	
+Madden NFL 2003	8	
+Madden NFL 2004	8	
+Madden NFL 2005	8	
+Madden NFL 97	8	
+Madden NFL 98	8	
+Madden NFL 99	8	
+March Madness '98	8	
+Micro Machines V3	8	
+Micro Maniacs	8	
+Monopoly	8	
+Monster Rancher Battle Card Episode II	8	
+NBA Action 98	8	
+NBA Basketball 2000	8	
+NBA in the Zone	8	
+NBA in the Zone 2	8	
+NBA in the Zone 2000	8	
+NBA in the Zone '98	8	
+NBA in the Zone '99	8	
+NBA Live 2000	8	
+NBA Live 2001	8	
+NBA Live 2002	8	
+NBA Live 2003	8	
+NBA Live 96	8	
+NBA Live 97	8	
+NBA Live 98	8	
+NBA Live 99	8	
+NBA ShootOut	8	
+NBA ShootOut 2000	8	
+NBA ShootOut 2001	8	
+NBA ShootOut 2002	8	
+NBA ShootOut 2004	8	
+NBA ShootOut '97	8	
+NCAA Basketball: Final Four 97	8	
+NCAA Final Four 2000	8	
+NCAA Final Four 2001	8	
+NCAA Final Four 99	8	
+NCAA Football 2000	8	
+NCAA Football 2001	8	
+NCAA Football 98	8	
+NCAA Football 99	8	
+NCAA Gamebreaker	8	
+NCAA GameBreaker 2000	8	
+NCAA GameBreaker 2001	8	
+NCAA GameBreaker 98	8	
+NCAA GameBreaker 99	8	
+NCAA March Madness 2000	8	
+NCAA March Madness 2001	8	
+NCAA March Madness 99	8	
+NFL GameDay 2000	8	
+NFL GameDay 2001	8	
+NFL GameDay 2002	8	
+NFL GameDay 2003	8	
+NFL GameDay 2004	8	
+NFL GameDay 2005	8	
+NFL GameDay '97	8	
+NFL GameDay 98	8	
+NFL GameDay 99	8	
+NFL Quarterback Club 97	8	
+NFL Xtreme 2	8	
+NHL 2000	8	
+NHL 2001	8	
+NHL 97	8	
+NHL 98	8	
+NHL 99	8	
+NHL Blades of Steel 2000	8	
+NHL Breakaway 98	8	
+NHL Championship 2000	8	
+NHL FaceOff 2000	8	
+NHL FaceOff 2001	8	
+NHL FaceOff '97	8	
+NHL FaceOff '98	8	
+NHL FaceOff 99	8	
+NHL Powerplay 98	8	
+Olympic Summer Games	8	
+Pro 18 World Tour Golf	8	
+Professional Underground League of Pain	8	
+Puma Street Soccer	8	
+Rival Schools	8	
+ShaoLin	8	
+Shiritsu Justice Gakuen: Nekketsu Seishun Nikki 2	8	
+Street Racer	8	
+Super Match Soccer	8	
+Sydney 2000	8	
+This Is Football	8	
+This Is Football 2	8	
+Triple Play 97	8	
+Triple Play 98	8	
+Triple Play 99	8	
+UEFA Champions League Season 1999/2000	8	
+UEFA Champions League Season 2000/2001	8	
+UEFA Euro 2000	8	
+World Cup 98	8	

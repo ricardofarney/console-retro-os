@@ -1,0 +1,83 @@
+# Arcádia — jogos de snes com multitap (3 ou mais jogadores)
+# Gerado por ferramentas/multijogador/montar-listas.py 1.0 em 16/11/2026 13:28 (horário de Brasília)
+# Fontes: snes-super-multitap.txt + DAT no-intro/Nintendo - Super Nintendo Entertainment System.dat
+# Formato: chave|título oficial|jogadores|modo
+bakukyuurenpatsusuperbdaman|Bakukyuu Renpatsu!! Super B-Daman|4|multitap
+barkleyshutupandjam|Barkley Shut Up and Jam!|4|multitap
+battlecross|Battle Cross|5|multitap
+battlejockey|Battle Jockey|4|multitap
+billwalshcollegefootball|Bill Walsh College Football|5|multitap
+bombermanbdaman|Bomberman B-Daman|4|multitap
+capcomssoccershootout|Capcom's Soccer Shootout|4|multitap
+collegeslam|College Slam|4|multitap
+crystalbeansfromdungeonexplorer|Crystal Beans from Dungeon Explorer|3|multitap
+dragonthebruceleestory|Dragon - The Bruce Lee Story|3|multitap
+dynamicstadium|Dynamic Stadium|4|multitap
+espnnationalhockeynight|ESPN National Hockey Night|5|multitap
+fifainternationalsoccer|FIFA International Soccer|5|multitap
+fifaroadtoworldcup98|FIFA - Road to World Cup 98|5|multitap
+fifasoccer96|FIFA Soccer 96|5|multitap
+fifasoccer97|FIFA Soccer 97|5|multitap
+firestriker|FireStriker|4|multitap
+fromtvanimationslamdunk2ihyosenkanzenban|From TV Animation Slam Dunk 2 - IH Yosen Kanzen Ban!!|5|multitap
+fromtvanimationslamdunkyonkyougekitotsu|From TV Animation Slam Dunk - Yonkyou Gekitotsu!!|5|multitap
+hammerlockwrestling|Hammerlock Wrestling|4|multitap
+headonsoccer|Head-On Soccer|5|multitap
+heberekenooishiipuzzlewairimasenka|Hebereke no Oishii Puzzle wa Irimasenka|5|multitap
+humangrandprixiiif1triplebattle|Human Grand Prix III - F1 Triple Battle|3|multitap
+humangrandprixivf1dreambattle|Human Grand Prix IV - F1 Dream Battle|3|multitap
+hungrydinosaurs|Hungry Dinosaurs|4|multitap
+internationalsuperstarsoccerdeluxe|International Superstar Soccer Deluxe|4|multitap
+jeopardydeluxeedition|Jeopardy! - Deluxe Edition|3|multitap
+jeopardysportsedition|Jeopardy! - Sports Edition|3|multitap
+jrrtolkiensthelordoftheringsvolume1|J.R.R. Tolkien's The Lord of the Rings - Volume 1|5|multitap
+jrrtolkiensthelordoftheringsvolumeone|J.R.R. Tolkien's The Lord of the Rings - Volume One|5|multitap
+kuniokunnododgeballdayozeninshuugou|Kunio-kun no Dodge Ball Da yo Zenin Shuugou!|4|multitap
+kuniokunnododgeballdayozeninshuugoutournamentspecial|Kunio-kun no Dodge Ball Da yo Zenin Shuugou! - Tournament Special|4|multitap
+lasvegasdreamingoldenparadise|Las Vegas Dream in Golden Paradise|4|multitap
+looneytunesbball|Looney Tunes B-Ball|4|multitap
+maddennfl94|Madden NFL '94|5|multitap
+maddennfl98|Madden NFL 98|5|multitap
+micromachines|Micro Machines|4|multitap
+micromachines2turbotournament|Micro Machines 2 - Turbo Tournament|4|multitap
+natsumechampionshipwrestling|Natsume Championship Wrestling|4|multitap
+nbagivengo|NBA Give 'n Go|4|multitap
+nbahangtime|NBA Hang Time|4|multitap
+nbajam|NBA Jam|4|multitap
+nbajamtournamentedition|NBA Jam - Tournament Edition|4|multitap
+nbalive95|NBA Live 95|5|multitap
+nbalive96|NBA Live 96|5|multitap
+nbalive97|NBA Live 97|5|multitap
+nbalive98|NBA Live 98|5|multitap
+ncaafinalfourbasketball|NCAA Final Four Basketball|5|multitap
+ncaafootball|NCAA Football|4|multitap
+nflquarterbackclub|NFL Quarterback Club|5|multitap
+nflquarterbackclub96|NFL Quarterback Club 96|5|multitap
+nhl94|NHL '94|5|multitap
+nhl98|NHL 98|5|multitap
+olympicsummergames|Olympic Summer Games|5|multitap
+peacekeepers|Peace Keepers, The|4|multitap
+pieces|Pieces|5|multitap
+rapjamvolumeone|RapJam - Volume One|5|multitap
+saturdaynightslammasters|Saturday Night Slam Masters|4|multitap
+secretofmana|Secret of Mana|3|multitap
+smashtennis|Smash Tennis|4|multitap
+sportingnewsbaseball|Sporting News, The - Baseball|4|multitap
+sterlingsharpeend2end|Sterling Sharpe - End 2 End|5|multitap
+streetracer|Street Racer|4|multitap
+streetsportsstreethockey95|Street Sports - Street Hockey '95|4|multitap
+sugoihebereke|Sugoi Hebereke|4|multitap
+sugoroquestdicenics|Sugoro Quest++ - Dicenics|4|multitap
+superbomberman|Super Bomberman|4|multitap
+superbomberman2|Super Bomberman 2|4|multitap
+superbomberman3|Super Bomberman 3|5|multitap
+superbomberman4|Super Bomberman 4|5|multitap
+superbomberman5|Super Bomberman 5|5|multitap
+superfamilytennis|Super Family Tennis|4|multitap
+superpuyopuyotsuuremix|Super Puyo Puyo Tsuu Remix|4|multitap
+supertetris3|Super Tetris 3|4|multitap
+tinytoonadventureswackysportschallenge|Tiny Toon Adventures - Wacky Sports Challenge|4|multitap
+topgear3000|Top Gear 3000|4|multitap
+turbotoons|Turbo Toons|4|multitap
+wcwsuperbrawlwrestling|WCW Super Brawl Wrestling|4|multitap
+wwfraw|WWF Raw|4|multitap

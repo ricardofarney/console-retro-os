@@ -1,0 +1,49 @@
+# Arcádia — fonte da lista multijogador (megadrive-4-way-play.txt)
+# Origem: https://segaretro.org/4_Way_Play (revisão 1163287)
+# Baixada em: 16/11/2026 13:23 (horário de Brasília) por montar-listas.py 1.0
+# Formato: título<TAB>jogadores (? = a fonte não informa)<TAB>observação
+Australian Rugby League	?	
+Bill Walsh College Football	?	
+Bill Walsh College Football '95	?	
+Coach K College Basketball	?	
+College Football USA 96	?	
+College Football USA 97	?	
+Elitserien 95	?	
+Elitserien 96	?	
+FIFA 97: Gold Edition	?	
+FIFA International Soccer	?	
+FIFA Road to World Cup 98	?	
+FIFA Soccer 95	?	
+FIFA Soccer 96	?	
+Gauntlet IV	?	
+General Chaos	?	
+Hoops Shut Up and Jam!	?	
+IMG International Tour Tennis	?	
+Madden NFL '94	?	
+Madden NFL '95	?	
+Madden NFL 96	?	
+Madden NFL 97	?	
+Madden NFL 98	?	
+Mega Bomberman	?	
+MLBPA Baseball	?	
+Mutant League Hockey	?	
+NBA Live 95	?	
+NBA Live 96	?	
+NBA Live 97	?	
+NBA Live 98	?	
+NBA Showdown '94	?	
+NHL 95	?	
+NHL 96	?	
+NHL 97	?	
+NHL 98	?	
+NHL Hockey '94	?	
+Pelé II: World Tournament Soccer	?	
+PGA European Tour	?	
+PGA Tour 96	?	
+PGA Tour Golf III	?	
+Rugby World Cup 1995	?	
+Street Racer	?	
+Triple Play 96	?	
+Triple Play 96 Special Edition	?	
+Triple Play: Gold Edition	?	
+Wayne Gretzky and the NHLPA All-Stars	?	

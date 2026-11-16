@@ -1,0 +1,64 @@
+# Arcádia — fonte da lista multijogador (megadrive-team-player.txt)
+# Origem: https://segaretro.org/Team_Player (revisão 1168703)
+# Baixada em: 16/11/2026 13:23 (horário de Brasília) por montar-listas.py 1.0
+# Formato: título<TAB>jogadores (? = a fonte não informa)<TAB>observação
+ATP Tour Championship Tennis	?	
+Barkley Shut Up and Jam 2	?	
+Chi Chi's Pro Challenge Golf	?	
+College Football's National Championship	?	
+College Football's National Championship II	?	
+College Slam	?	
+Columns III: Revenge of Columns	?	
+Dino Dini's Soccer	?	
+Dragon: The Bruce Lee Story	?	
+ESPN National Hockey Night	?	
+Fever Pitch Soccer	?	
+FIFA International Soccer	?	
+From TV Animation Slam Dunk: Kyougou Makkou Taiketsu!	?	
+Gauntlet IV	?	
+Honoo no Toukyuuji Dodge Danpei	?	
+Hoops Shut Up and Jam!	?	
+Hyokkori Hyoutanjima: Daitouryou o Mezase!	?	
+Hyper Dunk: The Playoff Edition	?	
+International Superstar Soccer Deluxe	?	
+J.League Pro Striker	?	
+J.League Pro Striker 2	?	
+J.League Pro Striker Kanzenban	?	
+The Lost Vikings	?	
+Madden NFL '94	?	
+Mega Bomberman	?	
+Micro Machines 2: Turbo Tournament	?	
+NBA Action '94	?	
+NBA Action '95 Starring David Robinson	?	
+NBA Hang Time	?	
+NBA Jam	?	
+NBA Jam Tournament Edition	?	
+NBA Showdown '94	?	
+NCAA Final Four Basketball	?	
+NCAA Football	?	
+NFL '95	?	
+NFL 98	?	
+NFL Quarterback Club '96	?	
+NFL Quarterback Club	?	
+Olympic Gold	?	
+Party Quiz Mega Q	?	
+Party Quiz Mega Q 2022	?	
+Party Quiz Sega Q	?	
+Pepenga Pengo	?	
+Prime Time NFL Football Starring Deion Sanders	?	
+Pro Striker Final Stage	?	
+Puzzle & Action: Ichidant-R	?	
+Puzzle & Action: Tant-R	?	
+Sega Sports 1	?	
+Street Racer	?	
+Tiny Toon Adventures: ACME All-Stars	?	
+Triple Play 96	?	
+Ultimate Soccer	?	
+Unnecessary Roughness '95	?	
+Wayne Gretzky and the NHLPA All-Stars	?	
+Wimbledon Championship Tennis	?	
+World Championship Soccer II	?	
+World Cup USA 94	?	
+Worms	?	
+WWF Raw	?	
+Yuu Yuu Hakusho: Makyou Toitsusen	?	

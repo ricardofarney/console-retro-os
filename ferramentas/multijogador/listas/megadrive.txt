@@ -1,0 +1,98 @@
+# Arcádia — jogos de megadrive com multitap (3 ou mais jogadores)
+# Gerado por ferramentas/multijogador/montar-listas.py 1.0 em 16/11/2026 13:28 (horário de Brasília)
+# Fontes: megadrive-team-player.txt, megadrive-4-way-play.txt + DAT no-intro/Sega - Mega Drive - Genesis.dat
+# Formato: chave|título oficial|jogadores|modo
+atptourchampionshiptennis|ATP Tour Championship Tennis|?|teamplayer
+australianrugbyleague|Australian Rugby League|?|4wayplay
+barkleyshutupandjam2|Barkley Shut Up and Jam 2|?|teamplayer
+billwalshcollegefootball|Bill Walsh College Football|?|4wayplay
+billwalshcollegefootball95|Bill Walsh College Football 95|?|4wayplay
+chichisprochallengegolf|Chi Chi's Pro Challenge Golf|?|teamplayer
+coachkcollegebasketball|Coach K College Basketball|?|4wayplay
+collegefootballsnationalchampionship|College Football's National Championship|?|teamplayer
+collegefootballsnationalchampionshipii|College Football's National Championship II|?|teamplayer
+collegefootballusa96|College Football USA 96|?|4wayplay
+collegefootballusa97|College Football USA 97|?|4wayplay
+collegeslam|College Slam|?|teamplayer
+columnsiii|Columns III|?|teamplayer
+columnsiiitaiketsucolumnsworld|Columns III - Taiketsu! Columns World|?|teamplayer
+dinodinissoccer|Dino Dini's Soccer|?|teamplayer
+dragonthebruceleestory|Dragon - The Bruce Lee Story|?|teamplayer
+elitserien95|Elitserien 95|?|4wayplay
+elitserien96|Elitserien 96|?|4wayplay
+espnnationalhockeynight|ESPN National Hockey Night|?|teamplayer
+feverpitchsoccer|Fever Pitch Soccer|?|teamplayer
+fifa98roadtoworldcup|FIFA 98 - Road to World Cup|?|4wayplay
+fifainternationalsoccer|FIFA International Soccer|?|teamplayer
+fifasoccer95|FIFA Soccer 95|?|4wayplay
+fifasoccer96|FIFA Soccer 96|?|4wayplay
+fifasoccer97|FIFA Soccer 97|?|4wayplay
+fromtvanimationslamdunkkyougoumakkoutaiketsu|From TV Animation Slam Dunk - Kyougou Makkou Taiketsu!|?|teamplayer
+gauntletiv|Gauntlet IV|?|teamplayer
+generalchaos|General Chaos|?|4wayplay
+honoonotoukyuujidodgedanpei|Honoo no Toukyuuji - Dodge Danpei|?|teamplayer
+hoopsshutupandjam|Hoops Shut Up and Jam!|?|teamplayer
+hyokkorihyoutanjimadaitouryouwomezase|Hyokkori Hyoutan-jima - Daitouryou wo Mezase!|?|teamplayer
+hyperdunktheplayoffedition|Hyper Dunk - The Playoff Edition|?|teamplayer
+imginternationaltourtennis|IMG International Tour Tennis|?|4wayplay
+internationalsuperstarsoccerdeluxe|International Superstar Soccer Deluxe|?|teamplayer
+jleagueprostriker|J. League Pro Striker|?|teamplayer
+jleagueprostriker2|J. League Pro Striker 2|?|teamplayer
+jleagueprostrikerperfect|J. League Pro Striker Perfect|?|teamplayer
+lostvikings|Lost Vikings, The|?|teamplayer
+maddennfl94|Madden NFL '94|?|teamplayer
+maddennfl95|Madden NFL 95|?|4wayplay
+maddennfl96|Madden NFL 96|?|4wayplay
+maddennfl97|Madden NFL 97|?|4wayplay
+maddennfl98|Madden NFL 98|?|4wayplay
+megabomberman|Mega Bomberman|?|teamplayer
+micromachines2turbotournament|Micro Machines 2 - Turbo Tournament|?|teamplayer
+mlbpabaseball|MLBPA Baseball|?|4wayplay
+mutantleaguehockey|Mutant League Hockey|?|4wayplay
+nbaaction94|NBA Action '94|?|teamplayer
+nbaaction95starringdavidrobinson|NBA Action '95 Starring David Robinson|?|teamplayer
+nbahangtime|NBA Hang Time|?|teamplayer
+nbajam|NBA Jam|?|teamplayer
+nbajamtournamentedition|NBA Jam - Tournament Edition|?|teamplayer
+nbalive95|NBA Live 95|?|4wayplay
+nbalive96|NBA Live 96|?|4wayplay
+nbalive97|NBA Live 97|?|4wayplay
+nbalive98|NBA Live 98|?|4wayplay
+nbashowdown94|NBA Showdown '94|?|teamplayer
+ncaafinalfourbasketball|NCAA Final Four Basketball|?|teamplayer
+ncaafootball|NCAA Football|?|teamplayer
+nfl95|NFL '95|?|teamplayer
+nfl98|NFL 98|?|teamplayer
+nflquarterbackclub|NFL Quarterback Club|?|teamplayer
+nflquarterbackclub96|NFL Quarterback Club 96|?|teamplayer
+nhl94|NHL '94|?|4wayplay
+nhl95|NHL 95|?|4wayplay
+nhl96|NHL 96|?|4wayplay
+nhl97|NHL 97|?|4wayplay
+nhl98|NHL 98|?|4wayplay
+olympicgold|Olympic Gold|?|teamplayer
+partyquizmegaq|Party Quiz Mega Q|?|teamplayer
+peleiiworldtournamentsoccer|Pele II - World Tournament Soccer|?|4wayplay
+pepengapengo|Pepenga Pengo|?|teamplayer
+pgaeuropeantour|PGA European Tour|?|4wayplay
+pgatour96|PGA Tour 96|?|4wayplay
+pgatourgolfiii|PGA Tour Golf III|?|4wayplay
+primetimenflstarringdeionsanders|Prime Time NFL Starring Deion Sanders|?|teamplayer
+prostrikerfinalstage|Pro Striker - Final Stage|?|teamplayer
+puzzleandactionichidantor|Puzzle & Action - Ichidanto-R|?|teamplayer
+puzzleandactiontantor|Puzzle & Action - Tanto-R|?|teamplayer
+rugbyworldcup95|Rugby World Cup 95|?|4wayplay
+segasports1|Sega Sports 1|?|teamplayer
+streetracer|Street Racer|?|teamplayer
+tinytoonadventuresacmeallstars|Tiny Toon Adventures - ACME All-Stars|?|teamplayer
+tripleplay96|Triple Play 96|?|teamplayer
+tripleplaygoldedition|Triple Play - Gold Edition|?|4wayplay
+ultimatesoccer|Ultimate Soccer|?|teamplayer
+unnecessaryroughness95|Unnecessary Roughness '95|?|teamplayer
+waynegretzkyandthenhlpaallstars|Wayne Gretzky and the NHLPA All-Stars|?|teamplayer
+wimbledonchampionshiptennis|Wimbledon Championship Tennis|?|teamplayer
+worldchampionshipsoccerii|World Championship Soccer II|?|teamplayer
+worldcupusa94|World Cup USA 94|?|teamplayer
+worms|Worms|?|teamplayer
+wwfraw|WWF RAW|?|teamplayer
+yuyuhakushomakyoutoitsusen|Yu Yu Hakusho - Makyou Toitsusen|?|teamplayer

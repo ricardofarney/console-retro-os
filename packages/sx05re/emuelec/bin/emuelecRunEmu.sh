@@ -544,6 +544,9 @@ fi
 # End netplay
 
 SHADERSET=$(setsettings.sh "${PLATFORM}" "${ROMNAME_SHADER}" "${CORE}" --controllers="${CONTROLLERCONFIG}" --autosave="${AUTOSAVE}" --snapshot="${SNAPSHOT}")
+
+# Arcadia: multitap automatico so nos jogos de 3 ou mais jogadores (docs/MULTIJOGADOR.md)
+[[ "${EMU}" == *_libretro ]] && arcadia-multijogador.sh "${PLATFORM}" "${ROMNAME}" "${EMU}" >/dev/null 2>&1
 #echo ${SHADERSET} # Only needed for debug
 
 if [[ ${SHADERSET} != 0 ]]; then

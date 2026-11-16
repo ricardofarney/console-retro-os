@@ -1,0 +1,324 @@
+# Arcádia — jogos de psx com multitap (3 ou mais jogadores)
+# Gerado por ferramentas/multijogador/montar-listas.py 1.0 em 16/11/2026 13:28 (horário de Brasília)
+# Fontes: psx-multitap.txt + DAT redump/Sony - PlayStation.dat
+# Formato: chave|título oficial|jogadores|modo
+2002fifaworldcup|2002 FIFA World Cup|8|multitap
+actuagolf3|Actua Golf 3|4|multitap
+actuaicehockey|Actua Ice Hockey|4|multitap
+actuaicehockey2|Actua Ice Hockey 2|4|multitap
+actuasoccer2|Actua Soccer 2|4|multitap
+actuasoccer3|Actua Soccer 3|8|multitap
+actuatennis|Actua Tennis|4|multitap
+adidaspowersoccer|Adidas Power Soccer|4|multitap
+adidaspowersoccer2|Adidas Power Soccer 2|4|multitap
+adidaspowersoccer98|Adidas Power Soccer 98|4|multitap
+adidaspowersoccerinternational97|Adidas Power Soccer International '97|4|multitap
+allstarsoccer|All Star Soccer|8|multitap
+allstartennis2000|All Star Tennis 2000|4|multitap
+allstartennis99|All Star Tennis '99|4|multitap
+allstarwatersports|All Star Watersports|4|multitap
+annakournikovassmashcourttennis|Anna Kournikova's Smash Court Tennis|4|multitap
+anokodokonoko|Ano Ko Doko no Ko|4|multitap
+aquarianagetokyowars|Aquarian Age - Tokyo Wars|5|multitap
+arcadesgreatesthitstheataricollection2|Arcade's Greatest Hits - The Atari Collection 2|4|multitap
+artcamionsugorokuden|Art Camion - Sugorokuden|4|multitap
+atarianniversaryeditionredux|Atari Anniversary Edition Redux|4|multitap
+backyardsoccer|Backyard Soccer|4|multitap
+battlehunter|Battle Hunter|4|multitap
+bishibashispecial|Bishi Bashi Special|3|multitap
+blastchamber|Blast Chamber|4|multitap
+blazeandbladebusters|Blaze & Blade Busters|4|multitap
+blazeandbladeeternalquest|Blaze & Blade - Eternal Quest|4|multitap
+bloodlines|Blood Lines|4|multitap
+bombermanland|Bomberman Land|4|multitap
+bombermanpartyedition|Bomberman - Party Edition|5|multitap
+bombermanworld|Bomberman World|5|multitap
+breakout|Breakout|4|multitap
+breakpoint|Break Point|4|multitap
+brianlaracricket|Brian Lara Cricket|4|multitap
+brunswickcircuitprobowling|Brunswick Circuit Pro Bowling|6|multitap
+buttsubushi|Buttsubushi|4|multitap
+caesarspalace2000millenniumgoldedition|Caesars Palace 2000 - Millennium Gold Edition|4|multitap
+caesarspalaceii|Caesars Palace II|4|multitap
+californiasurfing|California Surfing|4|multitap
+captaincommando|Captain Commando|3|multitap
+cardshark|Card Shark|4|multitap
+catandieersteinsel|Catan - Die erste Insel|4|multitap
+chessmasterii|Chessmaster II|4|multitap
+chriskamarasstreetsoccer|Chris Kamara's Street Soccer|8|multitap
+circuitbreakers|Circuit Breakers|4|multitap
+collegeslam|College Slam|4|multitap
+crashbash|Crash Bash|4|multitap
+ctrcrashteamracing|CTR - Crash Team Racing|4|multitap
+cubixrobotsforeveryoneracenrobots|Cubix Robots for Everyone - Race 'n Robots|4|multitap
+cybertiger|CyberTiger|4|multitap
+daredevilderby3d|Dare Devil Derby 3D|8|multitap
+davidbeckhamsoccer|David Beckham Soccer|4|multitap
+daviscupcompletetennis|Davis Cup Complete Tennis|4|multitap
+destructionderbyraw|Destruction Derby Raw|4|multitap
+devildice|Devil Dice|5|multitap
+dinomasterparty|Dinomaster Party|4|multitap
+dioramos|Dioramos|4|multitap
+disneyspoohspartygameinsearchofthetreasure|Disney's Pooh's Party Game - In Search of the Treasure|4|multitap
+dragonmoney|Dragon Money|4|multitap
+dynamitesoccer98|Dynamite Soccer 98|4|multitap
+ecwanarchyrulz|ECW Anarchy Rulz|4|multitap
+ecwhardcorerevolution|ECW Hardcore Revolution|4|multitap
+espnmlsgamenight|ESPN MLS Gamenight|4|multitap
+europeansuperleague|European Super League|4|multitap
+familygamescompendium|Family Games Compendium|4|multitap
+fantasticfour|Fantastic Four|4|multitap
+fapremierleaguestars|F.A. Premier League Stars, The|4|multitap
+fapremierleaguestars2001|F.A. Premier League Stars 2001, The|4|multitap
+fifa2000majorleaguesoccer|FIFA 2000 - Major League Soccer|8|multitap
+fifa2001|FIFA 2001|8|multitap
+fifa99|FIFA 99|8|multitap
+fifaroadtoworldcup98|FIFA - Road to World Cup 98|8|multitap
+fifasoccer2002|FIFA Soccer 2002|8|multitap
+fifasoccer2003|FIFA Soccer 2003|8|multitap
+fifasoccer2004|FIFA Soccer 2004|8|multitap
+fifasoccer2005|FIFA Soccer 2005|8|multitap
+fifasoccer96|FIFA Soccer 96|8|multitap
+fifasoccer97|FIFA Soccer 97|8|multitap
+fireprowrestlingg|Fire Pro Wrestling G|4|multitap
+foxkidscommicromaniacsracing|FoxKids.com - Micro Maniacs Racing|8|multitap
+foxsportsgolf99|Fox Sports Golf '99|4|multitap
+foxsportssoccer99|Fox Sports Soccer '99|8|multitap
+frogger|Frogger|4|multitap
+frogger2swampysrevenge|Frogger 2 - Swampy's Revenge|4|multitap
+galaxian3|Galaxian^3|4|multitap
+gameoflife|Game of Life, The|6|multitap
+gekidourbanfighters|Gekido - Urban Fighters|4|multitap
+gritzthepyramidadventure|Gritz - The Pyramid Adventure|4|multitap
+hihououmouomaetowakuchikikan|Hi-Hou-Ou - Mou Omae to wa Kuchi Kikan!!|4|multitap
+hogsofwar|Hogs of War|4|multitap
+hotshotsgolf|Hot Shots Golf|4|multitap
+hotshotsgolf2|Hot Shots Golf 2|4|multitap
+hotwheelsextremeracing|Hot Wheels - Extreme Racing|4|multitap
+hypertennisfinalmatch|Hyper Tennis - Final Match|4|multitap
+inspectorgadgetgadgetscrazymaze|Inspector Gadget - Gadget's Crazy Maze|8|multitap
+internationalsuperstarsoccerdeluxe|International Superstar Soccer Deluxe|4|multitap
+internationaltrackandfield|International Track & Field|4|multitap
+internationaltrackandfield2000|International Track & Field 2000|4|multitap
+issproevolution|ISS Pro Evolution|4|multitap
+issproevolution2|ISS Pro Evolution 2|4|multitap
+itadakistreetgorgeousking|Itadaki Street - Gorgeous King|4|multitap
+jarrettandlabontestockcarracing|Jarrett & Labonte Stock Car Racing|4|multitap
+jetracer|Jetracer|4|multitap
+jigsawislandjapangraffiti|Jigsaw Island - Japan Graffiti|4|multitap
+jigsawmadness|Jigsaw Madness|4|multitap
+jimmyjohnsonsvrfootball98|Jimmy Johnson's VR Football '98|8|multitap
+jonahlomurugby|Jonah Lomu Rugby|4|multitap
+junclassicccandropeclub|Junclassic C.C. & Rope Club|4|multitap
+kerokeroking|Kero Kero King|4|multitap
+kickoffworld|Kick Off World|4|multitap
+klonoabeachvolleyball|Klonoa Beach Volleyball|4|multitap
+kurtwarnersarenafootballunleashed|Kurt Warner's Arena Football Unleashed|4|multitap
+lovegameswaiwaitennisplus|Love Game's - Wai Wai Tennis Plus|4|multitap
+maddennfl2000|Madden NFL 2000|8|multitap
+maddennfl2001|Madden NFL 2001|8|multitap
+maddennfl2002|Madden NFL 2002|8|multitap
+maddennfl2003|Madden NFL 2003|8|multitap
+maddennfl2004|Madden NFL 2004|8|multitap
+maddennfl2005|Madden NFL 2005|8|multitap
+maddennfl97|Madden NFL 97|8|multitap
+maddennfl98|Madden NFL 98|8|multitap
+maddennfl99|Madden NFL 99|8|multitap
+marchmadness98|March Madness '98|8|multitap
+merupurana|Meru Purana|4|multitap
+michaelowensworldleaguesoccer99|Michael Owen's World League Soccer '99|4|multitap
+micromachinesv3|Micro Machines V3|8|multitap
+micromaniacs|Micro Maniacs|8|multitap
+missland2|Missland 2|4|multitap
+monopoly|Monopoly|8|multitap
+monsterracer|Monster Racer|4|multitap
+monsterrancherbattlecardepisodeii|Monster Rancher Battle Card - Episode II|8|multitap
+montecarlogamescompendium|Monte Carlo Games Compendium|4|multitap
+motormash|Motor Mash|4|multitap
+mottotrumpshiyouyoimodedegrandprix|Motto Trump Shiyou yo! i-Mode de Grand Prix|4|multitap
+mspacmanmazemadness|Ms. Pac-Man Maze Madness|4|multitap
+music2000|Music 2000|4|multitap
+naganowinterolympics98|Nagano Winter Olympics '98|4|multitap
+nbabasketball2000|NBA Basketball 2000|8|multitap
+nbahangtime|NBA Hangtime|4|multitap
+nbahoopz|NBA Hoopz|6|multitap
+nbainthezone|NBA in the Zone|8|multitap
+nbainthezone2|NBA in the Zone 2|8|multitap
+nbainthezone2000|NBA in the Zone 2000|8|multitap
+nbainthezone98|NBA in the Zone '98|8|multitap
+nbainthezone99|NBA in the Zone '99|8|multitap
+nbajamextreme|NBA Jam Extreme|4|multitap
+nbajamtournamentedition|NBA Jam - Tournament Edition|4|multitap
+nbalive2000|NBA Live 2000|8|multitap
+nbalive2001|NBA Live 2001|8|multitap
+nbalive2002|NBA Live 2002|8|multitap
+nbalive2003|NBA Live 2003|8|multitap
+nbalive96|NBA Live 96|8|multitap
+nbalive97|NBA Live 97|8|multitap
+nbalive98|NBA Live 98|8|multitap
+nbalive99|NBA Live 99|8|multitap
+nbashootout|NBA Shoot Out|8|multitap
+nbashootout2000|NBA ShootOut 2000|8|multitap
+nbashootout2001|NBA ShootOut 2001|8|multitap
+nbashootout2002|NBA ShootOut 2002|8|multitap
+nbashootout2004|NBA ShootOut 2004|8|multitap
+nbashootout97|NBA Shoot Out '97|8|multitap
+nbashowtimenbaonnbc|NBA Showtime - NBA on NBC|4|multitap
+ncaabasketballfinalfour97|NCAA Basketball Final Four 97|8|multitap
+ncaafinalfour2000|NCAA Final Four 2000|8|multitap
+ncaafinalfour2001|NCAA Final Four 2001|8|multitap
+ncaafinalfour99|NCAA Final Four 99|8|multitap
+ncaafootball2000|NCAA Football 2000|8|multitap
+ncaafootball2001|NCAA Football 2001|8|multitap
+ncaafootball98|NCAA Football 98|8|multitap
+ncaafootball99|NCAA Football 99|8|multitap
+ncaafootballgamebreaker|NCAA Football GameBreaker|8|multitap
+ncaagamebreaker2000|NCAA GameBreaker 2000|8|multitap
+ncaagamebreaker2001|NCAA GameBreaker 2001|8|multitap
+ncaagamebreaker98|NCAA GameBreaker 98|8|multitap
+ncaagamebreaker99|NCAA GameBreaker 99|8|multitap
+ncaamarchmadness2000|NCAA March Madness 2000|8|multitap
+ncaamarchmadness2001|NCAA March Madness 2001|8|multitap
+ncaamarchmadness99|NCAA March Madness 99|8|multitap
+needforspeedporscheunleashed|Need for Speed - Porsche Unleashed|4|multitap
+needforspeedvrally2|Need for Speed - V-Rally 2|4|multitap
+nflblitz2000|NFL Blitz 2000|4|multitap
+nflblitz2001|NFL Blitz 2001|4|multitap
+nflgameday2000|NFL GameDay 2000|8|multitap
+nflgameday2001|NFL GameDay 2001|8|multitap
+nflgameday2002|NFL GameDay 2002|8|multitap
+nflgameday2003|NFL GameDay 2003|8|multitap
+nflgameday2004|NFL GameDay 2004|8|multitap
+nflgameday2005|NFL GameDay 2005|8|multitap
+nflgameday97|NFL GameDay 97|8|multitap
+nflgameday98|NFL GameDay 98|8|multitap
+nflgameday99|NFL GameDay 99|8|multitap
+nflquarterbackclub97|NFL Quarterback Club '97|8|multitap
+nflxtreme2|NFL Xtreme 2|8|multitap
+nhl2000|NHL 2000|8|multitap
+nhl2001|NHL 2001|8|multitap
+nhl97|NHL 97|8|multitap
+nhl98|NHL 98|8|multitap
+nhl99|NHL 99|8|multitap
+nhlbladesofsteel2000|NHL Blades of Steel 2000|8|multitap
+nhlbreakaway98|NHL Breakaway 98|8|multitap
+nhlchampionship2000|NHL Championship 2000|8|multitap
+nhlfaceoff2000|NHL FaceOff 2000|8|multitap
+nhlfaceoff2001|NHL FaceOff 2001|8|multitap
+nhlfaceoff97|NHL Face Off '97|8|multitap
+nhlfaceoff98|NHL FaceOff 98|8|multitap
+nhlfaceoff99|NHL FaceOff 99|8|multitap
+nhlopenice2on2challenge|NHL Open Ice - 2 on 2 Challenge|4|multitap
+nhlpowerplay98|NHL Powerplay 98|8|multitap
+noon|Noon|4|multitap
+olympicsoccer|Olympic Soccer|4|multitap
+olympicsummergames|Olympic Summer Games|8|multitap
+overboard|Overboard!|5|multitap
+panzerbandit|Panzer Bandit|4|multitap
+parowars|Paro Wars|4|multitap
+peterjacobsensgoldenteegolf|Peter Jacobsen's Golden Tee Golf|4|multitap
+pitball|Pitball|4|multitap
+polarissnocross|Polaris SnoCross|4|multitap
+pongthenextlevel|Pong - The Next Level|4|multitap
+powerplaysportstrivia|Power Play - Sports Trivia|4|multitap
+powerspikeprobeachvolleyball|Power Spike - Pro Beach Volleyball|4|multitap
+poypoy|Poy Poy|4|multitap
+poypoy2|Poy Poy 2|4|multitap
+premiermanager2000|Premier Manager 2000|4|multitap
+premiermanagerninetynine|Premier Manager Ninety Nine|4|multitap
+pro18worldtourgolf|Pro 18 - World Tour Golf|8|multitap
+proevolutionsoccer|Pro Evolution Soccer|4|multitap
+proevolutionsoccer2|Pro Evolution Soccer 2|4|multitap
+professionalundergroundleagueofpain|Professional Underground League of Pain|8|multitap
+prowressengokudenhypertagmatch|Pro Wres Sengokuden - Hyper Tag Match|4|multitap
+pumastreetsoccer|Puma Street Soccer|8|multitap
+puttergolf|Putter Golf|4|multitap
+puyopuyobox|Puyo Puyo Box|4|multitap
+quakeii|Quake II|4|multitap
+rageball|Rageball|4|multitap
+rakugakishowtime|Rakugaki Showtime|4|multitap
+rallycross|Rally Cross|4|multitap
+rampage2universaltour|Rampage 2 - Universal Tour|3|multitap
+rampagethroughtime|Rampage - Through Time|3|multitap
+ratattack|Rat Attack|4|multitap
+riskthegameofglobaldomination|Risk - The Game of Global Domination|4|multitap
+rivalschoolsunitedbyfate|Rival Schools - United by Fate|8|multitap
+roadrashjailbreak|Road Rash - Jailbreak|4|multitap
+runningwild|Running Wild|4|multitap
+scars|S.C.A.R.S.|4|multitap
+scrabble|Scrabble|4|multitap
+shaolin|Shaolin|8|multitap
+shinobinoroku|Shinobi no Roku|4|multitap
+shipwreckers|Shipwreckers!|5|multitap
+shiritsujusticegakuenlegionofheroes|Shiritsu Justice Gakuen - Legion of Heroes|8|multitap
+shiritsujusticegakuennekketsuseishunnikki2|Shiritsu Justice Gakuen - Nekketsu Seishun Nikki 2|8|multitap
+simple1500seriesvol55thedarts|Simple 1500 Series Vol. 55 - The Darts|4|multitap
+simple1500seriesvol60thetablehockey|Simple 1500 Series Vol. 60 - The Table Hockey|4|multitap
+simple1500seriesvol65thegolf|Simple 1500 Series Vol. 65 - The Golf|4|multitap
+simple1500seriesvol72thebeachvolley|Simple 1500 Series Vol. 72 - The Beach Volley|4|multitap
+simplecharacter2000seriesvol05highschoolkimengumithetablehockey|Simple Character 2000 Series Vol. 05 - High School! Kimengumi - The Table Hockey|4|multitap
+skysportsfootballquiz|Sky Sports Football Quiz|4|multitap
+skysportsfootballquizseason02|Sky Sports Football Quiz - Season 02|4|multitap
+slamnjam96featuringmagicandkareem|Slam 'n Jam '96 featuring Magic & Kareem|4|multitap
+sledstorm|Sled Storm|4|multitap
+smashcourt|Smash Court|4|multitap
+soccer97|Soccer '97|4|multitap
+southparkchefsluvshack|South Park - Chef's Luv Shack|4|multitap
+spacejam|Space Jam|6|multitap
+speedpunks|Speed Punks|4|multitap
+streetracer|Street Racer|8|multitap
+striker96|Striker 96|4|multitap
+strikerpro2000|Striker Pro 2000|4|multitap
+suchiepaiadventuredokidokinightmare|Suchie-Pai Adventure - Doki Doki Nightmare|4|multitap
+superfootballchamp|Super Football Champ|4|multitap
+superlite1500seriesanokodokonokoendlessseason|SuperLite 1500 Series - Ano Ko Doko no Ko - Endless Season|4|multitap
+superlite1500seriespangaea|SuperLite 1500 Series - Pangaea|4|multitap
+supermatchsoccer|Super Match Soccer|8|multitap
+sydney2000|Sydney 2000|8|multitap
+syndicatewars|Syndicate Wars|4|multitap
+talesofdestinyii|Tales of Destiny II|4|multitap
+talesofeternia|Tales of Eternia|4|multitap
+teambuddies|Team Buddies|4|multitap
+tennis|Tennis|4|multitap
+tennisarena|Tennis Arena|4|multitap
+tenpinalley|Ten Pin Alley|6|multitap
+thisisfootball|This Is Football|8|multitap
+thisisfootball2|This Is Football 2|8|multitap
+tigerwoods99pgatourgolf|Tiger Woods 99 PGA Tour Golf|4|multitap
+tigerwoodspgatour2000|Tiger Woods PGA Tour 2000|4|multitap
+tigerwoodsusatour2001|Tiger Woods USA Tour 2001|4|multitap
+tocaworldtouringcars|TOCA World Touring Cars|4|multitap
+topshop|Top Shop|6|multitap
+trashit|Trash It|4|multitap
+tripleplay97|Triple Play 97|8|multitap
+tripleplay98|Triple Play 98|8|multitap
+tripleplay99|Triple Play 99|8|multitap
+trumpshiyouyo|Trump Shiyou yo!|4|multitap
+twistedmetal4|Twisted Metal 4|4|multitap
+twistedmetaliii|Twisted Metal III|4|multitap
+uefachallenge|UEFA Challenge|4|multitap
+uefachampionsleagueseason199899|UEFA Champions League - Season 1998-99|4|multitap
+uefachampionsleagueseason19992000|UEFA Champions League - Season 1999-2000|8|multitap
+uefachampionsleagueseason20002001|UEFA Champions League - Season 2000-2001|8|multitap
+uefaeuro2000|UEFA Euro 2000|8|multitap
+vegascasino|Vegas Casino|4|multitap
+vegasgames2000|Vegas Games 2000|4|multitap
+vivasoccer|Viva Soccer|4|multitap
+vrgolf97|VR Golf '97|4|multitap
+wakuwakuderby|Waku Waku Derby|4|multitap
+wcwmayhem|WCW Mayhem|4|multitap
+westlifefanomania|Westlife - Fan-O-Mania|4|multitap
+whowantstobeamillionaire|Who Wants to Be a Millionaire|4|multitap
+whowantstobeamillionaire2ndedition|Who Wants to Be a Millionaire - 2nd Edition|4|multitap
+worldcup98|World Cup 98|8|multitap
+worldleaguesoccer98|World League Soccer '98|4|multitap
+wutangshaolinstyle|Wu-Tang - Shaolin Style|4|multitap
+wwfattitude|WWF Attitude|4|multitap
+wwfinyourhouse|WWF In Your House|4|multitap
+wwfsmackdown|WWF SmackDown!|4|multitap
+wwfsmackdown2knowyourrole|WWF SmackDown! 2 - Know Your Role|4|multitap
+wwfwarzone|WWF War Zone|4|multitap
+yehyehtennis|Yeh Yeh Tennis|4|multitap
+youchiengaidenkareinarucasinoclubdoubledraw|Youchien Gaiden - Karei naru Casino Club - Double Draw|4|multitap
+zigzagball|ZigZagBall|4|multitap
+zipangujimaunmeiwasaikorogakimeru|Zipangu-jima - Unmei wa Saikoro ga Kimeru!|4|multitap

@@ -1,0 +1,61 @@
+# Arcádia — apelidos: título como está na fonte da comunidade -> título oficial na DAT No-Intro/Redump.
+# Formato: console|título da fonte|título oficial[;outro título oficial]
+# Título oficial vazio = ignorar o jogo (não existe na DAT do console, é homebrew recente ou é de outro aparelho).
+# Conferido em 16/11/2026 (horário de Brasília) contra as DATs de ferramentas/roms/dats.
+
+# Super Nintendo (fonte: Nintendo Wiki)
+snes|Bakkyū Renpatsu‼ Super B-Daman (Japan)|Bakukyuu Renpatsu!! Super B-Daman
+snes|Hanna Barbera's Turbo Toons (PAL)|Turbo Toons
+snes|Hebereke no Oishii Puzzle (Japan)|Hebereke no Oishii Puzzle wa Irimasenka
+snes|J.R.R. Tolkien's The Lord of the Rings, Vol. I|J.R.R. Tolkien's The Lord of the Rings - Volume 1;J.R.R. Tolkien's The Lord of the Rings - Volume One
+snes|Kunio-kun no Dodgeball da yo Zen'in Shūgō! (Japan)|Kunio-kun no Dodge Ball Da yo Zenin Shuugou!;Kunio-kun no Dodge Ball Da yo Zenin Shuugou! - Tournament Special
+snes|Las Vegas Dream (Japan)|Las Vegas Dream in Golden Paradise
+snes|Olympic Summer Games: Atlanta 1996|Olympic Summer Games
+snes|Slam Dunk 2: IH Yosen Kanzenban!!|From TV Animation Slam Dunk 2 - IH Yosen Kanzen Ban!!
+snes|Slam Dunk: Yonkyo Taiketsu!!|From TV Animation Slam Dunk - Yonkyou Gekitotsu!!
+snes|Smash Tennis (PAL) / Super Family Tennis (Japan)|Smash Tennis;Super Family Tennis
+snes|Street Hockey '95|Street Sports - Street Hockey '95
+snes|Super Puyo Puyo 2 Remix|Super Puyo Puyo Tsuu Remix
+
+# Mega Drive (fonte: Sega Retro)
+megadrive|Columns III: Revenge of Columns|Columns III;Columns III - Taiketsu! Columns World
+megadrive|Hyokkori Hyoutanjima: Daitouryou o Mezase!|Hyokkori Hyoutan-jima - Daitouryou wo Mezase!
+megadrive|J.League Pro Striker Kanzenban|J. League Pro Striker Perfect
+megadrive|Party Quiz Mega Q 2022|
+megadrive|Party Quiz Sega Q|
+megadrive|Prime Time NFL Football Starring Deion Sanders|Prime Time NFL Starring Deion Sanders
+megadrive|Puzzle & Action: Ichidant-R|Puzzle & Action - Ichidanto-R
+megadrive|Puzzle & Action: Tant-R|Puzzle & Action - Tanto-R
+megadrive|Yuu Yuu Hakusho: Makyou Toitsusen|Yu Yu Hakusho - Makyou Toitsusen
+megadrive|FIFA 97: Gold Edition|FIFA Soccer 97
+megadrive|FIFA Road to World Cup 98|FIFA 98 - Road to World Cup
+megadrive|NHL Hockey '94|NHL '94
+megadrive|Pelé II: World Tournament Soccer|Pele II - World Tournament Soccer
+megadrive|Rugby World Cup 1995|Rugby World Cup 95
+megadrive|Triple Play 96 Special Edition|
+
+# PlayStation (fonte: Wikipedia)
+psx|Capcom Generations: Blazing Guns|
+psx|Bleach Blade Battlers 2nd|
+psx|Caesars Palace 2000|Caesars Palace 2000 - Millennium Gold Edition
+psx|Chocobo Collection|
+psx|Crash Team Racing|CTR - Crash Team Racing
+psx|Gekido|Gekido - Urban Fighters
+psx|High School! Kimengumi: The Table Hockey|Simple Character 2000 Series Vol. 05 - High School! Kimengumi - The Table Hockey
+psx|Hi・Hou・Ou: Mou Omae Tobakuchi Kikan!!|Hi-Hou-Ou - Mou Omae to wa Kuchi Kikan!!
+psx|International Superstar Soccer 2000|
+psx|Karei Naru Casino Club: Double Draw|Youchien Gaiden - Karei naru Casino Club - Double Draw
+psx|Motto Trump Shiyouyo!: i-mode no Grand Prix|Motto Trump Shiyou yo! i-Mode de Grand Prix
+psx|NOON: New Type Action Game|Noon
+psx|Pangaea|SuperLite 1500 Series - Pangaea
+psx|Pete Sampras Tennis 97|
+psx|Pro Wrestling Sengokuden: Hyper Tag Match|Pro Wres Sengokuden - Hyper Tag Match
+psx|Simple 1500 Series: Vol.72 - The Beach Volleyball|Simple 1500 Series Vol. 72 - The Beach Volley
+psx|Tiger Woods PGA Tour 2001|Tiger Woods USA Tour 2001
+psx|Trump Shiyouyo! Fukkoku-ban|Trump Shiyou yo!
+psx|Twisted Metal 3|Twisted Metal III
+psx|Uchū Gōshōden: Bakuretsu Akindo|
+psx|World Soccer: Winning Eleven 6 International|
+psx|NBA Action 98|
+psx|NCAA Gamebreaker|NCAA Football GameBreaker
+psx|Rival Schools|Rival Schools - United by Fate;Shiritsu Justice Gakuen - Legion of Heroes
