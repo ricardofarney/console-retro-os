@@ -110,4 +110,6 @@ Conferido dentro da imagem (sistema extraído do `.tar`): versão `1.0.0`; `Them
 
 **Rebuild de 15/11/2026 02:35** (commit `02a38bdd`, 2 min, incremental), só a imagem Generic: `…-1.0.0-Generic.img.gz` SHA-256 `a235bba02762d56aaf600dc205cbf80c6ec5e9f56f361f7e394dbfef2a396634`; `…-1.0.0.tar` `fe357ed988310ac714d8abb61631c75ea1c063a5530ab9ae310f4e06e241b165`. `verificar-imagem.sh`: 14 OK.
 
+**Rebuild de 16/11/2026 13:57** (commit `951a1c33`, 5 min, incremental), com o multijogador (ES `50df2c3`, pacote `arcadia-multijogador`): `…-1.0.0-Generic.img.gz` SHA-256 `bee91b50fc3490b3601dbd2cf7aca64f16459f03dd6c583c636d1b7ffb219c59`; `…-1.0.0.tar` `a31e0bd4d1cfc1c3e6379a1e6db2836882235d656721278edfae5c730f86e9a5`. `verificar-imagem.sh`: 15 OK. Substitui a imagem de 15/11 em `imagens-compiladas` (mesmo nome de arquivo).
+
 **Desde 15/11/2026 o build gera só a imagem `Generic`:** `SUBDEVICES=""` em `projects/Amlogic-ce/devices/Amlogic-ng/options` (as u-boots das placas não são mais compiladas) e `scripts/image` passou a gerar a `Generic` no Amlogic-ce mesmo sem subdevices. O caminho de montagem da `Generic` é o mesmo de antes (`SUBDEVICE=Generic`, sem u-boot de placa; `dtb.img` escolhido no cartão), por isso o nome do arquivo continua `…-Generic.img.gz`.

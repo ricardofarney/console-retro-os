@@ -26,8 +26,20 @@ Sem argumento, confere `Arcadia-Amlogic-ng.aarch64-<EE_VERSION>-Generic.img.gz`;
 | Atualização | `updatecheck.sh` com `versoes.txt` e Releases de `ricardofarney/console-retro-os`, arquivo `Arcadia-*`, comparação X.Y.Z |
 | Proteção de dados | sem `clearconfig EMUS`; `emuelec-upgrade` (em `/usr/bin/batocera/`) chama `arcadia-dados.sh backup`; `emuelec_autostart.sh` migra gamelists |
 | DTBs do S905X2 | `device_trees/g12a_s905x2_2g.dtb` e `g12a_s905x2_2g_1gbit.dtb` na partição de boot |
+| Multijogador (desde 16/11/2026) | `/usr/bin/arcadia-multijogador.sh` + listas `snes`, `megadrive`, `psx` (≥ 50 títulos cada) em `/usr/share/arcadia/multijogador`; chamada no `emuelecRunEmu.sh`; `input_max_users` ≥ 4; módulos `joydev`, `xpad`, `hidp`, `hid-sony`; ES com `ArcadiaOrdemConexao` e "ORDEM DOS JOGADORES" no `.mo`; **teste a seco** do gerador da própria imagem (Super Bomberman 2 → porta 2 = 257; Super Mario World sem arquivo) — [MULTIJOGADOR.md](MULTIJOGADOR.md) |
 
 ## Resultados
+
+### 16/11/2026 13:57: imagem 1.0.0 com o multijogador (commit `951a1c33`)
+
+**15 OK, 0 FALHOU** (o item 11, multijogador, é novo). Listas na imagem: Super Nintendo 79, Mega Drive 94, PlayStation 320 títulos; `input_max_users=5`; módulos `joydev xpad hidp hid-sony`; o gerador da própria imagem, rodado a seco, criou `input_libretro_device_p2 = "257"` para Super Bomberman 2 e nada para Super Mario World. SHA-256:
+
+| Arquivo | SHA-256 |
+|---|---|
+| `Arcadia-Amlogic-ng.aarch64-1.0.0-Generic.img.gz` | `bee91b50fc3490b3601dbd2cf7aca64f16459f03dd6c583c636d1b7ffb219c59` |
+| `Arcadia-Amlogic-ng.aarch64-1.0.0.tar` | `a31e0bd4d1cfc1c3e6379a1e6db2836882235d656721278edfae5c730f86e9a5` |
+
+Relatório: `imagens-compiladas\logs\verificacao-Arcadia-Amlogic-ng.aarch64-1.0.0-Generic-2026-11-16_1357.md`. A imagem de 15/11 (abaixo) foi substituída por esta, com o mesmo nome de arquivo.
 
 ### 15/11/2026 02:36: imagem 1.0.0 final (commit `02a38bdd`, com todas as correções das Etapas 2 a 6)
 

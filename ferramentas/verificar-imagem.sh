@@ -103,6 +103,25 @@ D2="$B/device_trees/g12a_s905x2_2g.dtb"; D1="$B/device_trees/g12a_s905x2_2g_1gbi
 [ -f "$D2" ] && [ -f "$D1" ]
 item "device_trees com g12a_s905x2_2g.dtb e g12a_s905x2_2g_1gbit.dtb" $? "$(ls "$B/device_trees" 2>/dev/null | grep -c dtb) DTBs na imagem; s905x2: $(ls "$B/device_trees" 2>/dev/null | grep -i s905x2 | tr '\n' ' ')"
 
+# 11) multijogador: até 4 jogadores, multitap só nos jogos de 3+ (docs/MULTIJOGADOR.md)
+MJ="$S/usr/bin/arcadia-multijogador.sh"; ML="$S/usr/share/arcadia/multijogador"
+QTD=""; for c in snes megadrive psx; do QTD="$QTD $c=$(grep -vc '^#' "$ML/$c.txt" 2>/dev/null)"; done
+MODS=""; for m in joydev xpad hidp hid-sony; do find "$S/usr/lib" -name "$m.ko*" 2>/dev/null | grep -q . && MODS="$MODS $m"; done
+MAXU="$(grep -oP '^input_max_users = "?\K[0-9]+' "$S/usr/config/retroarch/retroarch.cfg" | tail -1)"
+# teste a seco com o gerador e as listas da própria imagem
+TMJ="$(mktemp -d)"
+ARCADIA_MJ_LISTAS="$ML" ARCADIA_MJ_CONFIG="$TMJ" ARCADIA_MJ_COREOPTS="$S/usr/config/retroarch/retroarch-core-options.cfg" ARCADIA_MJ_LOG="$TMJ/log" \
+  bash "$MJ" snes "/storage/roms/snes/Super Bomberman 2 (USA).sfc" snes9x_libretro
+ARCADIA_MJ_LISTAS="$ML" ARCADIA_MJ_CONFIG="$TMJ" ARCADIA_MJ_COREOPTS="$S/usr/config/retroarch/retroarch-core-options.cfg" ARCADIA_MJ_LOG="$TMJ/log" \
+  bash "$MJ" snes "/storage/roms/snes/Super Mario World (USA).sfc" snes9x_libretro
+GERA="$(grep -c 'input_libretro_device_p2 = "257"' "$TMJ/Snes9x/Super Bomberman 2 (USA).cfg" 2>/dev/null)"; [ -e "$TMJ/Snes9x/Super Mario World (USA).cfg" ] && GERA="smw"
+rm -rf "$TMJ"
+[ -x "$MJ" ] && [ "$(grep -vc '^#' "$ML/snes.txt")" -ge 50 ] && [ "$(grep -vc '^#' "$ML/megadrive.txt")" -ge 50 ] && [ "$(grep -vc '^#' "$ML/psx.txt")" -ge 50 ] \
+  && grep -q 'arcadia-multijogador.sh "${PLATFORM}" "${ROMNAME}" "${EMU}"' "$S/usr/bin/emuelecRunEmu.sh" \
+  && [ "${MAXU:-0}" -ge 4 ] && [ "$MODS" = " joydev xpad hidp hid-sony" ] && [ "$GERA" = "1" ] \
+  && grep -aq ArcadiaOrdemConexao "$ES" && grep -aq "PLAYER ORDER" "$ES" && grep -aq "ORDEM DOS JOGADORES" "$MO"
+item "Multijogador: até 4 controles e multitap automático nos jogos de 3+" $? "listas:$QTD; input_max_users=$MAXU; módulos:$MODS; teste a seco: Super Bomberman 2 → porta 2 = 257, Super Mario World sem arquivo ($GERA); ES com \"Ordem dos jogadores\" e ordem de conexão"
+
 # relatório
 {
   echo "# Verificação da imagem $NOME"
