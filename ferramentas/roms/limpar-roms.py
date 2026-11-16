@@ -57,7 +57,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-VERSAO = "1.1"
+VERSAO = "1.2"
 
 # Brasil não tem horário de verão desde 2019: Brasília = UTC-3 fixo.
 # (Evita depender do pacote tzdata, que não vem no Python do Windows.)
@@ -102,6 +102,19 @@ DATS_PALETA = [
     ("redump", "Sony - PlayStation"),
     ("redump", "NEC - PC Engine CD - TurboGrafx-CD"),
 ]
+
+# Número de jogadores (campo <players> do gamelist.xml):
+#  1) dats\maxusers\<DAT>.dat — pasta metadat/maxusers do libretro-database (por CRC);
+#  2) listas de multitap do Arcádia (ferramentas\multijogador\listas), que também
+#     cobrem o PlayStation (não há maxusers de discos).
+PASTA_MAXUSERS = PASTA_DATS / "maxusers"
+PASTA_LISTAS_MJ = PASTA_SCRIPT.parent / "multijogador" / "listas"
+DATS_SEM_MAXUSERS = {"Sega - Mega-CD - Sega CD", "Sony - PlayStation"}
+LISTA_MJ_DA_DAT = {
+    "Nintendo - Super Nintendo Entertainment System": "snes",
+    "Sega - Mega Drive - Genesis": "megadrive",
+    "Sony - PlayStation": "psx",
+}
 
 # Modo offline: quando True, qualquer tentativa de acesso à rede é bloqueada.
 OFFLINE = False
@@ -620,6 +633,83 @@ class GerenciadorDats:
         return idx
 
 
+def chave_mj(titulo: str) -> str:
+    """Mesma normalização de ferramentas\\multijogador (montar-listas.py e o aparelho)."""
+    t = re.sub(r"\([^)]*\)", "", titulo)
+    t = re.sub(r"\[[^\]]*\]", "", t)
+    t = t.lower().replace("&", "and")
+    t = re.sub(r"^\s*the\s+", "", t)
+    t = re.sub(r",\s*the(\s|-|$)", r"\1", t)
+    return re.sub(r"[^a-z0-9]", "", t)
+
+
+class IndiceJogadores:
+    """Quantos jogadores cada jogo aceita: maxusers do libretro-database (por CRC e
+    por nome) + listas de multitap do Arcádia (por título normalizado)."""
+
+    def __init__(self):
+        self.por_crc: dict[str, int] = {}
+        self.por_nome: dict[str, int] = {}
+        self.por_chave: dict[str, int] = {}
+        self.origens: list[str] = []
+
+    @classmethod
+    def carregar(cls, sis: Sistema) -> "IndiceJogadores | None":
+        if not sis.dat:
+            return None
+        idx = cls()
+        arq = PASTA_MAXUSERS / f"{sis.dat}.dat"
+        if arq.is_file():
+            jogo = None
+            for linha in arq.read_text(encoding="utf-8", errors="replace").splitlines():
+                m = re.match(r'\s*comment\s+"(.*)"\s*$', linha)
+                if m:
+                    jogo = m.group(1)
+                    continue
+                m = re.match(r"\s*users\s+(\d+)", linha)
+                if m and jogo:
+                    idx.por_nome[jogo] = int(m.group(1))
+                    idx.por_chave.setdefault(chave_mj(jogo), int(m.group(1)))
+                    continue
+                m = re.search(r"crc\s+([0-9A-Fa-f]{8})", linha)
+                if m and jogo and jogo in idx.por_nome:
+                    idx.por_crc[m.group(1).upper()] = idx.por_nome[jogo]
+            idx.origens.append("dats/maxusers/" + arq.name)
+        lista = LISTA_MJ_DA_DAT.get(sis.dat)
+        arq_mj = PASTA_LISTAS_MJ / f"{lista}.txt" if lista else None
+        if arq_mj and arq_mj.is_file():
+            for linha in arq_mj.read_text(encoding="utf-8").splitlines():
+                if linha.startswith("#") or "|" not in linha:
+                    continue
+                k, _, qtd, _ = (linha.split("|") + ["", "", ""])[:4]
+                if qtd.isdigit():
+                    # a lista de multitap tem prioridade: é o máximo com o adaptador
+                    idx.por_chave[k] = max(int(qtd), idx.por_chave.get(k, 0))
+            idx.origens.append("multijogador/listas/" + arq_mj.name)
+        return idx if idx.origens else None
+
+    def jogadores(self, u: "Unidade") -> int | None:
+        k = chave_mj(u.dat_jogo or u.stem)
+        lista = self.por_chave.get(k) if k else None
+        base = None
+        for _, crc in u.crcs:
+            if crc in self.por_crc:
+                base = self.por_crc[crc]
+                break
+        if base is None and u.dat_jogo:
+            base = self.por_nome.get(u.dat_jogo)
+        if base is None:
+            base = lista
+        elif lista:
+            base = max(base, lista)
+        return base
+
+
+def texto_jogadores(n: int) -> str:
+    """Formato do <players> do EmulationStation: "1" ou "1-4"."""
+    return "1" if n <= 1 else f"1-{n}"
+
+
 def atualizar_dats_repositorio(pasta: Path = PASTA_DATS) -> int:
     """Baixa de novo as DATs da paleta para ferramentas\\roms\\dats\\ (versionadas
     no git), todas do MESMO commit do libretro-database, e grava VERSAO.txt.
@@ -667,13 +757,33 @@ def atualizar_dats_repositorio(pasta: Path = PASTA_DATS) -> int:
             erros += 1
             linhas.append(f"{tipo}/{nome}.dat\tERRO: {e}")
             log(f"  ERRO {tipo}/{nome}: {e}")
+    # número de jogadores (metadat/maxusers do mesmo commit)
+    for _, nome in DATS_PALETA:
+        if nome in DATS_SEM_MAXUSERS:
+            continue
+        url = URL_DAT.format(ref=ref, tipo="maxusers", arquivo=urllib.parse.quote(nome))
+        try:
+            dados = http_get(url, timeout=120)
+            if dados is None or b"clrmamepro" not in dados[:300]:
+                raise RuntimeError("resposta inesperada (não é DAT clrmamepro)")
+            (pasta / "maxusers").mkdir(parents=True, exist_ok=True)
+            destino = pasta / "maxusers" / f"{nome}.dat"
+            tmp = destino.with_suffix(".dat.part")
+            tmp.write_bytes(dados)
+            os.replace(tmp, destino)
+            linhas.append(f"maxusers/{destino.name}\t{destino.stat().st_size}")
+            log(f"  ok  maxusers/{destino.name} ({tamanho_legivel(destino.stat().st_size)})")
+        except Exception as e:  # noqa: BLE001
+            erros += 1
+            linhas.append(f"maxusers/{nome}.dat\tERRO: {e}")
+            log(f"  ERRO maxusers/{nome}: {e}")
     (pasta / "VERSAO.txt").write_text(
         "Origem: https://github.com/libretro/libretro-database (pasta metadat/)\n"
         f"Commit: {ref} ({data_commit})\n"
         f"Atualizado em: {agora().strftime('%d/%m/%Y %H:%M')} (horário de Brasília)\n"
         "Arquivos (tamanho em bytes):\n" + "\n".join(linhas) + "\n",
         encoding="utf-8")
-    log(f"DATs atualizadas: {len(DATS_PALETA) - erros} ok, {erros} erro(s). Versão em {pasta / 'VERSAO.txt'}")
+    log(f"DATs atualizadas: {len(linhas) - erros} ok, {erros} erro(s). Versão em {pasta / 'VERSAO.txt'}")
     return erros
 
 
@@ -1327,13 +1437,15 @@ class ResultadoGamelist:
     removidas: int = 0
     imagens: int = 0
     nomes: int = 0
+    jogadores: int = 0
     backup: str | None = None
     alterado: bool = False
     erro: str | None = None
 
 
 def atualizar_gamelist(raiz_console: Path, mantidas: list[Unidade], saidas: list[tuple[Unidade, str]],
-                       capas: dict, pasta_removidos: Path, simular: bool, carimbo: str) -> ResultadoGamelist:
+                       capas: dict, pasta_removidos: Path, simular: bool, carimbo: str,
+                       jogadores: "IndiceJogadores | None" = None) -> ResultadoGamelist:
     res = ResultadoGamelist()
     arq = raiz_console / "gamelist.xml"
     try:
@@ -1383,8 +1495,16 @@ def atualizar_gamelist(raiz_console: Path, mantidas: list[Unidade], saidas: list
             if not existe and img_atual != capa:
                 definir_filho(g, "image", capa, ("path", "name", "desc"))
                 res.imagens += 1
+        # quantos podem jogar (ficha do jogo); não troca um valor que já exista
+        if jogadores and not texto_filho(g, "players"):
+            n = jogadores.jogadores(u)
+            if n:
+                definir_filho(g, "players", texto_jogadores(n),
+                              ("path", "name", "desc", "image", "rating", "releasedate",
+                               "developer", "publisher", "genre"))
+                res.jogadores += 1
 
-    res.alterado = bool(res.adicionadas or res.removidas or res.imagens or res.nomes)
+    res.alterado = bool(res.adicionadas or res.removidas or res.imagens or res.nomes or res.jogadores)
     if not res.alterado or simular:
         return res
 
@@ -1596,8 +1716,9 @@ def processar_console(console: str, raiz: Path, sis: Sistema, args, dats: Gerenc
     # gamelist.xml
     saidas_motivo = [(u, u.motivo) for u in saem + mover_corr]
     try:
+        idx_jog = None if getattr(args, "sem_dat", False) else IndiceJogadores.carregar(sis)
         r.gamelist = atualizar_gamelist(raiz, [u for u in mantidas if not u.problemas], saidas_motivo,
-                                        capas, base_rem, args.simular, carimbo)
+                                        capas, base_rem, args.simular, carimbo, idx_jog)
     except Exception as e:  # noqa: BLE001
         r.gamelist = ResultadoGamelist(erro=f"erro ao atualizar gamelist.xml: {e}")
     if r.gamelist.erro:
@@ -1768,7 +1889,8 @@ def gerar_relatorio(resultados: list[ResultadoConsole], ignoradas: list[str], ar
                 pref = "Seriam " if sim else ""
                 L.append(f"- {pref}entradas adicionadas: {g.adicionadas}; removidas (guardadas em "
                          f"`_removidos\\{r.console}\\gamelist-removidos.xml`): {g.removidas}; "
-                         f"imagens preenchidas: {g.imagens}; nomes preenchidos: {g.nomes}")
+                         f"imagens preenchidas: {g.imagens}; nomes preenchidos: {g.nomes}; "
+                         f"jogadores preenchidos: {g.jogadores}")
                 if g.backup:
                     L.append(f"- Backup do original: `{r.console}\\{g.backup}`")
                 L.append("- Dados existentes (favoritos, descrições, contadores) preservados.")

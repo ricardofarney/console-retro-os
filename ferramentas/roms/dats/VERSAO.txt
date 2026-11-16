@@ -1,6 +1,6 @@
 Origem: https://github.com/libretro/libretro-database (pasta metadat/)
 Commit: b2e5eaa256eb30c6301ed42a8eab3ba2afd74b8a (2026-11-15T00:42:24Z)
-Atualizado em: 15/11/2026 01:24 (horário de Brasília)
+Atualizado em: 15/11/2026 01:24 (horário de Brasília); maxusers/ acrescentada em 16/11/2026 do mesmo commit
 Arquivos (tamanho em bytes):
 no-intro/Atari - 2600.dat	189028
 no-intro/Atari - 7800.dat	77646
@@ -26,3 +26,25 @@ no-intro/Microsoft - MSX2.dat	43946
 redump/Sega - Mega-CD - Sega CD.dat	150366
 redump/Sony - PlayStation.dat	3945098
 redump/NEC - PC Engine CD - TurboGrafx-CD.dat	141019
+maxusers/Atari - 2600.dat	49697
+maxusers/Atari - 7800.dat	8638
+maxusers/Nintendo - Nintendo Entertainment System.dat	274197
+maxusers/Nintendo - Family Computer Disk System.dat	34263
+maxusers/Nintendo - Super Nintendo Entertainment System.dat	326491
+maxusers/Nintendo - Nintendo 64.dat	179305
+maxusers/Nintendo - Game Boy.dat	130263
+maxusers/Nintendo - Game Boy Color.dat	112202
+maxusers/Nintendo - Game Boy Advance.dat	296775
+maxusers/Sega - Master System - Mark III.dat	53322
+maxusers/Sega - Mega Drive - Genesis.dat	232161
+maxusers/Sega - 32X.dat	21355
+maxusers/Sega - Game Gear.dat	75252
+maxusers/NEC - PC Engine - TurboGrafx 16.dat	35329
+maxusers/NEC - PC Engine SuperGrafx.dat	501
+maxusers/SNK - Neo Geo Pocket.dat	1033
+maxusers/SNK - Neo Geo Pocket Color.dat	10574
+maxusers/Bandai - WonderSwan.dat	11336
+maxusers/Bandai - WonderSwan Color.dat	9541
+maxusers/Microsoft - MSX.dat	46408
+maxusers/Microsoft - MSX2.dat	9656
+maxusers/NEC - PC Engine CD - TurboGrafx-CD.dat	259
